@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?> <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"> 
+
+	<hibernate-configuration>
+		<session-factory>
+			<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ad_post</property>
+			<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+			<property name="hibernate.connection.username">root</property>
+			<property name="hibernate.connection.password">Sweet05p06=</property>
+			<property name="hibernate.connection.pool_size">0</property>
+			<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+			<property name="hibernate.show_sql">true</property>
+			
+			<property name="connection.pool_size">1</property>
+			<!-- Enable hibernate's automatic session context management -->
+			<property name="current_session_context_class">thread</property>
+			
+			<!-- Disable second level cache -->
+			
+			<!-- Drop and re-create the database schema on startup -->  
+	       	<property name="hbm2ddl.auto">update</property>  
+	       	
+	       	<!-- Use the script to initialize the database -->
+	       	<property name="hibernate.hbm2ddl.import_files">ad_post_init.sql</property>
+			
+	       	<!-- Multi-line statements -->
+	       	<property name="hibernate.hbm2ddl.import_files_sql_extractor">org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor</property>
+	       	
+	       	<!-- To avoid lazy loading error for collection -->
+			<property name="hibernate.enable_lazy_load_no_trans">true</property>
+			
+			<!-- "Import" the mapping resources here -->
+			<!-- mapping files -->
+			
+			<mapping class="com.adpost.domain.model.AdComment" />
+			<mapping class="com.adpost.domain.model.AdLike" />
+			<mapping class="com.adpost.domain.model.AdPicture" />
+			<mapping class="com.adpost.domain.model.AdShare" />
+			<mapping class="com.adpost.domain.model.Advert" />
+			<mapping class="com.adpost.domain.model.AdvertDetail" />
+			<mapping class="com.adpost.domain.model.AdvertType" />
+			<mapping class="com.adpost.domain.model.AppUser" />
+			<mapping class="com.adpost.domain.model.Menu" />
+			<mapping class="com.adpost.domain.model.SubMenu" />
+			<mapping class="com.adpost.domain.model.Role" />
+			<mapping class="com.adpost.domain.model.UserDetail" />
+			<mapping class="com.adpost.domain.model.UserType" />
+		</session-factory>
+	</hibernate-configuration>
