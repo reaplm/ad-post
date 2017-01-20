@@ -5,11 +5,12 @@
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-		<form id = "add-advert-form" method="post" action="/AdPost/advert/add">
+		<form:form id = "add-advert-form" method="post" action="/AdPost/advert/add" 
+		modelAttribute="adDetails" enctype="multipart/form-data">
 				<table>
 					<tr>
 						<td>
-							<label >CATEGORY:</label>	
+							<label>CATEGORY:</label>	
 						</td>
 					</tr>
 					<tr>
@@ -32,13 +33,13 @@
 					</tr>
 					<tr>
 						<td>
-							<label>LOCATION: </label>	
+							<label >LOCATION: </label>	
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" placeholder="location"  
-								name="adLocation"/>
+							<form:input type="text" placeholder="location"  
+								name="adLocation" id="adLocation" path="adLocation"/>
 						</td>
 					</tr>
 					<tr>
@@ -46,18 +47,19 @@
 					</tr>
 					<tr>
 						<td>
-							<label >AD DETAILS: </label>	
+							<label>AD DETAILS: </label>	
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" placeholder="subject" 
-								name="adSubject"/>
+							<form:input type="text" placeholder="subject" 
+								name="adSubject" id="adSubject" path="adSubject"/>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<textarea rows="10" cols="30" name="adBody"></textarea>
+							<form:textarea rows="10" cols="30" name="adBody" 
+							id="adBody" path="adBody"></form:textarea>
 						</td>
 					</tr>
 					<tr>
@@ -70,14 +72,14 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="text" placeholder="phone" 
-								name="contactNo"/>
+							<form:input type="text" placeholder="phone" 
+								name="contactNo" id="contactNo" path="contactNo"/>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" placeholder="email" 
-								name="contactEmail"/>
+							<form:input type="text" placeholder="email" 
+								name="contactEmail" id="contactEmail" path="contactEmail"/>
 						</td>
 					</tr>
 					<tr>
@@ -85,17 +87,28 @@
 					</tr>
 					<tr>
 						<td>
-							<button>Post</button>
-						</td>
-						<td>
 							
 								<img src="<%=request.getContextPath()%>
 								/resources/images/ic_add_a_photo_black_48dp.png" 
-									height="20px" width ="20px" class="button button-img" 
-									onclick="UploadImage('adPicture','/AdPost/picture/upload')"/>
+									height="20px" width ="20px" />
 							
 						</td>
 					</tr>
+					<tr>
+					
+						<td>
+							<form:input type="file" name="pictures[]" 
+								path="adPictures" id="adPictures" accept="image/*" multiple="multiple"/>
+						</td>
+					</tr>
+					<tr>
+						<td><hr /></td>
+					</tr>
+					<tr>
+						<td>
+							<button type="submit">Post</button>
+						</td>
+						
+					</tr>
 				</table>								
-			</form>			
-	<jsp:include page="/WEB-INF/views/jsp/photoUpload.jsp"></jsp:include>
+			</form:form>			

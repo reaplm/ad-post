@@ -29,7 +29,7 @@ public class Advert {
 	@OneToOne(mappedBy="advert", cascade=CascadeType.ALL,
 			fetch=FetchType.EAGER)
 	@JsonManagedReference
-	private AdvertDetail advertDetail;
+	private AdvertDetail advertDetail; 
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="fk_sub_menu_id", nullable=false)
@@ -39,7 +39,7 @@ public class Advert {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="fk_user_id", nullable=false)
 	@JsonManagedReference
-	private AppUser appUser; 
+	private AppUser appUser;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="advert")
 	@JsonBackReference
@@ -85,18 +85,7 @@ public class Advert {
 	public int getAdvertId(){
 		return this.advertId;
 	}
-	public void setAppUser(AppUser appUser){
-		this.appUser = appUser;
-	}
-	public AppUser getAppUser(){
-		return this.appUser;
-	}
-	public SubMenu getSubMenu(){
-		return this.subMenu;
-	}
-	public void setSubMenu(SubMenu subMenu){
-		this.subMenu = subMenu;
-	}
+	
 	
 	public void setAdvertStatus(AdvertStatus advertStatus){
 		this.advertStatus = advertStatus;
@@ -151,5 +140,17 @@ public class Advert {
 	}
 	public int getRejectedFlag(){
 		return this.rejectedFlag;
+	}
+	public SubMenu getSubMenu(){
+		return this.subMenu;
+	}
+	public void setSubMenu(SubMenu subMenu){
+		this.subMenu = subMenu;
+	}
+	public void setAppUser(AppUser appUser){
+		this.appUser = appUser;
+	}
+	public AppUser getAppUser(){
+		return this.appUser;
 	}
 }

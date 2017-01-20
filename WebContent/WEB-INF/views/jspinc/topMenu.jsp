@@ -14,6 +14,8 @@
 							<li><a href="/AdPost/adverts">Post Ad</a></li>
 							<li>|</li>					
 							<li><a href="/AdPost/admin">Admin</a></li>
+							<li>|</li>					
+							<li><a href="/AdPost/advert/newpost">Post Ad</a></li>
 						</sec:authorize>
 				</ul>								
 			</div>

@@ -53,7 +53,8 @@ public class AdvertController {
 	
 	@RequestMapping(value="/adverts", method=GET)
 	public ModelAndView getAllAdverts(
-			@ModelAttribute("advert") Advert advert){
+			@ModelAttribute("advert") Advert advert,
+			@ModelAttribute("adDetails") AdvertDetail advertDetails){
 		ModelAndView modelAndView = new ModelAndView("adverts");
 	
 		List<Advert> advertList = getAdvertList();
@@ -64,9 +65,18 @@ public class AdvertController {
 		modelAndView.addObject("menuList", menuList);
 		return modelAndView;
 	}
+	@RequestMapping(value="/advert/newpost", method=GET)
+	public ModelAndView newAdvert(@ModelAttribute("adDetails") AdvertDetail advertDetails){
+		ModelAndView model = new ModelAndView("postAd");
+		List<Menu> menuList = getMenuList();
+		model.addObject("menuList", menuList);
+		return model;
+	}
 	@RequestMapping(value="/advert/add", method=POST)
 	public void insertAdverts(HttpServletRequest request,
-			HttpServletResponse response)throws NumberFormatException, IOException{
+			HttpServletResponse response,
+			@ModelAttribute("adDetails") AdvertDetail advertDetails)
+					throws NumberFormatException, IOException{
 		ModelAndView modelAndView = new ModelAndView("adverts");
 		int subMenuId = Integer.parseInt(request.getParameter("subMenuId"));
 		Advert advert = createAdvert(request.getParameter("adSubject"), 

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -38,6 +40,10 @@ public class AdvertDetail {
 	private String contactNo;
 	@Column(name="contact_email")
 	private String contactEmail;
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JsonBackReference
+	private List<AdPicture> adPictures;
 	
 	public int getAdvertId(){
 		return this.advertId;
@@ -82,5 +88,11 @@ public class AdvertDetail {
 	}
 	public void setContactEmail(String contactEmail){
 		this.contactEmail = contactEmail;
+	}
+	public List<AdPicture> getAdPictures(){
+		return this.adPictures;
+	}
+	public void setAdPictures(List<AdPicture> adPictures){
+		this.adPictures = adPictures;
 	}
 }
