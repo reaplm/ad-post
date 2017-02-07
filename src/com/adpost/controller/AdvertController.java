@@ -6,15 +6,20 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -76,17 +81,25 @@ public class AdvertController {
 	public void insertAdverts(HttpServletRequest request,
 			HttpServletResponse response,
 			@ModelAttribute("adDetails") AdvertDetail advertDetails)
-					throws NumberFormatException, IOException{
+					throws NumberFormatException, IOException, IllegalStateException, ServletException{
 		ModelAndView modelAndView = new ModelAndView("adverts");
 		int subMenuId = Integer.parseInt(request.getParameter("subMenuId"));
 		Advert advert = createAdvert(request.getParameter("adSubject"), 
 				request.getParameter("adBody"), request.getParameter("adLocation"),
 				request.getParameter("contactEmail"),request.getParameter("contactNo"),
 				subMenuId);
+		Deque<FileInfo> pictures = new LinkedList<>();
+		for(Part filePart : request.getParts()){
+			long fileSize = filePart.getSize();
+			String fileName = filePart.getName();
+			if(fileSize == 0 && (fileName == null || fileName.isEmpty())){
+				continue;
+			}
+		}
 		if(advert != null){
 			iAdvertService.insertAdvert(advert);
 		}
-		response.sendRedirect("/AdPost/adverts");
+		response.sendRedirect("/AdPost/adverts"); 
 	}
 	@RequestMapping(value="/advert/detail", method=GET)
 	public @ResponseBody Advert getAdvert(

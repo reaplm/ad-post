@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 		<form:form id = "add-advert-form" method="post" action="/AdPost/advert/add" 
-		modelAttribute="adDetails" enctype="multipart/form-data">
+		enctype="multipart/form-data">
 				<table>
 					<tr>
 						<td>
