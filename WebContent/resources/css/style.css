@@ -14,6 +14,8 @@ body {
 	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
+	box-shadow: 3px 3px 3px #ccc;
+	background-color: #fff;
 }
 #login-wrapper {
 	background-color: #e9eef2;
@@ -76,34 +78,32 @@ body {
 
 #admin-header{
 	width: 100%;
-	height: 80px;
-	color: #fff;
+	height: 30px;
+	color: #2c2a33;
 	float: left;
-	background-color: #f8d650;
 }
 #admin-header p{
 	font-family: impact;
-	font-size: 19pt;
-	float: left;
-	margin-top: 0px;
+	font-size: 9pt;
 	margin-left: 30px;
 }
-#admin-header ul{
+#admin-menu ul{
 	float: right;
+	margin-top: 0px;
+
 }
-#admin-header img{
-	width: 50px;
-	height: 50px;
-	float: left;
+#admin-menu img{
 	margin-left: 20px;
 }
 #admin-menu{
 	width: 95%;
-	height: 80%;
-	margin: 1em auto;
+	margin: 0 auto;
+
 }
 .logo {
 	background-color: transparent;
+	float: left;
+	margin-top: 0px;
 }
 
 
@@ -131,31 +131,29 @@ body {
 
 /*==========================SIDEBAR====================================*/
 .sidebar{
-	float: left;
-	width: 200px;
+	width: 20%;
 	min-height: 500px;
 	margin-top: 10px;
-	color: #fff;
-	text-transform: uppercase;
+	color: #2c2a33;
 	font-size: 9pt;
-	font-family: Calibri;
-	background-color: #2c2a33;
 }
 .sidebar-accordion .ui-widget{
 	border: none;
+	color: #2c2a33;
 	background: #2c2a33;
+	text-transform: uppercase;
 }
 .sidebar-accordion .ui-accordion-header{
-	color: #fff;
+	color: #2c2a33;
 	font-size: 9pt;
-	background: #2c2a33;
+	background: #f8d650;
 	margin-top: 0px;
 	border: none;
 }
 
 .sidebar-accordion .ui-widget-content{
 	border: none;
-	background: #f8ecc1;
+	background: #e9eef2;
 	font-size: 8pt;
 }
 .sidebar-accordion li {
@@ -185,7 +183,7 @@ body {
 }
 .user-pic-text a, .user-pic-text a:visited {
 	text-decoration: none;
-	color: #fff;
+	color: #d94d4d;
 }
 .user-pic-text img{
 	float: left;
@@ -497,6 +495,7 @@ body {
 	background-color: #201e25;
 	text-transform: uppercase;
 	font-size: 9pt;
+	margin-top: 10px;
 	background: #201e25; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#201e25,#000); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#201e25, #000); /* For Opera 11.1 to 12.0 */
@@ -537,22 +536,20 @@ body {
 }
 .content {
 	min-height: 500px;
-	width: 80%;
+	width: 75%;
 	color: #2c2a33;
-	margin-left: 10px;
-	margin-top: 10px;
-	background-color: #e9eef2;
+	margin: 10px;
+	background-color: #fff;
 	overflow: auto;
 }
 
 .content table{
 	width: 100%;
 }
-.content table{
-	overflow: auto;
-}
+
 .content td{
 	text-transform: Capitalize;
+	width: 50%;
 }
 .content a, a:visited {
 	text-decoration: none;
@@ -619,6 +616,13 @@ body {
 }
 .float-right{
 	float: right;
+}
+.txt-medium{
+	width: 400px;
+	height: 30px;
+}
+.shadow-box{
+	box-shadow: 3px 3px 3px #ccc;
 }
 #menu-tabs {
 	background:transparent; 

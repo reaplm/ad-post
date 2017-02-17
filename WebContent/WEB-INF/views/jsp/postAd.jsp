@@ -9,8 +9,10 @@
 	<jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/topMenu.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/bottomMenu.jsp"></jsp:include>
-    <div id="post-ad" class="content">
-	    <jsp:include page="/WEB-INF/views/jsp/newAdForm.jsp"></jsp:include>							
-	 </div>
+
+	    <jsp:include page="/WEB-INF/views/jsp/newAdForm.jsp"></jsp:include>	
+						
+	 	<jsp:include page="/WEB-INF/views/jspinc/rightSidebar.jsp"></jsp:include>
+	 
 		<jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>							
 	

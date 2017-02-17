@@ -66,7 +66,7 @@ public class LoginAuthenticationSuccessHandler
         }
  
         if (isAdmin(roles)) {
-        	return "/admin";
+        	return "/home";
         } else if (isUser(roles)) {
         	return "/home";
         } else {

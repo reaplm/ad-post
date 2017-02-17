@@ -1,89 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="com.adpost.domain.model.FileUpload" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+	<div class="float-left content">
 		<form:form id = "add-advert-form" method="post" action="/AdPost/advert/add" 
-		enctype="multipart/form-data">
+		enctype="multipart/form-data" modelAttribute="fileUpload">
 				<table>
 					<tr>
-						<td>
-							<label>CATEGORY:</label>	
+						<td colspan="2">
+							CATEGORY:	
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<select id="new-ad-category" class="select" name="menu">
+							<select id="new-ad-category" class="txt-medium" name="menuId">
 								<option value="-1"> </option>
 							<c:forEach var="menu" items="${menuList}">
 								<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
 							</c:forEach>
 							</select>	 
 						</td>
-					</tr>
-					<tr>
 						<td>
-							<div id="subMenuSelect"></div>		
+							<select id="subMenuSelect" class="txt-medium" name="subMenuId">
+								<option value="-1"> </option>
+							</select>
+						<!-- 
+								<span id="subMenuSelect"></span>	
+								-->	
 						</td>
 					</tr>
 					<tr>
-						<td><hr /></td>
+						<td colspan="2"><hr /></td>
 					</tr>
-					<tr>
-						<td>
-							<label >LOCATION: </label>	
+					<tr >
+						<td colspan="2">
+							LOCATION: 
+						</td>
+					</tr>
+					<tr >
+						<td colspan="2">
+							<input type="text" placeholder="location"  
+								id="adLocation" class="txt-medium" name="adLocation"/>
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<form:input type="text" placeholder="location"  
-								name="adLocation" id="adLocation" path="adLocation"/>
+						<td colspan="2"><hr /></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							AD DETAILS: 
 						</td>
 					</tr>
 					<tr>
-						<td><hr /></td>
-					</tr>
-					<tr>
-						<td>
-							<label>AD DETAILS: </label>	
+						<td colspan="2">
+							<input type="text" placeholder="subject" 
+								id="adSubject" class="txt-medium" name="adSubject"/>
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<form:input type="text" placeholder="subject" 
-								name="adSubject" id="adSubject" path="adSubject"/>
+						<td colspan="2">
+							<textarea rows="30" cols="120" 
+							id="adBody" name="adBody" ></textarea>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<form:textarea rows="10" cols="30" name="adBody" 
-							id="adBody" path="adBody"></form:textarea>
-						</td>
+					<tr >
+						<td colspan="2"><hr /></td>
 					</tr>
 					<tr>
-						<td><hr /></td>
-					</tr>
-					<tr>
-						<td>
+						<td colspan="2">
 							CONTACT: 
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<form:input type="text" placeholder="phone" 
-								name="contactNo" id="contactNo" path="contactNo"/>
+							<input type="text" placeholder="phone" 
+								id="contactNo" name="contactNo" class="txt-medium"/>
 						</td>
-					</tr>
-					<tr>
 						<td>
-							<form:input type="text" placeholder="email" 
-								name="contactEmail" id="contactEmail" path="contactEmail"/>
+							<input type="text" placeholder="email" class="txt-medium"
+								name="contactEmail" id="contactEmail" />
 						</td>
 					</tr>
 					<tr>
-						<td><hr /></td>
+						<td colspan="2"><hr /></td>
 					</tr>
 					<tr>
 						<td>
@@ -96,19 +97,20 @@
 					</tr>
 					<tr>
 					
-						<td>
-							<form:input type="file" name="pictures[]" 
-								path="adPictures" id="adPictures" accept="image/*" multiple="multiple"/>
+						<td colspan="2">
+							<input type="file" 
+								id="adPictures" accept="image/*" name="file" />
 						</td>
 					</tr>
 					<tr>
-						<td><hr /></td>
+						<td colspan="2"><hr /></td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan="2">
 							<button type="submit">Post</button>
 						</td>
 						
 					</tr>
 				</table>								
-			</form:form>			
+			</form:form>	
+		</div>		

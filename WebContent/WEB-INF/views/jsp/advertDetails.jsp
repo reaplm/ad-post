@@ -1,38 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.AppUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>	 
-	
-	<div id="advert-details" class="hidden dialog">
-		<div class="profile-img">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>	
+ 
+	<jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/jspinc/topMenu.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/jspinc/bottomMenu.jsp"></jsp:include>
+	<div id="ad-dtl">
+		<div class="ad-dtl-user profile-img">
 			<img src="<%=request.getContextPath()%>/resources/images/account_pic.png" />
+			<p>userDetails.getFirstName() userDetails.getLastName()</p>
+			<p>user.getUserCreateDate()</p>
 		</div>
-		<div class="detail-header">
-			<h3><span id="userName"></span></h3><br />
-			<span id="adSubmittedDatetime"></span><br />
-			<span id="adSubmittedLocation"></span>
+		<div class="ad-dtl-title">
+			<h3>advertDetails.getAdSubject()</h3>
+			<div class="menu-list">
+				<ul>
+					<li id="adSubmittedDatetime">advertDetails.getPublishedDate()</li>
+					<li id="adSubmittedDatetime">advertDetails.getAdLocation()</li>
+				</ul>		
+			</div>			
 		</div>
-		<div class="clear"></div>
 		<hr />
-		<div class="detail-body">
-			<h2><span id="adSubject"></span></h2><br />
-			<span id="adBody"></span>
+		<div class="ad-dtl-body">
+			<p>advertDetails.getAdBody()</p>
 		</div>
 		<hr />
-		<div class="detail-pictures">
+		<div class="ad-dtl-pics">
 			<img src="<%=request.getContextPath()%>/resources/images/ic_keyboard_hide_black_48dp.png" 
 				height="50px" width ="50px" />
 		</div>
-		<div class="detail-contact">
-			<span id="adContactNo"></span><br />
-			<span id="adContactEmail"></span>
+		<div class="ad-dtl-contact">
+			<p>advertDetails.getContactNo()</p>
+			<p>advertDetails.getContactEmail()</p>
 		</div>
 		<hr />
-		<div class="detail-icons">
-			
-		</div>
+
 	</div>
 		
-			
+	    <jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>
+	
 
 

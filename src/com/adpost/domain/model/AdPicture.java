@@ -1,5 +1,6 @@
 package com.adpost.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -19,10 +21,9 @@ public class AdPicture {
 	@Column(name="pk_ad_picture_id")
 	private int adPictureId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="fk_advert_id", nullable=false)
-	@JsonManagedReference
-	private Advert advert;
+	private AdvertDetail advertDetail;
 	
 	@Column(name="image_url")
 	private String imageUrl;
@@ -37,11 +38,11 @@ public class AdPicture {
 	public int getAdPictureId(){
 		return this.adPictureId;
 	}
-	public void setAdvert(Advert advert){
-		this.advert = advert;
+	public void setAdvert(AdvertDetail advertDetail){
+		this.advertDetail = advertDetail;
 	}
-	public Advert getAdvert(){
-		return this.advert;
+	public AdvertDetail getAdvertDetail(){
+		return this.advertDetail;
 	}
 	public String getImageUrl(){
 		return this.imageUrl;

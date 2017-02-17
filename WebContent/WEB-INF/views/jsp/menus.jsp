@@ -7,7 +7,7 @@
     <jsp:include page="/WEB-INF/views/jspinc/adminHeader.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/jspinc/leftSidebar.jsp"></jsp:include>
 	
-	<div id="menus" class="content">
+	<div id="menus" class="content float-left">
 				<div class="content-menu" class="menu-list">
 					<h1>Menus</h1>
 					<ul class="menu-list">

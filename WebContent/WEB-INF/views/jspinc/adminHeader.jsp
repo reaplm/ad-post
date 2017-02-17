@@ -21,14 +21,12 @@
 	<body>
 	
 		<div id = "admin-header">
-		 <div id="admin-menu">
 			<div class="logo">
-					<p>adPost</p>
 			</div>
-			<div class="menu-list nav">
-				<ul id="top-menu">						
+			<div id="admin-menu" class="menu-list">
+				<ul>						
 					<sec:authorize access="hasRole('ADMIN')">
-						<li><a href="/AdPost/admin">Admin</a></li>
+						<li><a href="/AdPost/home">Home</a></li>
 						<li>|</li>
 					</sec:authorize>
 					<sec:authorize access="hasAnyRole('ADMIN','USER')">
@@ -37,7 +35,6 @@
 						<li><a href="/AdPost/logout">Log Out</a></li>
 					</sec:authorize>
 				</ul>				
-			</div>
 			</div>
 		</div>
 			<div class="clear"></div>	

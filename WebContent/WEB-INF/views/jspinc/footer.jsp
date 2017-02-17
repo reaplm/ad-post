@@ -1,4 +1,4 @@
-			</wrapper>
+			</div>
 			<div class = "clear"></div>
 			<div id = "footer">
 					<div id="footer-menu" class="menu-list">

@@ -927,22 +927,25 @@ $(document).ready(
 			$(document).on("change", "#new-ad-category",function(e){
 					var parentMenuId = $(this).val();
 				  GetSubMenuList(parentMenuId, function(subMenuList){
-					  var htmlText = "<select value='subMenuId' class='select' name='subMenuId'>";
-						if(subMenuList.length > 0){
+					  var select = document.getElementById("subMenuSelect");
+					  var length = select.length;
+					  $("#subMenuSelect").empty()
+					  $("#subMenuSelect").append("<option value='-1'> </option>");
+					  if(subMenuList.length > 0){
 							for(var i = 0; i < subMenuList.length; i++){
-								htmlText += "<option value =" + subMenuList[i].subMenuId +" >" 
-									+ subMenuList[i].subMenuName + "</option>"
+								
+								$("#subMenuSelect").append("<option value = '" + subMenuList[i].subMenuId +"' >" 
+									+ subMenuList[i].subMenuName + "</option>");
 							}	
 						}
-						htmlText += "</select>"
-						$("#subMenuSelect").empty();
-						$("#subMenuSelect").append(htmlText);
+					  
+						$("#subMenuSelect").removeClass("hidden");
 				  });
 				
 		});
 			
 			//=======================ADVERT DETAILS ONCLICK===========================
-			$(document).on("click", ".advert-details-link",function(e){
+			/*$(document).on("click", ".advert-details-link",function(e){
 				var url = $(this).attr("href");
 				var ok = function(){$("#advert-details").dialog("close");},
 				dialogOpts ={
@@ -966,6 +969,7 @@ $(document).ready(
 					  $("#advert-details").dialog({title: advert.advertDetail.adSubject});
 					  $("#advert-details").dialog("open");
 					  
+					  
 					  $("#userName").text(advert.appUser.userDetail.firstName + " " +
 							  advert.appUser.userDetail.lastName);
 					  $("#adSubmittedDatetime").text("Submitted " + submittedDate);
@@ -976,7 +980,7 @@ $(document).ready(
 					  $("#adContactEmail").text("Contact Email: " + advert.advertDetail.contactEmail);
 				  });
 				  e.preventDefault(); 
-			});	
+			});	*/
 			
 			
 	}

@@ -10,6 +10,7 @@ import com.adpost.domain.dao.IAdvertDAO;
 import com.adpost.domain.dao.IMenuDAO;
 import com.adpost.domain.dao.IUserDAO;
 import com.adpost.domain.model.Advert;
+import com.adpost.domain.model.AdvertDetail;
 import com.adpost.domain.model.AppUser;
 import com.adpost.domain.model.Menu;
 import com.adpost.domain.model.Role;
@@ -89,5 +90,19 @@ public class AdvertDAOImpl implements IAdvertDAO{
 			System.out.println("Exception in void deleteAdvert(Advert advert): \n" + e);
 		}
 	}
-
+	@Override
+	public void insertAdvertDetail(AdvertDetail advertDetail) {
+		try{
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.delete(advertDetail);
+			session.getTransaction().commit();
+			session.close();
+			
+		}
+		catch(Exception e){
+			System.out.println("Exception in void deleteAdvert(Advert advert): \n" + e);
+		}
+	}
+	
 }
