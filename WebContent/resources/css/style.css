@@ -14,9 +14,8 @@ body {
 	width: 100%;
 	overflow: hidden;
 	margin: 0 auto;
-	box-shadow: 3px 3px 3px #ccc;
-	background-color: #fff;
 }
+
 #login-wrapper {
 	background-color: #e9eef2;
 	width: 800px;
@@ -96,13 +95,12 @@ body {
 	margin-left: 20px;
 }
 #admin-menu{
-	width: 95%;
+	width: 90%;
 	margin: 0 auto;
 
 }
 .logo {
 	background-color: transparent;
-	float: left;
 	margin-top: 0px;
 }
 
@@ -135,13 +133,14 @@ body {
 	min-height: 500px;
 	margin-top: 10px;
 	color: #2c2a33;
-	font-size: 9pt;
+	font-size: 12pt;
 }
 .sidebar-accordion .ui-widget{
 	border: none;
 	color: #2c2a33;
 	background: #2c2a33;
 	text-transform: uppercase;
+	
 }
 .sidebar-accordion .ui-accordion-header{
 	color: #2c2a33;
@@ -154,7 +153,7 @@ body {
 .sidebar-accordion .ui-widget-content{
 	border: none;
 	background: #e9eef2;
-	font-size: 8pt;
+	font-size: 10pt;
 }
 .sidebar-accordion li {
 	list-style-type: none;
@@ -195,7 +194,7 @@ body {
 	
 }
 /*==========================LOGIN PAGE====================================*/
-#login-form {
+#pg-login{
 	background-color: #f8d650;
 	margin: 0 auto;
 	width: 350px;
@@ -203,20 +202,25 @@ body {
 	border-color: #f8d650;
 	border-style: groove;
 }
-
-#login-form table {
-	color: #fff;
-	margin: 1em auto;
-	width: 95%;
+#login-form {
+	margin-top: 10px;
 }
-
-#login-form td {
-	color: #666;
-	vertical-align: top;
+.form-row{
+	float: left;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 5px;
 	text-align: center;
-	height: 52px;
 }
-
+.form-row img{
+	width: 30px;
+	height: 30px;
+	margin-left: 20px;
+	float: left;
+}
+.form-row input{
+	float: left;
+}
 #login-form a, #login-form a:visited {
 	text-decoration: none;
 	color: #fa6247;
@@ -227,45 +231,26 @@ body {
 	color: #666;
 }
 
-#login-form button {
+.form-submit{
 	background-color: #fa6247;
 	color: #fff;
 	width: 200px;
 	height: 40px;
 	border-style: outset;
 	border-color: #fa6247;
-	/*background-image: url(../images/quote_sq.png);*/
 }
 
-#login-form img {
-	width: 25px;
-	height: 25px;
-}
-.form-bottom{
+
+.pg-submit-err{
 	width: 350px;
 	height: 30px;
 	margin: 0 auto;
-}
-.form-bottom table{
-	width: 100%;
-	margin: 0 auto;
-}
-.form-bottom td{
+	text-align: center;
 }
 .login-textbox {
-	width: 100%;
-	height: 30px;
 	color: #666;
 	font-size: 1em;
 	font-weight: bold;
-	text-align: center;
-}
-
-
-.login-error {
-	width: 100%;
-	color: #d94d4d;
-	font-size: 1em;
 	text-align: center;
 }
 .success-msg {
@@ -277,62 +262,27 @@ body {
 	text-align: center;
 }
 /*==========================REGISTRATION PAGE====================================*/
-#register-form {
+#pg-register{
 	background-color: #f8d650;
-	height: 210px;
-	width: 400px;
 	margin: 0 auto;
+	width: 420px;
+	height: 220px;
 	border-color: #f8d650;
 	border-style: groove;
 	color: #666;
 }
-
-#register-form table {
-	float: left;
-	width: 100%;
-	height: 0px;
+#register-form{
+	margin-left: 5px;
 	margin-top: 5px;
 }
 
-#register-form tr {
-	height: 50px;
-	
-}
-
-#register-form td {
-	vertical-align: top;
-	text-align: center;
-}
-
-#register-form input {
-	background: #f8ecc1;
-	color: #666;
-	height: 25px;
-	width: 100%;
-	border: solid;
-	border-width: 1px;
-	border-color: #fa6247;
-	font-size: 1em;
-	font-weight: bold;
-	text-align: center;
-}
-
-#register-form button {
-	background-color: #fa6247;
-	color: #fff;
-	width: 100%;
-	height: 30px;
-	
-}
-
-#register-button img {
-	width: 30px;
-	height: 30px;
-}
 /*==========================HOME PAGE====================================*/
-#home{
-	width: 800px;
+#pg-home{
 	margin: 0 auto;
+	min-height: 280px;
+	width: 75%;
+	color: #2c2a33;
+	overflow: auto;
 }
 .category{
 	float: left;
@@ -375,11 +325,6 @@ body {
 	margin-left: 10px;
 	width: 40%;
 	float: left;
-}
-#post-ad{
-	width: 100%;
-	height: 50px;
-	text-align: center;
 }
 /*==========================ABOUT PAGE====================================*/
 #about{
@@ -540,6 +485,7 @@ body {
 	color: #2c2a33;
 	margin: 10px;
 	background-color: #fff;
+	box-shadow: 3px 3px 3px #ccc;
 	overflow: auto;
 }
 
@@ -549,7 +495,7 @@ body {
 
 .content td{
 	text-transform: Capitalize;
-	width: 50%;
+	width: 30%;
 }
 .content a, a:visited {
 	text-decoration: none;
@@ -586,6 +532,7 @@ body {
 	font-size: 1em;
 	font-weight: bold;
 	width: 100%;
+	height: 30px;
 	display: block;
 	text-align: center;
 }
@@ -617,12 +564,27 @@ body {
 .float-right{
 	float: right;
 }
+.txt-small{
+	width: 200px;
+	height: 30px;
+}
 .txt-medium{
+	width: 270px;
+	height: 30px;
+}
+.txt-large{
+	width: 300px;
+	height: 30px;
+}
+.txt-large{
 	width: 400px;
 	height: 30px;
 }
 .shadow-box{
 	box-shadow: 3px 3px 3px #ccc;
+}
+.page{
+	min-height: 250px;
 }
 #menu-tabs {
 	background:transparent; 
@@ -649,7 +611,7 @@ body {
 }
 #menu-tabs .ui-widget-content {
 	
-	background:#e9eef2; 
+	background:#fff; 
 }
 
 

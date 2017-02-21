@@ -8,18 +8,19 @@
     <jsp:include page="/WEB-INF/views/jspinc/logo.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/bottomMenu.jsp"></jsp:include>
 	<div class="clear"></div>
-	<div id="home" class="content">
+	<div id="pg-home">
 		
 			<c:if test="${fn: length(categories) > 0}">
 			<% int rowCount = 0; %>
+			
 				<c:forEach var="category" items="${categories}">
 					
-					
 					<% if(rowCount%3 == 0) { %>
-						<div class="clear"></div>
-						<hr />
-						<% }%>
-						<div class="category">
+					<div class="clear"></div>
+					<hr />
+					<% }%>
+					
+					<div class="category">
 						<div class="cat-icon">
 							<a href="AdPost/${category.getMenuName()}"><img 
 								src="<%=request.getContextPath()%>/resources/images/
@@ -32,18 +33,20 @@
 						</div>
 						<div class="clear"></div>
 						
-							<c:if test="${fn: length(category.getSubMenu()) > 0}">
-								<c:forEach var="submenu" items="${category.getSubMenu()}">
-									<div class="cat-submenu">
-										<a href="/AdPost/submenu/detail?id=${subMenu.getSubMenuId()}">
-											${submenu.getSubMenuName()}</a>
-									</div>
-								</c:forEach>
-							</c:if>
+						<c:if test="${fn: length(category.getSubMenu()) > 0}">
+							<c:forEach var="submenu" items="${category.getSubMenu()}">
+								<div class="cat-submenu">
+									<a href="/AdPost/submenu/detail?id=${submenu.getSubMenuId()}">
+										${submenu.getSubMenuName()}</a>
+								</div>
+							</c:forEach>
+						</c:if>
 						
 					</div>
 					<% rowCount++; %>
+					
 				</c:forEach>
+				
 			</c:if>
 		
 		
@@ -51,7 +54,7 @@
 		
 		<div class="clear"></div>
 		<br />
-		<div ><a href="/AdPost/adverts">POST AN AD</a></div>
+		<div ><a href="/AdPost/adverts">BROWSE CATEGORIES</a></div>
 	</div>
 
 	<jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>							

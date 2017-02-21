@@ -16,14 +16,9 @@
 					<h3>Menu Type: ${menu.getMenuType()} Status: ${menu.getMenuStatus()} </h3>
 						<c:if test="${fn: length(menu.getSubMenu()) > 0}">
 						<table>
-							<tr style="backgroud-color: #fff">
-								<th>Name</th>
-								<th>Description</th>
-								<th>Status</th>
-							</tr>
 							<c:forEach var="subMenu" items="${menu.subMenu}">
 								<%  if(odd){ %>
-								<tr style="background-color: #f8ecc1">
+								<tr style="background-color: #fb9d9d">
 								<% } 
 								else{ %>
 								<tr style="background-color: #fff">

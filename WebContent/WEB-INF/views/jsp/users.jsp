@@ -13,7 +13,7 @@
 		<c:if test="${fn: length(userList) > 0}">
 				<% boolean odd = true; %>
 				<div id="content-menu" class="menu-list">
-					<h2>Users</h2>
+					<h1>Users</h1>
 				</div>
 				
 				<table>
@@ -25,7 +25,7 @@
 					</tr>
 					<c:forEach var="user" items="${userList}">
 						<%  if(odd){ %>
-						<tr style="background-color: #f9e7a0">
+						<tr style="background-color: #fb9d9d">
 						<% } 
 						else{ %>
 						<tr style="background-color: #fff">

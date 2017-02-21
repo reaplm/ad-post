@@ -21,7 +21,7 @@
 							</tr>
 							<c:forEach var="subMenu" items="${menu.subMenu}">
 								<%  if(odd){ %>
-								<tr style="background-color: #f8ecc1">
+								<tr style="background-color: #fb9d9d">
 								<% } 
 								else{ %>
 								<tr style="background-color: #fff">
