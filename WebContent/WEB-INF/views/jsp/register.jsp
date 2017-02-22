@@ -9,28 +9,36 @@
 	<div id="pg-register">	
 		<form id = "register-form" method="post" action="/AdPost/register">
 			<div class="form-row">
-				<input class = "login-textbox textbox txt-small float-left" type = "text" 
-					name = "firstName" id = "firstName" placeholder="First Name"/>
-				<input class = "login-textbox textbox txt-small" type = "text" 
-					name = "lastName" id = "lastName" placeholder="Last Name"/>
+				<div class="form-col float-left">
+					<input class = "textbox txt-small float-left" type = "text" 
+						name = "firstName" id = "firstName" placeholder="First Name"/>
+				</div>
+				<div  class="form-col float-left">
+					<input class = "textbox txt-small" type = "text" 
+						name = "lastName" id = "lastName" placeholder="Last Name"/>
+				</div>
 			</div>
 			<div class="form-row">
-				<input class = "login-textbox textbox txt-large" type = "text" 
+				<input class = "textbox txt-large" type = "text" 
 					name = "email" id = "email" placeholder="Email"/>
 			</div>
 			<div class="form-row">
-				<input class = "login-textbox textbox txt-small" type = "text" 
-					name = "password" id = "password" placeholder="Password"/>
-				<input class = "login-textbox textbox txt-small" type = "text" 
-					name = "confirmPass" id = "confirmPass" placeholder="Re-enter password"/>
+				<div class="form-col float-left">
+					<input class = "textbox txt-small float-left" type = "text" 
+						name = "password" id = "password" placeholder="Password"/>
+				</div>
+				<div class="form-col float-left">
+					<input class = "textbox txt-small float-left" type = "text" 
+						name = "confirmPass" id = "confirmPass" placeholder="Re-enter password"/>
+				</div>
 			</div>
-			<div class="form-row">
+			<div class="form-row align-center">
 				<button name="register" id = "register-button" class="form-submit button"
 						onclick="SubmitRegistration()">SUBMIT</button>
 			</div>		
 		</form>	
-		<div class = "pg-submit-err">
-			<p class = "error-msg">${msg}</p>
-		</div>
+	</div>
+	<div class = "pg-submit-err">
+			<p class = "error-msg">${errorMsg}</p>
 	</div>
 	<div class = "clear"></div> 

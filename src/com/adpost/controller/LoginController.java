@@ -41,7 +41,7 @@ public class LoginController{
 			@RequestParam(value="loginError", required=false) String loginError){
 		ModelAndView modelAndView = new ModelAndView("login");
 		if(loginError != null){
-			modelAndView.addObject("msg", "Invalid email or password");
+			modelAndView.addObject("errorMsg", "Invalid email or password");
 		}
 		return modelAndView;
 	}

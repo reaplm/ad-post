@@ -7,110 +7,49 @@
 	<div class="float-left content">
 		<form:form id = "add-advert-form" method="post" action="/AdPost/advert/add" 
 		enctype="multipart/form-data" modelAttribute="fileUpload">
-				<table>
-					<tr>
-						<td colspan="2">
-							CATEGORY:	
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<select id="new-ad-category" class="txt-medium" name="menuId">
-								<option value="-1"> </option>
-							<c:forEach var="menu" items="${menuList}">
-								<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
-							</c:forEach>
-							</select>	 
-						</td>
-						<td>
-							<select id="subMenuSelect" class="txt-medium" name="subMenuId">
-								<option value="-1"> </option>
-							</select>
-						<!-- 
-								<span id="subMenuSelect"></span>	
-								-->	
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr >
-						<td colspan="2">
-							LOCATION: 
-						</td>
-					</tr>
-					<tr >
-						<td colspan="2">
-							<input type="text" placeholder="location"  
-								id="adLocation" class="txt-medium" name="adLocation"/>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							AD DETAILS: 
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<input type="text" placeholder="subject" 
+			<div class="form-row">
+				<p>CATEGORY: </p>
+				<select id="new-ad-category" class="textbox txt-medium" name="menuId">
+						<option value="-1"> </option>
+					<c:forEach var="menu" items="${menuList}">
+						<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
+					</c:forEach>
+				</select>	
+				
+				<select id="subMenuSelect" class="textbox txt-medium" name="subMenuId">
+					<option value="-1"> </option>
+				</select>
+			</div>
+			<div class="form-row">
+			
+				<p>LOCATION: </p>
+				<input type="text" placeholder="location"  class="textbox txt-medium"
+								id="adLocation" name="adLocation"/>
+						
+			</div>
+			<div class="form-row">
+				<p>AD DETAILS: </p>
+				<input type="text" placeholder="subject" class="textbox txt-medium"
 								id="adSubject" class="txt-medium" name="adSubject"/>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<textarea rows="30" cols="120" 
-							id="adBody" name="adBody" ></textarea>
-						</td>
-					</tr>
-					<tr >
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							CONTACT: 
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="text" placeholder="phone" 
-								id="contactNo" name="contactNo" class="txt-medium"/>
-						</td>
-						<td>
-							<input type="text" placeholder="email" class="txt-medium"
+				<textarea rows="20" cols="100" 
+							id="adBody" name="adBody" class="txt-area" ></textarea>
+						
+			</div>
+			<div class="form-row">
+				<p>CONTACT: </p>
+				<input type="text" placeholder="phone" class="textbox txt-medium"
+								id="contactNo" name="contactNo" />
+				<input type="text" placeholder="email" class="textbox txt-medium"
 								name="contactEmail" id="contactEmail" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr>
-						<td>
-							
-								<img src="<%=request.getContextPath()%>
+			</div>
+			
+			<div class="form-row">
+				<img src="<%=request.getContextPath()%>
 								/resources/images/ic_add_a_photo_black_48dp.png" 
 									height="20px" width ="20px" />
-							
-						</td>
-					</tr>
-					<tr>
-					
-						<td colspan="2">
 							<input type="file" 
 								id="adPictures" accept="image/*" name="file" />
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2"><hr /></td>
-					</tr>
-					<tr>
-						<td colspan="2">
 							<button type="submit">Post</button>
-						</td>
-						
-					</tr>
-				</table>								
+			</div>
 			</form:form>	
 		</div>		

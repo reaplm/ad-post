@@ -69,10 +69,11 @@ public class RegistrationController {
 			errMsgs.add("Email is already in use.");
 		}
 		if(error){
-			modelAndView = new ModelAndView("/register");
+			modelAndView = new ModelAndView("register");
 			modelAndView.addObject("errorMsg", errMsgs);
 		}
 		else{
+			modelAndView = new ModelAndView("login");
 			UserDetail userDetail = new UserDetail();
 			userDetail.setFirstName(request.getParameter("firstName"));
 			userDetail.setLastName(request.getParameter("lastName"));
@@ -89,8 +90,8 @@ public class RegistrationController {
 			appUser.setRole(roles);
 			
 			iUserService.createUser(appUser);
-			modelAndView = new ModelAndView("/login");
-			modelAndView.addObject("successMsg", "Registration Successful. Please login.");
+			modelAndView = new ModelAndView("login");
+			modelAndView.addObject("errorMsg", "Registration Successful. Please login");
 			System.out.println("Registration Successful!");
 		}
 		return modelAndView;

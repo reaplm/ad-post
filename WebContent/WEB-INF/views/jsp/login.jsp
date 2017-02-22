@@ -8,28 +8,27 @@
 			<form id = "login-form" action = "/AdPost/login" method = "post" >
 				<div class="form-row">
 					<img src="resources/images/person_outline.png"/>
-					<input class = "login-textbox textbox txt-medium" 
+					<input class = "textbox txt-medium" 
 						type = "text" name = "email" 
 								id = "email" placeholder = "email" value="${email}" />
 				</div>
 				<div class="form-row">
-					<div><img src="resources/images/lock_outline.png"/></div>
-					<input class = "login-textbox textbox txt-medium" type = "password" 
+					<img src="resources/images/lock_outline.png"/>
+					<input class = "textbox txt-medium" type = "password" 
 								name = "password" id = "password" placeholder = "password"/>
 				</div>
-				<div class="form-row">
+				<div class="form-row align-center">
 					<button name = "action" id = "login-button" class="button form-submit"
 							onclick="SubmitLogin()" >SUBMIT</button><br />
 				</div>
-				<div class="form-row">
-					<a href = "/AdPost/resetPassword">Forgot Password?</a>&nbsp;&nbsp;&nbsp;
+				<div class="form-row align-center">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href = "/AdPost/resetPassword">Forgot Password?</a>&nbsp;&nbsp;&nbsp;
 					<a href = "/AdPost/register">Register</a>
 				</div>
 			</form>
 	</div>
 	<div class = "pg-submit-err">
-		<!-- <form:errors path="email" element="error-msg"/> -->
-			<p class = "error-msg">${msg}</p>
+			<p class = "error-msg">${errorMsg}</p>
 	</div>
 			<div class="clear"></div>
 </div>

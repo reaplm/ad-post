@@ -326,7 +326,13 @@ function SubmitRegistration(){
 				required: "Re-enter password",
 				equalTo: "Passwords do not match" 
 			}
-		}
+		},
+		//errorLabelContainer: ".err-cont"
+		
+        errorPlacement: function (error, element) {
+        	error.insertAfter(element);
+        	//error.insertAfter(element.parent('.form-row'));
+        }
 	});
 	if(validator.form()){ // submit if no error
 		  $("#register-form").submit(function(){
@@ -355,7 +361,6 @@ function SubmitLogin(){
 				required: "Password cannot be empty"
 			}
 		}
-	
 	});
 	if(validator.form()){ // validation perform 
 		  $("#login-form").submit();
@@ -363,7 +368,7 @@ function SubmitLogin(){
 }
 function SubmitEditUser(){
 	var validator = $("#register-form").validate({
-		errorClass: "error-msg",
+		errorElement: 'span',
 		rules:{
 			firstName: {
 				required: true
