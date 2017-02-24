@@ -40,11 +40,11 @@ public class SubMenu {
 	@Column(name="icon")
 	private String icon;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name="menu_type")
 	private MenuType menuType = MenuType.UNCLASSIFIED;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name="menu_status")
 	private MenuStatus menuStatus = MenuStatus.INACTIVE;
 	

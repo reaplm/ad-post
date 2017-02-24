@@ -22,15 +22,14 @@
 				<div id="menu-tabs" class="menu-list">
 					<ul>
 						<li><a href="/AdPost/menus/home?menuType=category">Home</a></li>
-						<li><a href="/AdPost/menus/sidebar?menuType=sidebar">Sidebar</a></li>
+						<li><a href="/AdPost/menus/home?menuType=admin">Admin</a></li>
 					</ul>
 				</div>
 		</div>
 	<div class="clear"></div>
 	<div class = "error-msg menu-list hidden"></div>
-	<div id="add-menu" class="hidden dialog" >
 		<jsp:include page="/WEB-INF/views/jsp/newMenuForm.jsp"></jsp:include>
-	</div>
+
 	<div id="edit-menu" class="hidden dialog" >
 		<jsp:include page="/WEB-INF/views/jsp/editMenu.jsp"></jsp:include>
 	</div>

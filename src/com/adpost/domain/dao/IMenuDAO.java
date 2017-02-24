@@ -15,6 +15,8 @@ public interface IMenuDAO {
 	 */
 	public List<SubMenu> getAllSubMenus(int menuId);
 	public List<Menu> getAllMenus(String menuType);
+	public List<Menu> getMenusByStatus(String menuStatus);
+	public List<Menu> getMenusByType(String menuType);
 	public Menu getMenu(int id);
 	public void updateMenu(Menu menu);
 	public void insertMenu(Menu menu);

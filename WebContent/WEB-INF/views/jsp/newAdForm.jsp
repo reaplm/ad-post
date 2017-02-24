@@ -4,7 +4,7 @@
     <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-	<div class="float-left content">
+	<div id="add-menu" class="float-left content">
 		<form:form id = "add-advert-form" method="post" action="/AdPost/advert/add" 
 		enctype="multipart/form-data" modelAttribute="fileUpload">
 			<div class="form-row">
@@ -44,12 +44,18 @@
 			</div>
 			
 			<div class="form-row">
+				<p></p>
 				<img src="<%=request.getContextPath()%>
 								/resources/images/ic_add_a_photo_black_48dp.png" 
 									height="20px" width ="20px" />
 							<input type="file" 
 								id="adPictures" accept="image/*" name="file" />
-							<button type="submit">Post</button>
+				
+			</div>
+			<div class="form-row">
+				<p></p>
+							<button type="submit" class="button form-submit">Post</button>
+							<p></p>
 			</div>
 			</form:form>	
 		</div>		

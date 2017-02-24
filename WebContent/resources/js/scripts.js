@@ -64,6 +64,54 @@ function GetSubMenuList(parentMenuId, callback){
 			}
 		});
 }
+function GetMenuList(menuType, callback){
+	switch(menuType){
+	case "all":
+		$.ajax({
+			type: "get",
+			url: "/AdPost/menu/all",
+			dataType: "json",
+			cache: false,
+			error: function(jqXHr,textStatus, errorThrown){
+				alert("Error fetching menu list:\n" + errorThrown);
+			},
+			success: function(data){
+				callback(data);
+			}
+		});
+		break;
+	case "category":
+		$.ajax({
+			type: "get",
+			url: "/AdPost/menus/type?menuType=category",
+			dataType: "json",
+			cache: false,
+			error: function(jqXHr,textStatus, errorThrown){
+				alert("Error fetching home menu list:\n" + errorThrown);
+			},
+			success: function(data){
+				callback(data);
+			}
+		});
+		break;
+	case "admin":
+		$.ajax({
+			type: "get",
+			url: "/AdPost/menus/type?menuType=admin",
+			dataType: "json",
+			cache: false,
+			error: function(jqXHr,textStatus, errorThrown){
+				alert("Error fetching admin menu list:\n" + errorThrown);
+			},
+			success: function(data){
+				callback(data);
+			}
+		});
+		break;
+	}
+
+	
+}
 function GetAdvertDetails(url, callback){
 	$.ajax({
 			type: "get",
@@ -105,11 +153,11 @@ function MenuRadioClick(radioType){
 			
 		});
 	}
-	else if(radioType == "sidebar"){
+	else if(radioType == "admin"){
 		//get home menus
 		$.ajax({
 			type: "get",
-			url: "/AdPost/menus/type?menuType=sidebar",
+			url: "/AdPost/menus/type?menuType=admin",
 			dataType: "json",
 			cache: false,
 			error: function(jqXHr,textStatus, errorThrown){
@@ -487,13 +535,13 @@ function SubmitMenu(){
 		dataType: "json",
 		data: formData,
 		error: function(jqXHr,textStatus, errorThrown){
+			alert("The following errors were encountered:\n" + errorThrown);
 		},
 		success: function(data){
 			if(data.status == 0){
 				alert("The following errors were encountered:\n" + data.message);
 			}
 			else{
-				alert("success!");
 				$("#add-menu-form").dialog("close");
 			}
 			window.location.reload();
@@ -812,8 +860,9 @@ $(document).ready(
 			 */
 			$(document).on("click", "#new-menu",function(e){
 				var htmlText;
+				var menuType = "category";
 				var cancel= function(){$("#add-menu").dialog("close");},
-				saveUser = function(){
+				addMenu = function(){
 					
 					AddMenu();
 					
@@ -824,43 +873,33 @@ $(document).ready(
 					modal: true,
 					autoOpen: false,
 					resizable: false,
-					title: "Add Menu",
+					title: "Add Category/Sub-Category",
 					open: function(){},
 					buttons:{
 						"cancel": cancel,
-						"save": saveUser
+						"save": addMenu
 					},
 					dialogClass: 'dialog'
 				};
-				//get menu list through ajax
-				$.ajax({
-					type: "get",
-					url: "/AdPost/menu/all",
-					dataType: "json",
-					cache: false,
-					error: function(jqXHr,textStatus, errorThrown){
-						alert("Error getting menu list:\n" + errorThrown);
-					},
-					success: function(data){
-						htmlText = "<select name='menuId'>";
-						htmlText += "<option value=0 ></option>";
-						if(data.length > 0){
-							
-							for(var i = 0; i < data.length; i++){
-								htmlText += "<option value=" +data[i].menuId +
-									">" + data[i].menuName + "</option>";
-							}								
+				GetMenuList(menuType, function(menuList){
+					  var select = document.getElementById("menuSelect");
+					  var length = select.length;
+					  $("#menuSelect").empty()
+					  $("#menuSelect").append("<option value='0'> </option>");
+					  if(menuList.length > 0){
+							for(var i = 0; i < menuList.length; i++){
+								
+								$("#menuSelect").append("<option value = '" + menuList[i].menuId +"' >" 
+									+ menuList[i].menuName + "</option>");
+							}	
 						}
-						htmlText += "</select>";
-						//menu select
-						$("#menuSelect").empty();
-						$("#menuSelect").append(htmlText);
-						//open dialog
-						$("#add-menu").dialog(dialogOpts);
-						$("#add-menu").dialog("open");
-					}
-					
-				});//end menu ajax
+					  
+				  });
+				//open dialog
+				$("#add-menu").removeClass("hidden");
+				$("#add-menu").dialog(dialogOpts);
+				$("#add-menu").dialog("open");
+				
 				return false;
 			});
 			/**

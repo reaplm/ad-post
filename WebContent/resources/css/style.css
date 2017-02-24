@@ -219,10 +219,12 @@ body {
 #login-form .form-row button{
 	margin-left: 50px;
 }
+#login-form .form-row{
+	text-align: center;
+	height: 58px;
+}
 .form-row{
 	width: 100%;
-	height: 65px;
-	text-align: center;
 }
 
 #login-form .form-row img{
@@ -293,6 +295,10 @@ body {
 	height: 35px;
 	text-align: center;
 	margin-right: 5px;
+}
+#register-form .form-row{
+	text-align: center;
+	height: 60px;
 }
 /*==========================HOME PAGE====================================*/
 #pg-home{
@@ -417,11 +423,7 @@ body {
 .button-img{
 	float: right;
 }
-/*--------------------------ADD MENU/CATEGORY------------------------------*/
-.dialog-table td{
-	text-align: right;
-}
-/*--------------------------ADD MENU/CATEGORY------------------------------*/
+
 /*==========================ADVERTS PAGE====================================*/
 #new-advert{
 	float: left;
@@ -486,6 +488,12 @@ body {
 	float: left;
 }
 /*==========================CLASSES====================================*/
+.form-col{
+	height: 30px;
+	width: 100px;
+	text-align: right;
+	margin-right: 5px;
+}
 .textbox {
 	background-color: #f8ecc1;
 	opacity: .8;
@@ -494,7 +502,7 @@ body {
 	text-align: center;
 	border: solid;
 	border-width: 1px;
-	border-radius: 10px;
+	border-radius: 0px;
 	border-color: #fa6247;
 	color: #666;
 	margin-bottom: 5px;
@@ -611,9 +619,9 @@ body {
 	width: 400px;
 	height: 30px;
 }
-.txt-large{
-	width: 400px;
-	height: 30px;
+.txt-width-small{
+	width: 270px;
+	height: 20px;
 }
 .shadow-box{
 	box-shadow: 3px 3px 3px #ccc;
@@ -651,11 +659,13 @@ body {
 
 
 /*==========================DIALOGS====================================*/
-.dialog {
+.ui-dialog {
 	overflow: auto;
+	background-color: #000;
 }
-.dialog .ui-widget-content {
+.dialog .ui-dialog-content {
 	color: #2c2a33;
+	background: #2c2a33;
 	font-size: 10pt;
 }
 .dialog .ui-widget-contentinput {
@@ -664,10 +674,10 @@ body {
 
 .dialog .ui-dialog-titlebar {
 	text-transform: Capitalize;
-	background: #2e202b;
+	background: #f8d650;
 	text-align: Center;
 	border: none;
-	color: #fff;
+	color: #2c2a33;
 }
 
 .dialog .ui-dialog-titlebar-close {
@@ -675,7 +685,7 @@ body {
 }
 
 .dialog .ui-dialog-buttonpane {
-	background: #2e202b;
+	background: #f8d650;
 }
 
 .dialog .ui-dialog-buttons {
@@ -683,6 +693,10 @@ body {
 	color: #fff;
 	border-style: outset;
 	border-color: #d94d4d;
+}
+.dialog {
+	background-color: #e9eef2;
+
 }
 /*==========================FONT SIZES====================================*/
 h1 {

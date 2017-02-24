@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,9 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.adpost.domain.model.Menu;
+import com.adpost.service.IMenuService;
 
 /**
  * 
@@ -28,6 +32,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class LoginAuthenticationSuccessHandler 
 	implements AuthenticationSuccessHandler{
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	@Autowired
+	IMenuService iMenuService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,
@@ -45,7 +51,8 @@ public class LoginAuthenticationSuccessHandler
 		        session.setAttribute("username", authUser.getUsername());
 		        session.setAttribute("authorities", authentication.getAuthorities());
 		        session.setAttribute("loggedIn", true);
-		 
+		        List<Menu> adminMenus = iMenuService.getMenusByType("ADMIN");
+				session.setAttribute("adminMenus", adminMenus);
 		 
 		        if (response.isCommitted()) {
 		            //logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);

@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    import="java.util.ArrayList, java.util.List, com.adpost.domain.model.Menu,
+    	com.adpost.domain.model.SubMenu" 
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	<%List<Menu> adminMenus = (ArrayList<Menu>)session.getAttribute("adminMenus"); %>
 	<div class = "sidebar float-left"> 
 	
 		<div class="user-pic-text">
@@ -16,38 +21,18 @@
 		<%} %>
 		</div>
 	<div class="clear"></div>
-		<div class= "sidebar-accordion" >
-			<h3>Home</h3>
-			<ul class= "nav">
-				<li><a href="#">Dashboard</a></li>
-				<li><a href="#">MyProfile</a></li>
-				<li><a href="#">Messages</a></li>
-			</ul>
-			<h3>Manage</h3>
-			<ul>
-				<li><a href="/AdPost/admin/users">Users</a></li>
-				<li><a href="#">Adverts</a></li>
-				<li><a href="/AdPost/menus">menus</a></li>
-				<li><a href="/AdPost/admin/permissions">Permissions</a></li>
-			</ul>
-			<h3>Site Administration</h3>
-			<ul >
-				<li><a href=" ">Alerts</a></li>
-				<li><a href="#">Settings</a></li>
-				<li><a href="#">Look and Feel</a></li>
-			</ul>
-			<h3>Site Activity</h3>
-			<ul >
-				<li id = "side-bar-products"><a href=" ">Recently Viewed</a></li>
-				<li><a href="#">My Ads</a></li>
-				<li><a href="#">Favorites</a></li>
-			</ul>
-			<h3>Reports</h3>
-			<ul >
-				<li id = "side-bar-products"><a href=" ">Users</a></li>
-				<li><a href="#">Roles</a></li>
-				<li id = "side-bar-products"><a href="#">Activities</a></li>
-				<li id = "side-bar-products"><a href="#">Adverts</a></li>
-			</ul>
-		</div>
+	<div class= "sidebar-accordion" >
+		<c:if test="${fn: length(adminMenus) > 0}">
+			<c:forEach var="menu" items="${adminMenus}">
+					<h3>${menu.getMenuName()}</h3>
+					<ul>
+						<c:if test="${fn: length(menu.getSubMenu()) > 0}">
+						<c:forEach var="subMenu" items="${menu.subMenu}">
+							<li><a href="${subMenu.getUrl()}">${subMenu.getSubMenuName()}</a></li>
+						</c:forEach>
+						</c:if>
+					</ul>
+			</c:forEach>
+		</c:if>			
+	</div>
 </div>

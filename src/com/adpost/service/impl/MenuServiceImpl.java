@@ -75,5 +75,15 @@ public class MenuServiceImpl implements IMenuService{
 	public List<SubMenu> getAllSubMenus(int menuId) {
 		return iMenuDAO.getAllSubMenus(menuId);
 	}
+
+	@Override
+	public List<Menu> getMenusByStatus(String menuStatus) {
+		return iMenuDAO.getMenusByStatus(menuStatus);
+	}
+
+	@Override
+	public List<Menu> getMenusByType(String menuType) {
+		return iMenuDAO.getMenusByType(menuType);
+	}
 	
 }

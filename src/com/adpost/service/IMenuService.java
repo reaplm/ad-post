@@ -52,4 +52,6 @@ public interface IMenuService {
 	public void updateSubMenu(SubMenu subMenu);
 	public void insertSubMenu(SubMenu submenu);
 	public boolean deleteSubMenu(SubMenu subMenu);
+	public List<Menu> getMenusByStatus(String menuStatus);
+	public List<Menu> getMenusByType(String menuType);
 }

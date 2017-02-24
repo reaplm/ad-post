@@ -34,13 +34,13 @@ public class Menu {
 	@Column(name="menu_desc")
 	private String menuDesc;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name="menu_type")
 	private MenuType menuType = MenuType.UNCLASSIFIED;
 	
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name="menu_status")
-	private MenuStatus menuStatus = MenuStatus.INACTIVE;
+	private MenuStatus menuStatus = MenuStatus.ACTIVE;
 	
 	@Column(name="menu_url")
 	private String url;

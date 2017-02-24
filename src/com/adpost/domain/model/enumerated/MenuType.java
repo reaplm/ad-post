@@ -3,7 +3,7 @@ package com.adpost.domain.model.enumerated;
 
 public enum MenuType {
 	CATEGORY(1),
-	SIDEBAR(2),
+	ADMIN(2),
 	UNCLASSIFIED(3);
 	
 	private int menuType;

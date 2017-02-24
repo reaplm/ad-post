@@ -12,6 +12,7 @@ import com.adpost.domain.model.AppUser;
 import com.adpost.domain.model.Menu;
 import com.adpost.domain.model.Role;
 import com.adpost.domain.model.SubMenu;
+import com.adpost.domain.model.enumerated.MenuStatus;
 import com.adpost.domain.model.enumerated.MenuType;
 import com.adpost.hibernate.dao.HibernateUtil;
 
@@ -185,6 +186,48 @@ public class MenuDAOImpl implements IMenuDAO{
 			System.out.println("Exception in List<SubMenu> getAllSubMenus(int menuId): "+e);
 		}
 		return results;
+	}
+	@Override
+	public List<Menu> getMenusByStatus(String menuStatus) {
+		List<Menu> results = null;
+		MenuStatus status = MenuStatus.valueOf(menuStatus);
+		try{ 
+			Session session = HibernateUtil.getSessionFactory().openSession();
+
+			session.beginTransaction();
+
+			Query query = session.createQuery("from Menu"
+					+ " where menuStatus = :menuStatus");
+			query.setParameter("menuStatus", status);
+			results = (List<Menu>)query.list();
+			session.flush();
+			session.getTransaction().commit();
+			session.close();
+		}
+		catch(Exception e){
+			System.out.println("Exception in List<SubMenu> getAllSubMenus(int menuId): "+e);
+		}
+		return results;
+	}
+	@Override
+	public List<Menu> getMenusByType(String menuType) {
+		List<Menu> result = null;
+		MenuType type = MenuType.valueOf(menuType);
+		 try{
+			 Session session = HibernateUtil.getSessionFactory().openSession();
+			 session.beginTransaction();
+			 Query query = session.createQuery("From Menu"
+			 		+ " Where menuType = :menuType");
+			 query.setParameter("menuType", type);
+			 result = (List<Menu>)query.list();
+			 session.getTransaction().commit();
+			 session.flush();
+			 session.close();
+		 }
+		 catch(Exception e){
+			 System.out.println("Exception caught in getMenuByMenuType DAO: " + e);
+		 }
+		 return result;
 	}
 
 }
