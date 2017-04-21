@@ -47,6 +47,11 @@ function UploadAdPicture(url, callback){
 			}
 		});
 }
+/**
+ * Get list of sub-menus belonging to parent
+ * @param parentMenuId
+ * @param callback
+ */
 function GetSubMenuList(parentMenuId, callback){
 	//get home menus
 	var menuList;
@@ -57,13 +62,18 @@ function GetSubMenuList(parentMenuId, callback){
 			dataType: "json",
 			cache: false,
 			error: function(jqXHr,textStatus, errorThrown){
-				alert("Error fetching hsub-menus:\n" + errorThrown);
+				alert("Error fetching sub-menus:\n" + errorThrown);
 			},
 			success: function(data){
 				callback(data);
 			}
 		});
 }
+/**
+ * Get menu list by type
+ * @param menuType
+ * @param callback
+ */
 function GetMenuList(menuType, callback){
 	switch(menuType){
 	case "all":
@@ -112,6 +122,11 @@ function GetMenuList(menuType, callback){
 
 	
 }
+/**
+ * Get advert details using the given url
+ * @param url
+ * @param callback
+ */
 function GetAdvertDetails(url, callback){
 	$.ajax({
 			type: "get",
@@ -125,6 +140,19 @@ function GetAdvertDetails(url, callback){
 				callback(data);
 			}
 		});
+}
+function GetMenuById(url, callback){
+	$.ajax({
+		type: "get",
+		url: url,
+		dataType: "json",
+		error: function(jqXHr,textStatus, errorThrown){
+			alert("Error fetching menu details for url:\n" + url);
+		},
+		success: function(data){
+			callback(data);
+		}
+	});
 }
 function MenuRadioClick(radioType){
 	if(radioType == "category"){
@@ -180,29 +208,50 @@ function MenuRadioClick(radioType){
 		});
 	}
 }
+function GetMenuStatus(callback){
+	$.ajax({
+		type: "get",
+		url: "/AdPost/status",
+		dataType: "json",
+		error: function(jqXHr, textStatus, errorThrown){
+			
+		},
+		success: function(data){
+			callback(data);
+		}
+	});
+}
+function DeleteMenu(url, callback){
+	$.ajax({
+		type: get,
+		url: url,
+		dataType: "json",
+		error: function(jqXHr,textStatus, errorThrown){
+			alert("Ajax call failed. Something went wrong");
+		},
+		success: function(data){
+			callback(data);
+		}	
+	});
+}
 //==========================VALIDATORS========================
+/**
+ * Validator for adding a new category or sub-category
+ */
 function AddMenu(){
 	var validator = $("#add-menu-form").validate({
 		errorClass: "error-msg",
 		rules:{
-			menuName: {
-				required: true
-			},
-			catName: {
+			txtATitle: {
 				required: true
 			}
 		},
 		messages: {
-			menuName: {
-				required: "Title cannot be blank"
-			},
-			catName: {
-				required: "Category name cannot be null"
+			title: {
+				required: "Menu title cannot be blank"
 			}
 		},
-		errorPlacement: function(error, element) {
-            error.insertAfter(element);
-        },
+		errorLabelContainer: ".err-div"
 	});
 	
 	    
@@ -215,125 +264,9 @@ function AddMenu(){
 		return false;
 	}
 }
-function SubmitEditMenu(){
-	var validator = $("#edit-menu-form").validate({
-		errorClass: "error-msg",
-		rules:{
-			menuName: {
-				required: true
-			},
-			menuDesc: {
-				required: true
-			},
-			icon: {
-				required: true
-			}
-		},
-		messages: {
-			menuName: {
-				required: "Title is required"
-			},
-			menuDesc: {
-				required: "Please enter a description"
-			},
-			icon: {
-				required: "Category icon is required"
-			}
-		},
-		errorPlacement: function(error, element) {
-            error.insertAfter(element);
-        },
-	});
-	
-	    
-	if(validator.form()){ // submit if no error
-		SubmitEditMenuAjax();
-		//close dialog
-		$("#edit-menu").dialog("close");
-		alert("Menu Saved.");
-		window.location.reload();
-		return false;
-	}
-}
-function SubmitDeleteMenu(){
-	var msgBox = confirm("Deleting this menu deletes all its sub-menus." +
-			"\nWould you like to continue?");
-	if(msgBox == false){
-		alert("you clicked cancel!")
-	}
-	if(msgBox == true){
-		var formData = $("#edit-menu-form").serializeArray();
-
-		$.ajax({
-			type: "get",
-			url: "/AdPost/menu/delete",
-			dataType: "json",
-			data: formData,
-			error: function(jqXHr,textStatus, errorThrown){
-			},
-			success: function(data){
-				
-				if(data.status == 1){
-					alert(data.message);
-				}
-				if(data.status == 0){
-					alert("The following errors were encountered:\n" + data.message);
-				}
-			}
-		});//end deleteMenu
-	}
-}
-function SubmitNewUser(){
-	var validator = $("#add-user-form").validate({
-		errorClass: "error-msg",
-		rules:{
-			firstName: {
-				required: true
-			},
-			lastName: {
-				required: true
-			},
-			password: {
-				required: true
-			},
-			confirmPass: {
-				required: true,
-				equalTo: "#password"
-			}
-		},
-		messages: {
-			firstName: {
-				required: "First Name is required"
-			},
-			lastName: {
-				required: "Last name is required"
-			},
-			email: {
-				required: "Email is required",
-				email: "Please enter valid email",
-			},
-			password: {
-				required: "Password cannot be empty"
-			},
-			confirmPass: {
-				required: "Re-enter password",
-				equalTo: "Passwords do not match"
-			}
-		},
-		errorPlacement: function(error, element) {
-            error.insertAfter(element);
-        },
-	});
-	
-	    
-	if(validator.form()){ // submit if no error
-		var formData = $("#add-user-form").serializeArray();
-		AddUser(formData);
-		alert('adding user!');
-		return false;
-		 }
-}
-
+/**
+ * Validator for registering a new user
+ */
 function SubmitRegistration(){
 	var validator = $("#register-form").validate({
 		errorClass: "error-msg",
@@ -374,20 +307,19 @@ function SubmitRegistration(){
 				required: "Re-enter password",
 				equalTo: "Passwords do not match" 
 			}
-		},
-		//errorLabelContainer: ".err-cont"
-		
+		},		
         errorPlacement: function (error, element) {
         	error.insertAfter(element);
         	//error.insertAfter(element.parent('.form-row'));
         }
 	});
 	if(validator.form()){ // submit if no error
-		  $("#register-form").submit(function(){
-			  //e.preventDefault();
-		  });
+		  $("#register-form").submit();
 	}
 }
+/**
+ * Validator for login page
+ */
 function SubmitLogin(){
 	var validator = $("#login-form").validate({
 		errorClass: "error-msg",
@@ -412,71 +344,7 @@ function SubmitLogin(){
 	});
 	if(validator.form()){ // validation perform 
 		  $("#login-form").submit();
-		 }
-}
-function SubmitEditUser(){
-	var validator = $("#register-form").validate({
-		errorElement: 'span',
-		rules:{
-			firstName: {
-				required: true
-			},
-			lastName: {
-				required: true
-			}
-		},
-		messages: {
-			firstName: {
-				required: "First Name is required"
-			},
-			lastName: {
-				required: "Last name is required"
-			}
-		}
-	});
-	if(validator.form()){ // submit if no error
-		  $("#register-form").submit(function(){
-			  e.preventDefault();
-		  });
-		 }
-	
-}
-function SubmitReset(){
-	var validator = $("#reset-form").validate({
-		errorClass: "error-msg",
-		rules:{
-			resetEmail: {
-				required: true,
-				email: true
-			},
-			resetPass: {
-				required: true
-			},
-			resetPassRepeat: {
-				required: true
-				//equalTo: "#password"
-			}
-		},
-		messages: {
-			resetEmail: {
-				required: "Email is required",
-				email: "Please enter valid email"
-			},
-			resetPass: {
-				required: "Password cannot be empty"
-			},
-			resetPassRepeat: {
-				required: "Re-enter password",
-				equalTo: "Passwords do not match"
-			}
-		}
-	
-	});
-	if(validator.form()){ // validation perform 
-		  $("#reset-form").submit(function(){
-			  e.preventDefault();
-		  });
-		 }
+	}
 }
 //===================================RADIO-BUTTONS================
 
@@ -535,7 +403,7 @@ function SubmitMenu(){
 		dataType: "json",
 		data: formData,
 		error: function(jqXHr,textStatus, errorThrown){
-			alert("The following errors were encountered:\n" + errorThrown);
+			alert("SubmitMenu error thrown by application:\n" + errorThrown);
 		},
 		success: function(data){
 			if(data.status == 0){
@@ -560,11 +428,11 @@ function SubmitEditMenuAjax(){
 		error: function(jqXHr,textStatus, errorThrown){
 		},
 		success: function(data){
-			if(data.status == 1){
-				alert(data.message);
+			if(data == true){
+				alert("Menu saved successfully!");
 			}
-			if(data.status == 0){
-				alert("The following errors were encountered:\n" + data.message);
+			if(data == false){
+				alert("The following errors were encountered:\n" + errorThrown);
 			}
 		}
 	});//end saveUser
@@ -882,14 +750,14 @@ $(document).ready(
 					dialogClass: 'dialog'
 				};
 				GetMenuList(menuType, function(menuList){
-					  var select = document.getElementById("menuSelect");
+					  var select = document.getElementById("add-menu-select");
 					  var length = select.length;
-					  $("#menuSelect").empty()
-					  $("#menuSelect").append("<option value='0'> </option>");
+					  $("#add-menu-select").empty()
+					  $("#add-menu-select").append("<option value='0'> </option>");
 					  if(menuList.length > 0){
 							for(var i = 0; i < menuList.length; i++){
 								
-								$("#menuSelect").append("<option value = '" + menuList[i].menuId +"' >" 
+								$("#add-menu-select").append("<option value = '" + menuList[i].menuId +"' >" 
 									+ menuList[i].menuName + "</option>");
 							}	
 						}
@@ -906,16 +774,12 @@ $(document).ready(
 			 * Edit a menu item
 			 */
 			$(document).on("click", ".menu-details-link",function(e){
-				var cancel= function(){$("#edit-menu").dialog("close");},
+				e.preventDefault();
+				var status = "";
+				var cancel= function(){$("#menu-dtl").dialog("close");},
 				saveMenu = function(){
-					
-					SubmitEditMenu();
-					
-				},
-				deleteMenu = function(){
-					SubmitDeleteMenu();
-					alert("Menu deleted.")
-					$("#edit-menu").dialog("close");
+					SubmitEditMenuAjax();
+					$("#menu-dtl").dialog("close");
 					window.location.reload();
 				},
 				dialogOpts ={
@@ -926,43 +790,86 @@ $(document).ready(
 					resizable: false,
 					title: "Edit Menu",
 					open: function(){},
+					close: function(){$(".edit-menu").addClass("hidden");},
 					buttons:{
-						"cancel": cancel,
-						"delete": deleteMenu,
 						"save": saveMenu
 					},
 					dialogClass: 'dialog'
 				};
+				$("#menu-dtl").dialog(dialogOpts);
 				//get menu details through ajax
-				$.ajax({
-					type: "get",
-					url: $(this).attr("href"),
-					dataType: "json",
-					cache: false,
-					error: function(jqXHr,textStatus, errorThrown){
-						alert("Error getting menu detail:\n" + errorThrown);
-					},
-					success: function(data){
-						
-						//open dialog
-						$("#edit-menu").dialog(dialogOpts);
-						$("#edit-menu").dialog({title: 'Editing ' + data.menuName});
-						$("#edit-menu").dialog("open");
-						//select values
-						$("#menuType").val(data.menuType);
-						$("#menuStatus").val(data.menuStatus);
-						//populate input values
-						$("#menuId").val(data.menuId);
-						$("#menuName").val(data.menuName);
-						$("#menuDesc").val(data.menuDesc);
-						$("#url").val(data.url);
-						$("#icon").val(data.icon);
+				GetMenuById($(this).attr("href"), function(menu){
+					var textbox;
+					if(menu != null){
+						$("#menu-dtl").removeClass("hidden");
 					}
+					//set image attributes
+					//$("#menu-dtl img").attr("src", + menu.icon) 
+					//$("#menu-dtl img").attr("title", "menu.icon") 
+					//spans
+					//$("#spn-dtlId").text(menu.menuId + ". ");
+					$("#spn-dtlName").text(" " + menu.menuName);
+					$("#spn-dtlDesc").text(" - " + menu.menuDesc);
+					$("#spn-dtlIcon").text(menu.icon);
+					$("#spn-dtlType").text(menu.menuType);
+					$("#spn-dtlStatus").text(menu.menuStatus);
+					//inputs
+					textbox = document.getElementById("txt-dtlTitle").value = menu.menuName;
+					textbox = document.getElementById("txt-dtlDescription").value = menu.menuDesc;
+					textbox = document.getElementById("txt-dtlIcon").value = menu.icon;
+					textbox = document.getElementById("txt-dtlUrl").value = menu.url;
+					status = menu.menuStatus;
+					if(menu.menuStatus = "ACTIVE"){
+						document.getElementById("menuActive").checked = true;
+					}
+					if(menu.menuStatus = "INACTIVE"){
+						document.getElementById("menuInactive").checked = true;
+					}
+					document.getElementById("hiddenId").value = menu.menuId;
+					//open dialog
 					
-				});//end menu ajax
-				return false;
+					$("#menu-dtl").dialog({title: 'Editing ' + menu.menuName});					
+				});
+				/*GetMenuStatus(function(status){
+					var select = document.getElementById("statusSelect");
+					$("#statusSelect").empty();
+					for(var i= 0; i < status.length; i++){
+						select.append("<option value = '"+status[i]+"'>"+ status[i]+"</option>")
+					}
+					//select.value = menuStatus;
+				});*/
+				
+				$("#menu-dtl").dialog("open");
 			});
-			
+			$(document).on("click", ".dtl-link", function(e){
+				e.preventDefault();
+				var linkAction = $(this).text().toLowerCase();
+				//get menu details through ajax
+				if(linkAction == "delete"){
+					var action = confirm("This will delete the menu as well as it's sub-menus.\n " +
+							"Would you like to continue?");
+					if(action == true){
+						DeleteMenu(url, function(){
+							if(data.success == true){
+								alert("Menu successfully deleted.");
+							}
+							if(success == false){
+								alert("Delete failed. Something went wrong");
+							}
+						});
+					}else{
+						alert("Aborting....");
+					}
+				}
+				if(linkAction == "edit"){
+					$(".edit-menu").removeClass("hidden");
+						//select values
+						//$("#menuType").val(data.menuType);
+						//$("#menuStatus").val(data.menuStatus);
+						
+					
+				}
+			});
 			//=======================MENU-LIST STATE===========================
 			$(document).on("click", ".menu-list a",function(e){
 					  $('.active').removeClass('active');

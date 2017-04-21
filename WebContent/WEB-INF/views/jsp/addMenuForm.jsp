@@ -10,7 +10,7 @@
 						<p>Parent Menu:</p>
 					</div>
 					
-						<select id="menuSelect" class="textbox txt-medium" name="parentMenuId">
+						<select id="sel-addParentId" class="textbox txt-medium" name="sel-addParentId">
 							<option value="-1"> </option>
 						<c:forEach var="menu" items="${menuList}">
 							<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
@@ -23,31 +23,30 @@
 					<div class="form-col float-left">
 						<p>Menu Title: </p>
 					</div>
-						<input type = "text" name = "title" class="textbox txt-medium"/>
+						<input type = "text" name = "txt-addTitle" id = "txt-addTitle"
+							class="textbox txt-medium"/>
 				</div>
 				<div class="clear"></div>
 				<div class="form-row">
 					<div class="form-col float-left">
 						<p>Description: </p>
 					</div>
-						<input type = "text" name = "description" class="textbox txt-medium"/>
-				</div>
-				<div class="clear"></div>
-				<div class="form-row">
-					<div class="form-col float-left">
-						<p>URL: </p>
-					</div>
-						<input type = "text" name = "menuUrl" class="textbox txt-medium"/>
+						<input type = "text" id = "txt-addDescription" name = "txt-addDescription" 
+							class="textbox txt-medium"/>
 				</div>
 				<div class="clear"></div>
 				<div class="form-row">
 					<div class="form-col float-left">
 						<p>Icon: </p>
 					</div>
-						<input type = "text" name = "icon" class="textbox txt-medium"/>
+						<input type = "text" id = "txt-addIcon" name = "txt-addIcon" 
+							class="textbox txt-medium"/>
 				</div>
 				<div class="form-row">
 					<input type="hidden" name = "menuType" value="category"/>
+				</div>
+				<div class="err-div">
+					
 				</div>
 	
 			</div>

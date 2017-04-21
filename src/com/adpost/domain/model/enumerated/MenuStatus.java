@@ -1,5 +1,9 @@
 package com.adpost.domain.model.enumerated;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public enum MenuStatus {
 	ACTIVE(1),
@@ -18,5 +22,6 @@ public enum MenuStatus {
 	public String getName(){
 		return this.name();
 	}
+
 	
 }

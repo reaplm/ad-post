@@ -28,11 +28,8 @@
 		</div>
 	<div class="clear"></div>
 	<div class = "error-msg menu-list hidden"></div>
-		<jsp:include page="/WEB-INF/views/jsp/newMenuForm.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/jsp/addMenuForm.jsp"></jsp:include>
 
-	<div id="edit-menu" class="hidden dialog" >
-		<jsp:include page="/WEB-INF/views/jsp/editMenu.jsp"></jsp:include>
-	</div>
 	<jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>							
 							
 				

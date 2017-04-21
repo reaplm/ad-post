@@ -8,6 +8,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
 
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,10 +48,10 @@ public class MenuController {
 	@Autowired
 	private IMenuService iMenuService;
 	
+
 	@RequestMapping(value="/menus", method=GET)
 	public ModelAndView getAllMenus(HttpServletRequest request,
-			HttpServletResponse response,
-			@ModelAttribute("menu") Menu menu){
+			HttpServletResponse response){
 		HttpSession session = request.getSession();
 		
 		ModelAndView modelAndView = new ModelAndView("menus");
@@ -56,6 +61,7 @@ public class MenuController {
 		session.setAttribute("adminMenus", adminMenus);
 		modelAndView.addObject("title", "Activities");
 		modelAndView.addObject("menuList", menuList);
+
 		return modelAndView;
 	}
 	@RequestMapping(value="/menus/home",method=GET)
@@ -90,6 +96,7 @@ public class MenuController {
 	public Menu getMenuDetail(
 			@RequestParam(value="id") int menuId){
 		return iMenuService.getMenu(menuId);
+
 	}
 	@RequestMapping(value="/menu/status")
 	@ResponseBody
@@ -102,29 +109,30 @@ public class MenuController {
 	public boolean createMenu(HttpServletRequest request, 
 			HttpServletResponse response){
 		
-		response.setContentType("application/json");
 		int parentMenuId = -1;
 		boolean success = false;
 
 		try{
-			if(request.getParameter("parentMenuId") != null){
-				parentMenuId = Integer.parseInt(request.getParameter("parentMenuId"));
+			if(request.getParameter("add-menu-select") != null){
+				parentMenuId = Integer.parseInt(request.getParameter("add-menu-parentId"));
 
-				String menuType = request.getParameter("menuType");
+				String menuType = request.getParameter("add-menu-menuType");
 				Menu menu = null;
 				SubMenu subMenu = null;
+				String url = null;
+				
 				if(parentMenuId == 0){//not a sub menu
-					menu = createMenu(request.getParameter("title"),
-							request.getParameter("description"),
-							request.getParameter("url"),
-							request.getParameter("icon"),menuType);
+					url = "/AdPost/menu/detail";
+					menu = createMenu(request.getParameter("add-menu-title"),
+							request.getParameter("add-menu-description"), url,
+							request.getParameter("add-menu-icon"),menuType);
 					iMenuService.insertMenu(menu);
 				}else{
+					url = "/AdPost/submenu/detail";
 					menu = iMenuService.getMenu(parentMenuId);
-					subMenu = createSubMenu(request.getParameter("title"),
-							request.getParameter("description"),
-							request.getParameter("url"),
-							request.getParameter("icon"), 
+					subMenu = createSubMenu(request.getParameter("add-menu-title"),
+							request.getParameter("add-menu-description"), url,
+							request.getParameter("add-menu-icon"), 
 							menuType);
 					subMenu.setMenu(menu);
 					iMenuService.insertSubMenu(subMenu);	
@@ -143,11 +151,28 @@ public class MenuController {
 	}
 	@RequestMapping(value="/menu/edit", method=RequestMethod.POST)
 	@ResponseBody
-	public void updateMenu(HttpServletRequest request, 
-			HttpServletResponse response,
-			@ModelAttribute("menu") Menu menu){
-		
-		iMenuService.updateMenu(menu);
+	public boolean updateMenu(HttpServletRequest request, 
+			HttpServletResponse response){
+		int menuId = 0;
+		boolean success = false;
+		String id = request.getParameter("menuId");
+		if(request.getParameter("menuId") != null){
+			menuId = Integer.parseInt(request.getParameter("menuId"));
+			Menu menu = iMenuService.getMenu(menuId);
+			menu.setMenuDesc(request.getParameter("txt-dtlDescription"));
+			menu.setMenuName(request.getParameter("txt-dtlTitle"));
+			menu.setIcon(request.getParameter("txt-dtlIcon"));
+			menu.setUrl(request.getParameter("txt-dtlUrl"));
+			if(request.getParameter("status").compareToIgnoreCase("active") == 0)
+				menu.setMenuStatus(MenuStatus.ACTIVE);
+			else if(request.getParameter("status").compareToIgnoreCase("inactive") == 0)
+				menu.setMenuStatus(MenuStatus.INACTIVE);
+			
+			iMenuService.updateMenu(menu);
+			success = true;
+		}
+		return success;
+
 	}
 
 	@RequestMapping(value="/menu/delete", method=GET)
@@ -166,7 +191,12 @@ public class MenuController {
 		
 		return getMenuList();
 	}
-	
+	@RequestMapping(value="/status", method=RequestMethod.GET)
+	@ResponseBody
+	public List<MenuStatus> getStatus(){
+		return new ArrayList<MenuStatus>(Arrays.asList(MenuStatus.values()));
+
+	}
 
 	private List<Menu> getMenuList(){
 		return iMenuService.getAllMenus();

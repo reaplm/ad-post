@@ -10,11 +10,20 @@
     <c:if test="${fn: length(menuList) > 0}">
 					<c:forEach var="menu" items="${menuList}">
 					<% boolean odd = true; %>
-					<h2><a href="/AdPost/menu/detail?id=${menu.getMenuId()}"
+					<h2>
+					<a href="/AdPost/menu/detail?id=${menu.getMenuId()}"
+						class="menu-details-link">
+						<img 
+							src="<%=request.getContextPath()%>/resources/images/
+							homeIcons/${menu.getIcon()}" alt="${menu.getIcon()}"
+							width="25px" height="25px" />
+							</a>
+						<a href="/AdPost/menu/detail?id=${menu.getMenuId()}"
 						 	class="menu-details-link">${menu.getMenuName()}</a>
 					 - ${menu.getMenuDesc()}</h2>
 					 
-					<h3>Menu Type: ${menu.getMenuType()} Status: ${menu.getMenuStatus()} </h3>
+					<h3>
+							Menu Type: ${menu.getMenuType()} Status: ${menu.getMenuStatus()}</h3>
 						<c:if test="${fn: length(menu.getSubMenu()) > 0}">
 						<table>
 							<c:forEach var="subMenu" items="${menu.subMenu}">
@@ -25,12 +34,12 @@
 								<tr style="background-color: #fff">
 								<% } %>	
 									<td><a href="/AdPost/submenu/detail?id=${subMenu.getSubMenuId()}"
-									 	class="menu-details-link">
+									 	class="">
 									 	${subMenu.getSubMenuName()}</a></td>					
 									<td>${subMenu.getSubMenuDesc()}</td>
 									<td>${subMenu.getMenuStatus()}</td>
 									<td><input type="checkbox" name="menuStatus" 
-											 <c:if test="${menu.getMenuStatus()} = 'ACTIVE'">
+											 <c:if test="${subMenu.menuStatus.name} = 'ACTIVE'">
 											 	checked="checked"
 											 </c:if>
 											 />
@@ -42,5 +51,6 @@
 						</c:if>
 					</c:forEach>
 				</c:if>											
-		
+			<jsp:include page="/WEB-INF/views/jsp/menuDetails.jsp"></jsp:include>
+
 	

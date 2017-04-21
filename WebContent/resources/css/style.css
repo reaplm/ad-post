@@ -423,7 +423,35 @@ body {
 .button-img{
 	float: right;
 }
+/*--------------------------MENU DETAILS-----------------------------------*/
+#menu-dtl{
+	color: #2c2a33;
+}
+#menu-dtl .dtl-img{
+	
+}
 
+#menu-dtl .details{
+	overflow: auto;
+	margin: 0 auto;
+	text-align: center;
+}
+#menu-dtl .left-col{
+	width: 20%;
+	height: 20px;
+	text-align: right;
+	float: left;
+}
+
+#menu-dtl .right-col{
+	width: 75%;
+	text-align: left;
+	float: left;
+}
+#menu-dtl input{
+	background-color: #e9eef2;
+	border: none;
+}
 /*==========================ADVERTS PAGE====================================*/
 #new-advert{
 	float: left;
@@ -494,17 +522,20 @@ body {
 	text-align: right;
 	margin-right: 5px;
 }
+.err-div{
+	text-align: center;
+}
 .textbox {
-	background-color: #f8ecc1;
+	/*background-color: #f8ecc1;*/
 	opacity: .8;
 	font-size: 1em;
 	font-weight: bold;
-	text-align: center;
+	/*text-align: center;*/
 	border: solid;
 	border-width: 1px;
 	border-radius: 0px;
-	border-color: #fa6247;
-	color: #666;
+	/*border-color: #fa6247;
+	color: #666;*/
 	margin-bottom: 5px;
 }
 .txt-area{
