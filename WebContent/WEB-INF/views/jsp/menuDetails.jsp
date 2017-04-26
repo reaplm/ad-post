@@ -4,17 +4,18 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>	
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-	<div id="menu-dtl" class="dialog hidden">
+	<div id="dg-menu-dtl" class="dialog hidden">
 		<div class="details">
 			<div class="dtl-img">
 				<img src=""
 						/>
-				<h3><span id="dtlIcon"></span></h3>
+				<h3><span id=""></span></h3>
 			</div>
 			<div class="dtl-info">
-				<h2><span id="spn-dtlId"></span><span id="spn-dtlName"></span><span id="spn-dtlDesc"></span></h2>
-				<h3>Menu Type: <span id="spn-dtlType"></span> Status: <span id="spn-dtlStatus"></span></h3>
+				<h2><span id="dtlId"></span><span id="dtlName"></span><span id="dtlDesc"></span></h2>
+				<h3>Menu Type: <span id="dtlType"></span> Status: <span id="dtlStatus"></span></h3>
 			</div>
+			<div class="clear"></div>
 			<div>
 				<a class="dtl-link" href="">Edit</a>&nbsp;&nbsp;
 				<a class="dtl-link" href="">Delete</a>
@@ -33,14 +34,12 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 							checked="checked" id="menuInactive"  />Inactive
 					</div>
 				</div>
-				<br /><br />
-					<div class="clear"></div>
 				<div class="form-row">
 						<div class="left-col">
 							<label>menu Title:</label>
 						</div>
 						<div class="right-col">
-							<input type = "text" id = "txt-dtlTitle" name = "txt-dtlTitle" 
+							<input type = "text" id = "editTitle" name = "editTitle" 
 							class="textbox txt-medium"/>
 						</div>
 				</div>
@@ -50,7 +49,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 							<label >Menu Desc:</label>
 						</div>
 						<div class="right-col">
-							<input type = "text" id = "txt-dtlDescription" name = "txt-dtlDescription" 
+							<input type = "text" id = "editDescription" name = "editDescription" 
 								class="textbox txt-medium" />
 						</div>
 				</div>
@@ -60,7 +59,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 							<label>Icon:</label>
 						</div>
 						<div class="right-col">
-							<input type = "text" id = "txt-dtlIcon" name = "txt-dtlIcon" 
+							<input type = "text" id = "editIcon" name = "editIcon" 
 								class="textbox txt-medium" />
 						</div>
 				</div>
@@ -70,7 +69,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 							<label>Url:</label>
 						</div>
 						<div class="right-col">
-							<input type = "text" id = "txt-dtlUrl" name = "txt-dtlUrl" 
+							<input type = "text" id = "editUrl" name = "editUrl" 
 								class="textbox txt-medium"/>
 						</div>
 				</div>

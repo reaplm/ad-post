@@ -159,10 +159,10 @@ public class MenuController {
 		if(request.getParameter("menuId") != null){
 			menuId = Integer.parseInt(request.getParameter("menuId"));
 			Menu menu = iMenuService.getMenu(menuId);
-			menu.setMenuDesc(request.getParameter("txt-dtlDescription"));
-			menu.setMenuName(request.getParameter("txt-dtlTitle"));
-			menu.setIcon(request.getParameter("txt-dtlIcon"));
-			menu.setUrl(request.getParameter("txt-dtlUrl"));
+			menu.setMenuDesc(request.getParameter("editDescription"));
+			menu.setMenuName(request.getParameter("editTitle"));
+			menu.setIcon(request.getParameter("editIcon"));
+			menu.setUrl(request.getParameter("editUrl"));
 			if(request.getParameter("status").compareToIgnoreCase("active") == 0)
 				menu.setMenuStatus(MenuStatus.ACTIVE);
 			else if(request.getParameter("status").compareToIgnoreCase("inactive") == 0)

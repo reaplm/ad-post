@@ -261,11 +261,11 @@ body {
 	margin: 0 auto;
 	text-align: center;
 }
-.login-textbox {
-	color: #666;
-	font-size: 1em;
-	font-weight: bold;
+#pg-login .textbox {
+	background-color: #f8ecc1;
 	text-align: center;
+	border-color: #fa6247;
+	color: #666;
 }
 .success-msg {
 	color: #fa6247;
@@ -294,11 +294,16 @@ body {
 	width: 200px;
 	height: 35px;
 	text-align: center;
-	margin-right: 5px;
 }
 #register-form .form-row{
 	text-align: center;
 	height: 60px;
+}
+#pg-register .textbox {
+	background-color: #f8ecc1;
+	text-align: center;
+	border-color: #fa6247;
+	color: #666;
 }
 /*==========================HOME PAGE====================================*/
 #pg-home{
@@ -424,31 +429,36 @@ body {
 	float: right;
 }
 /*--------------------------MENU DETAILS-----------------------------------*/
-#menu-dtl{
+#dg-menu-dtl{
 	color: #2c2a33;
 }
-#menu-dtl .dtl-img{
-	
+#dg-menu-dtl img{
+	width: 50px;
+	height: 50px;
 }
-
-#menu-dtl .details{
+#dg-menu-dtl .details{
 	overflow: auto;
 	margin: 0 auto;
 	text-align: center;
 }
-#menu-dtl .left-col{
+#dg-menu-dtl .form-row{
+	height: 40px;
+	
+}
+#dg-menu-dtl .left-col{
 	width: 20%;
 	height: 20px;
 	text-align: right;
 	float: left;
+	
 }
 
-#menu-dtl .right-col{
+#dg-menu-dtl .right-col{
 	width: 75%;
 	text-align: left;
 	float: left;
 }
-#menu-dtl input{
+#dg-menu-dtl input{
 	background-color: #e9eef2;
 	border: none;
 }
@@ -526,16 +536,12 @@ body {
 	text-align: center;
 }
 .textbox {
-	/*background-color: #f8ecc1;*/
 	opacity: .8;
 	font-size: 1em;
 	font-weight: bold;
-	/*text-align: center;*/
 	border: solid;
 	border-width: 1px;
 	border-radius: 0px;
-	/*border-color: #fa6247;
-	color: #666;*/
 	margin-bottom: 5px;
 }
 .txt-area{
@@ -599,7 +605,7 @@ body {
 	visiblity: visible;
 }
 .error-msg {
-	color: #fa6247;
+	color: #fb9d9d;
 	font-style: italic;
 	font-size: 1em;
 	font-weight: bold;
@@ -647,7 +653,7 @@ body {
 	height: 30px;
 }
 .txt-large{
-	width: 400px;
+	width: 98%;
 	height: 30px;
 }
 .txt-width-small{

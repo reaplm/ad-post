@@ -18,8 +18,9 @@
 						name = "lastName" id = "lastName" placeholder="Last Name"/>
 				</div>
 			</div>
+			<div class="clear"></div>
 			<div class="form-row">
-				<input class = "textbox txt-large" type = "text" 
+				<input class = "textbox txt-medium" type = "text" 
 					name = "email" id = "email" placeholder="Email"/>
 			</div>
 			<div class="form-row">

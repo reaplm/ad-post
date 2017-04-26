@@ -114,7 +114,7 @@ public class AdvertController {
 	@RequestMapping(value="/advert/post-ad", method=GET)
 	public ModelAndView postAd(@ModelAttribute FileUpload fileUpload){
 		ModelAndView model = new ModelAndView("postAd");
-		List<Menu> menuList = getMenuList();
+		List<Menu> menuList = getMenuList("category");
 		model.addObject("menuList", menuList);
 		model.addObject("fileUpload",new FileUpload());
 		return model;
@@ -124,6 +124,9 @@ public class AdvertController {
 	}
 	private List<Menu> getMenuList(){
 		return iMenuService.getAllMenus();
+	}
+	private List<Menu> getMenuList(String menuType){
+		return iMenuService.getAllMenus(menuType);
 	}
 	private Advert createAdvert(String adSubject, String adBody, String adLocation,
 			String contactEmail, String contactNo, int subMenuId, AdPicture picture){

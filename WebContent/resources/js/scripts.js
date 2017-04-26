@@ -270,6 +270,7 @@ function AddMenu(){
 function SubmitRegistration(){
 	var validator = $("#register-form").validate({
 		errorClass: "error-msg",
+		errorElement: "div",
 		rules:{
 			firstName: {
 				required: true
@@ -340,10 +341,41 @@ function SubmitLogin(){
 			password: {
 				required: "Password cannot be empty"
 			}
+		},
+		errorPlacement: function (error, element) {
+        	error.insertAfter(element);
+        }
+	});
+	if(validator.form()){ // validation performed
+		  $("#login-form").submit();
+	}
+}
+/**
+ * Edit Menu Validator
+ */
+function SubmitEditMenu(){
+	var validator = $("#edit-menu-form").validate({
+		errorClass: "error-msg",
+		rules:{
+			editTitle: {
+				required: true
+			},
+			editIcon:{
+				required: true
+			}
+		},
+		messages:{
+			editTitle:{
+				required: "*Required"
+			},
+			editIcon:{
+				required: "*Required"
+			}
 		}
 	});
-	if(validator.form()){ // validation perform 
-		  $("#login-form").submit();
+	if(validator.form()){
+		SubmitEditMenuAjax();
+		return true;
 	}
 }
 //===================================RADIO-BUTTONS================
@@ -359,17 +391,6 @@ function UserTypeChange(){
 	}
 	else{
 		$("#employee-details").addClass("hidden");
-	}
-}
-function DriverChecked(){
-	if($("#drivercheck").attr("checked")){
-		$("#license_no").
-		prop("disabled", true); 
-		$("#tc_class").prop("disabled", true); 
-	}
-	else {
-		$("#license_no").prop("disabled", false); 
-	$("#tc_class").removeAttr("disabled"); 
 	}
 }
 
@@ -776,19 +797,22 @@ $(document).ready(
 			$(document).on("click", ".menu-details-link",function(e){
 				e.preventDefault();
 				var status = "";
-				var cancel= function(){$("#menu-dtl").dialog("close");},
+				var cancel= function(){$("#dg-menu-dtl").dialog("close");},
 				saveMenu = function(){
-					SubmitEditMenuAjax();
-					$("#menu-dtl").dialog("close");
-					window.location.reload();
+					var result = SubmitEditMenu();
+					if(result){
+						$("#dg-menu-dtl").dialog("close");
+						window.location.reload();
+					}
 				},
 				dialogOpts ={
-					width: 500,
-					height: 350,
+					width: 550,
+					height: "auto",
 					modal: true,
 					autoOpen: false,
 					resizable: false,
 					title: "Edit Menu",
+					position: { my: "right bottom", at: "center center", of: window },
 					open: function(){},
 					close: function(){$(".edit-menu").addClass("hidden");},
 					buttons:{
@@ -796,39 +820,40 @@ $(document).ready(
 					},
 					dialogClass: 'dialog'
 				};
-				$("#menu-dtl").dialog(dialogOpts);
+				$("#dg-menu-dtl").dialog(dialogOpts);
 				//get menu details through ajax
 				GetMenuById($(this).attr("href"), function(menu){
 					var textbox;
 					if(menu != null){
-						$("#menu-dtl").removeClass("hidden");
+						$("#dg-menu-dtl").removeClass("hidden");
 					}
 					//set image attributes
-					//$("#menu-dtl img").attr("src", + menu.icon) 
+					$("#dg-menu-dtl img").attr("src", "/AdPost/" +
+							"resources/images/homeIcons/" + menu.icon);
 					//$("#menu-dtl img").attr("title", "menu.icon") 
 					//spans
 					//$("#spn-dtlId").text(menu.menuId + ". ");
-					$("#spn-dtlName").text(" " + menu.menuName);
-					$("#spn-dtlDesc").text(" - " + menu.menuDesc);
-					$("#spn-dtlIcon").text(menu.icon);
-					$("#spn-dtlType").text(menu.menuType);
-					$("#spn-dtlStatus").text(menu.menuStatus);
+					$("#dtlName").text(" " + menu.menuName);
+					$("#dtlDesc").text(" - " + menu.menuDesc);
+					$("#dtlIcon").text(menu.icon);
+					$("#dtlType").text(menu.menuType);
+					$("#dtlStatus").text(menu.menuStatus);
 					//inputs
-					textbox = document.getElementById("txt-dtlTitle").value = menu.menuName;
-					textbox = document.getElementById("txt-dtlDescription").value = menu.menuDesc;
-					textbox = document.getElementById("txt-dtlIcon").value = menu.icon;
-					textbox = document.getElementById("txt-dtlUrl").value = menu.url;
-					status = menu.menuStatus;
-					if(menu.menuStatus = "ACTIVE"){
+					document.getElementById("editTitle").value = menu.menuName;
+					document.getElementById("editDescription").value = menu.menuDesc;
+					document.getElementById("editIcon").value = menu.icon;
+					document.getElementById("editUrl").value = menu.url;
+					//status = menu.menuStatus;
+					if(menu.menuStatus == "ACTIVE"){
 						document.getElementById("menuActive").checked = true;
 					}
-					if(menu.menuStatus = "INACTIVE"){
+					if(menu.menuStatus == "INACTIVE"){
 						document.getElementById("menuInactive").checked = true;
 					}
 					document.getElementById("hiddenId").value = menu.menuId;
 					//open dialog
 					
-					$("#menu-dtl").dialog({title: 'Editing ' + menu.menuName});					
+					$("#dg-menu-dtl").dialog({title: 'Editing ' + menu.menuName});					
 				});
 				/*GetMenuStatus(function(status){
 					var select = document.getElementById("statusSelect");
@@ -839,7 +864,7 @@ $(document).ready(
 					//select.value = menuStatus;
 				});*/
 				
-				$("#menu-dtl").dialog("open");
+				$("#dg-menu-dtl").dialog("open");
 			});
 			$(document).on("click", ".dtl-link", function(e){
 				e.preventDefault();

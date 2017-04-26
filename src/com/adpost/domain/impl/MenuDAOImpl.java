@@ -128,7 +128,7 @@ public class MenuDAOImpl implements IMenuDAO{
 	@Override
 	public List<Menu> getAllMenus(String menuType) {
 		List<Menu> results = null;
-		MenuType type = MenuType.valueOf(menuType);
+		MenuType type = MenuType.valueOf(menuType.toUpperCase());
 		try{ 
 			Session session = HibernateUtil.getSessionFactory().openSession();
 
