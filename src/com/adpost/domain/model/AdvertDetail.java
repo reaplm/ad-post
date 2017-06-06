@@ -1,5 +1,6 @@
 package com.adpost.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,12 +25,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class AdvertDetail {
 	@Id
 	@GeneratedValue
-	@Column(name="pfk_advert_id")
-	private int advertId;
+	@Column(name="pk_ad_detail_id")
+	private int adDetailId;
 
 	@OneToOne
-	@PrimaryKeyJoinColumn
-	@JsonBackReference
+	@JoinColumn(name="fk_advert_id")
 	private Advert advert;
 	
 	@Column(name="ad_subject")
@@ -43,12 +43,15 @@ public class AdvertDetail {
 	@Column(name="contact_email")
 	private String contactEmail;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="advertDetail",
-			cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="advertDetail", fetch=FetchType.LAZY, 
+			cascade=CascadeType.REMOVE)
 	private List<AdPicture> adPictures;
 	
-	public int getAdvertId(){
-		return this.advertId;
+	public AdvertDetail(){
+		this.adPictures = new ArrayList<AdPicture>();
+	}
+	public int getAdDetailId(){
+		return this.adDetailId;
 	}
 	public void setAdvert(Advert advert){
 		this.advert = advert;
@@ -57,8 +60,8 @@ public class AdvertDetail {
 	public Advert getAdvert(){
 		return this.advert;
 	}
-	public void setAdvertId(int advertId){
-		this.advertId =advertId;
+	public void setAdDetailId(int advertId){
+		this.adDetailId =advertId;
 	}
 	
 	public String getAdSubject(){

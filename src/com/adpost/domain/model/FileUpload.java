@@ -1,8 +1,20 @@
 package com.adpost.domain.model;
 
+import java.io.Serializable;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class FileUpload {
+public class FileUpload implements Serializable{
+
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int menuId;
 	private int subMenuId;
 	private String adLocation;
@@ -11,7 +23,7 @@ public class FileUpload {
 	private String contactNo;
 	private String contactEmail;
 	private String fileName;
-	private CommonsMultipartFile file;
+	private List<MultipartFile> files = null;
 	
 	public int getSubMenuId(){
 		return this.subMenuId;
@@ -61,11 +73,10 @@ public class FileUpload {
 	public void setFile(String fileName){
 		this.fileName = fileName;
 	}
-	public CommonsMultipartFile getFile(){
-		return this.file;
+	public List<MultipartFile> getFiles(){
+		return this.files;
 	}
-	public void setFile(CommonsMultipartFile file){
-		this.file = file;
-		this.fileName = file.getOriginalFilename();
+	public void setFiles(List<MultipartFile> files){
+		this.files = files;
 	}
 }

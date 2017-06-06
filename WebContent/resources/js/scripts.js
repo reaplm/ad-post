@@ -242,7 +242,7 @@ function AddMenu(){
 	var validator = $("#add-menu-form").validate({
 		errorClass: "error-msg",
 		rules:{
-			txtATitle: {
+			title: {
 				required: true
 			}
 		},
@@ -771,14 +771,14 @@ $(document).ready(
 					dialogClass: 'dialog'
 				};
 				GetMenuList(menuType, function(menuList){
-					  var select = document.getElementById("add-menu-select");
+					  var select = document.getElementById("parentId");
 					  var length = select.length;
-					  $("#add-menu-select").empty()
-					  $("#add-menu-select").append("<option value='0'> </option>");
+					  $("#parentId").empty()
+					  $("#parentId").append("<option value='0'> </option>");
 					  if(menuList.length > 0){
 							for(var i = 0; i < menuList.length; i++){
 								
-								$("#add-menu-select").append("<option value = '" + menuList[i].menuId +"' >" 
+								$("#parentId").append("<option value = '" + menuList[i].menuId +"' >" 
 									+ menuList[i].menuName + "</option>");
 							}	
 						}

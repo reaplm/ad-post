@@ -1,6 +1,5 @@
 package com.adpost.domain.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,21 +7,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mysql.jdbc.Clob;
 
 @Entity
 @Table(name="advert_picture")
 public class AdPicture {
 	@Id
 	@GeneratedValue
-	@Column(name="pk_ad_picture_id")
+	@Column(name="pk_pic_id")
 	private int adPictureId;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="fk_advert_id", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="fk_detail_id")
 	private AdvertDetail advertDetail;
 	
 	@Column(name="image_url")
@@ -30,7 +31,7 @@ public class AdPicture {
 	@Column(name="image_title")
 	private String imageTitle;
 	@Column(name="image_name")
-	private String imageName; //physical name
+	private String imageName;
 	
 	public void setAdvertId(int adPictureId){
 		this.adPictureId = adPictureId;
@@ -38,7 +39,7 @@ public class AdPicture {
 	public int getAdPictureId(){
 		return this.adPictureId;
 	}
-	public void setAdvert(AdvertDetail advertDetail){
+	public void setAdvertDetail(AdvertDetail advertDetail){
 		this.advertDetail = advertDetail;
 	}
 	public AdvertDetail getAdvertDetail(){
@@ -62,5 +63,10 @@ public class AdPicture {
 	public void setImageName(String imageName){
 		this.imageName = imageName;
 	}
-
+	/*public Clob getImage(){
+		return this.image;
+	}
+	public void setImage(Clob image){
+		this.image = image;
+	}*/
 }

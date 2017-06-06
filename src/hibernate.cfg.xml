@@ -18,7 +18,7 @@
 			<!-- Disable second level cache -->
 			
 			<!-- Drop and re-create the database schema on startup -->  
-	       	<property name="hbm2ddl.auto">update</property>  
+	       	<property name="hbm2ddl.auto">create</property>  
 	       	
 	       	<!-- Use the script to initialize the database -->
 	       	<property name="hibernate.hbm2ddl.import_files">ad_post_init.sql</property>

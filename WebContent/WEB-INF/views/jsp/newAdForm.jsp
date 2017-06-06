@@ -9,38 +9,38 @@
 		enctype="multipart/form-data" modelAttribute="fileUpload">
 			<div class="form-row">
 				<p>CATEGORY: </p>
-				<select id="new-ad-category" class="textbox txt-medium" name="menuId">
+				<form:select id="new-ad-category" class="textbox txt-medium" name="menuId" path="menuId">
 						<option value="-1"> </option>
 					<c:forEach var="menu" items="${menuList}">
 						<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
 					</c:forEach>
-				</select>	
+				</form:select>	
 				
-				<select id="subMenuSelect" class="textbox txt-medium" name="subMenuId">
+				<form:select id="subMenuSelect" class="textbox txt-medium" name="subMenuId" path="subMenuId">
 					<option value="-1"> </option>
-				</select>
+				</form:select>
 			</div>
 			<div class="form-row">
 			
 				<p>LOCATION: </p>
-				<input type="text" placeholder="location"  class="textbox txt-medium"
-								id="adLocation" name="adLocation"/>
+				<form:input type="text" placeholder="location"  class="textbox txt-medium"
+								id="adLocation" name="adLocation" path="adLocation"/>
 						
 			</div>
 			<div class="form-row">
 				<p>AD DETAILS: </p>
-				<input type="text" placeholder="subject" class="textbox txt-medium"
-								id="adSubject" class="txt-medium" name="adSubject"/>
-				<textarea rows="20" cols="100" 
-							id="adBody" name="adBody" class="txt-area" ></textarea>
+				<form:input type="text" placeholder="subject" class="textbox txt-medium"
+								id="adSubject" name="adSubject" path="adSubject"/>
+				<form:textarea rows="20" cols="100"	id="adBody" name="adBody" 
+				class="txt-area" path="adBody" ></form:textarea>
 						
 			</div>
 			<div class="form-row">
 				<p>CONTACT: </p>
-				<input type="text" placeholder="phone" class="textbox txt-medium"
-								id="contactNo" name="contactNo" />
-				<input type="text" placeholder="email" class="textbox txt-medium"
-								name="contactEmail" id="contactEmail" />
+				<form:input type="text" placeholder="phone" class="textbox txt-medium"
+								id="contactNo" name="contactNo" path="contactNo"/>
+				<form:input type="text" placeholder="email" class="textbox txt-medium"
+								name="contactEmail" id="contactEmail" path="contactEmail"/>
 			</div>
 			
 			<div class="form-row">
@@ -48,8 +48,9 @@
 				<img src="<%=request.getContextPath()%>
 								/resources/images/ic_add_a_photo_black_48dp.png" 
 									height="20px" width ="20px" />
-							<input type="file" 
-								id="adPictures" accept="image/*" name="file" />
+							<form:input type="file" 
+								id="adPictures" accept="image/*" name="files[]" multiple="multiple" 
+								path="files"/>
 				
 			</div>
 			<div class="form-row">

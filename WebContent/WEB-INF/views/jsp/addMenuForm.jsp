@@ -10,7 +10,7 @@
 						<p>Parent Menu:</p>
 					</div>
 					
-						<select id="sel-addParentId" class="textbox txt-medium" name="sel-addParentId">
+						<select id="parentId" class="textbox txt-medium" name="parentId">
 							<option value="-1"> </option>
 						<c:forEach var="menu" items="${menuList}">
 							<option value="${menu.getMenuId()}">${menu.getMenuName()}</option>
@@ -23,7 +23,7 @@
 					<div class="form-col float-left">
 						<p>Menu Title: </p>
 					</div>
-						<input type = "text" name = "txt-addTitle" id = "txt-addTitle"
+						<input type = "text" name = "title" id = "title"
 							class="textbox txt-medium"/>
 				</div>
 				<div class="clear"></div>
@@ -31,7 +31,7 @@
 					<div class="form-col float-left">
 						<p>Description: </p>
 					</div>
-						<input type = "text" id = "txt-addDescription" name = "txt-addDescription" 
+						<input type = "text" id = "description" name = "description" 
 							class="textbox txt-medium"/>
 				</div>
 				<div class="clear"></div>
@@ -39,7 +39,7 @@
 					<div class="form-col float-left">
 						<p>Icon: </p>
 					</div>
-						<input type = "text" id = "txt-addIcon" name = "txt-addIcon" 
+						<input type = "text" id = "icon" name = "icon" 
 							class="textbox txt-medium"/>
 				</div>
 				<div class="form-row">

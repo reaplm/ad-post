@@ -113,26 +113,26 @@ public class MenuController {
 		boolean success = false;
 
 		try{
-			if(request.getParameter("add-menu-select") != null){
-				parentMenuId = Integer.parseInt(request.getParameter("add-menu-parentId"));
+			if(request.getParameter("parentId") != null){
+				parentMenuId = Integer.parseInt(request.getParameter("parentId"));
 
-				String menuType = request.getParameter("add-menu-menuType");
+				String menuType = request.getParameter("menuType");
 				Menu menu = null;
 				SubMenu subMenu = null;
 				String url = null;
 				
 				if(parentMenuId == 0){//not a sub menu
 					url = "/AdPost/menu/detail";
-					menu = createMenu(request.getParameter("add-menu-title"),
-							request.getParameter("add-menu-description"), url,
-							request.getParameter("add-menu-icon"),menuType);
+					menu = createMenu(request.getParameter("title"),
+							request.getParameter("description"), url,
+							request.getParameter("icon"),menuType);
 					iMenuService.insertMenu(menu);
 				}else{
 					url = "/AdPost/submenu/detail";
 					menu = iMenuService.getMenu(parentMenuId);
-					subMenu = createSubMenu(request.getParameter("add-menu-title"),
-							request.getParameter("add-menu-description"), url,
-							request.getParameter("add-menu-icon"), 
+					subMenu = createSubMenu(request.getParameter("title"),
+							request.getParameter("description"), url,
+							request.getParameter("icon"), 
 							menuType);
 					subMenu.setMenu(menu);
 					iMenuService.insertSubMenu(subMenu);	
@@ -204,7 +204,7 @@ public class MenuController {
 	private List<Menu> getMenuList(String menuType){
 		return iMenuService.getAllMenus(menuType);
 	}
-	private List<Menu> getgetMenusByStatus(String menuStatus){
+	private List<Menu> getMenusByStatus(String menuStatus){
 		return iMenuService.getMenusByStatus(menuStatus);
 	}
 	private List<SubMenu> getSubMenuList(int parentMenuId){

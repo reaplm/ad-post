@@ -23,7 +23,8 @@ INSERT INTO sub_menu(pk_sub_menu_id, sub_menu_name, fk_menu_id, menu_status, url
 		(null, 'Menus', 7, 'ACTIVE','/AdPost/menus'),
 		(null, 'Permissions', 7, 'ACTIVE','/AdPost/permissions'),
 		(null, 'My Posts', 8, null,null),
-		(null, 'Favourites', 8, null,null);
+		(null, 'Favourites', 8, null,null),
+		(null, 'Buses', 1, null, null);
 --INITIALIZE ADMIN USER AND ROLES
 INSERT INTO app_user (pk_user_id, email, password, password_used,
 	user_status, user_created_date)

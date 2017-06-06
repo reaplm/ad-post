@@ -26,9 +26,8 @@ public class Advert {
 	@Column(name="pk_advert_id")
 	private int advertId;
 	
-	@OneToOne(mappedBy="advert", cascade=CascadeType.ALL,
+	@OneToOne(mappedBy="advert", cascade=CascadeType.REMOVE,
 			fetch=FetchType.EAGER)
-	@JsonManagedReference
 	private AdvertDetail advertDetail; 
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -42,13 +41,10 @@ public class Advert {
 	private AppUser appUser;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="advert")
-	@JsonBackReference
 	private List<AdComment> adComments;
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="advert")
-	@JsonBackReference
 	private List<AdShare> adShares;
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="advert")
-	@JsonBackReference
 	private List<AdLike> adLikes;
 	
 	

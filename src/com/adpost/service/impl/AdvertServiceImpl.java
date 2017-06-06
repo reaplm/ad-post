@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.adpost.domain.dao.IAdvertDAO;
 import com.adpost.domain.dao.IMenuDAO;
+import com.adpost.domain.model.AdPicture;
 import com.adpost.domain.model.Advert;
 import com.adpost.domain.model.AdvertDetail;
 import com.adpost.domain.model.AppUser;
@@ -31,11 +32,35 @@ public class AdvertServiceImpl implements IAdvertService{
 		iAdvertDAO.updateAdvert(advert);
 	}
 	@Override
-	public void insertAdvert(Advert advert){
-		iAdvertDAO.insertAdvert(advert);
+	public int insertAdvert(Advert advert){
+		return iAdvertDAO.insertAdvert(advert);
 	}
 	@Override
-	public void insertAdvertDetail(AdvertDetail advertDetail){
-		iAdvertDAO.insertAdvertDetail(advertDetail);
+	public int insertAdvertDetail(AdvertDetail advertDetail){
+		return iAdvertDAO.insertAdvertDetail(advertDetail);
+	}
+	@Override
+	public AdvertDetail getAdvertDetail(int id) {
+		return iAdvertDAO.getAdvertDetail(id);
+	}
+	@Override
+	public void updateAdvertDetail(AdvertDetail advertDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public int insertAdPicture(AdPicture adPicture) {
+		return iAdvertDAO.insertAdPicture(adPicture);
+
+	}
+	@Override
+	public AdPicture getAdPicture(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void updateAdPicture(AdPicture adPicture) {
+		// TODO Auto-generated method stub
+		
 	}
 }

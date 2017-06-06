@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,9 +44,11 @@ import com.adpost.domain.model.AppUser;
 import com.adpost.domain.model.FileUpload;
 import com.adpost.domain.model.Menu;
 import com.adpost.domain.model.SubMenu;
+import com.adpost.exception.FailedToPersistObjectException;
 import com.adpost.service.IAdvertService;
 import com.adpost.service.IMenuService;
 import com.adpost.service.IUserService;
+import com.sun.xml.internal.ws.api.ResourceLoader;
 
 @Controller
 public class AdvertController {
@@ -56,7 +59,7 @@ public class AdvertController {
 	@Autowired
 	private IUserService iUserService;
 	
-	private final String uploadDirectory = "C:\'Users\'pmolefe\'Documents\'Uploads";
+	private final String uploadDirectory = "C:/Users/pmolefe/Documents/AdPost/images/uploads";
 	
 	@RequestMapping(value="/adverts", method=GET)
 	public ModelAndView getAllAdverts(
@@ -80,27 +83,54 @@ public class AdvertController {
 		return model;
 	}
 	@RequestMapping(value="/advert/add", method=POST)
-	public void insertAdverts(HttpServletRequest request,
+	public void submitAdvert(HttpServletRequest request,
 			HttpServletResponse response, 
-			@ModelAttribute("fileUpload") FileUpload fileUpload,
-			@RequestParam CommonsMultipartFile file)
+			@ModelAttribute("fileUpload") FileUpload fileUpload)
 					throws NumberFormatException, IOException, IllegalStateException, 
-					ServletException, FileUploadException{
+					ServletException, FileUploadException, FailedToPersistObjectException{
 		
-		List<FileItem> fileItems = new ServletFileUpload
-					(new DiskFileItemFactory()).parseRequest(request);
-		AdPicture picture = new AdPicture();
-		picture.setImageName(file.getName());
+		//Get uploaded files and store them
+		List<MultipartFile> files = fileUpload.getFiles();
+		List<String> fileNames = new ArrayList<String>();
+		List<AdPicture> pictures =  new ArrayList<AdPicture>();
+		boolean success = false;
 		
-		if(fileUpload != null && file.getSize() > 0){
-			file.transferTo(new File(uploadDirectory + fileUpload.getFileName()));
-		}
-		Advert advert = createAdvert(fileUpload.getAdSubject(), fileUpload.getAdBody(),
-				fileUpload.getAdLocation(),fileUpload.getContactEmail(),
-				fileUpload.getContactNo(), fileUpload.getSubMenuId(), picture);
+		try{
+			Advert advert = createAdvert(fileUpload.getAdSubject(), fileUpload.getAdBody(),
+					fileUpload.getAdLocation(),fileUpload.getContactEmail(),
+					fileUpload.getContactNo(), fileUpload.getSubMenuId());
+			if(files != null && files.size() > 0){
+				for(MultipartFile image:files){
+					AdPicture adPicture = new AdPicture();
+					String fileName = image.getOriginalFilename();
+					adPicture.setImageName(fileName);
+					adPicture.setAdvertDetail(advert.getAdvertDetail());
+					//persist the paprent first, set the parent in child then persist the child
+					iAdvertService.insertAdPicture(adPicture);
+					pictures.add(adPicture);
+					//advert.getAdvertDetail().getAdPictures().add(adPicture);
+					String[] fileSplit = fileName.split("\\.");
+					fileNames.add(fileName);
+					//File imageFile = new File(request.getServletContext().getRealPath("C:/Users/pmolefe/Documents/AdPost/images/uploads"), fileName);
+					//File tempFile = File.createTempFile(fileSplit[0], "." + fileSplit[1],
+							//new File(uploadDirectory));
+					File directory = new File(uploadDirectory);
+					if(!directory.exists()){
+						directory.mkdirs();
+					}
+					//iAdvertService.updateAdvertDetail(advert.getAdvertDetail());
+					File uploadedFile = new File(uploadDirectory+"\\"+Math.random()+fileName);
+					uploadedFile.createNewFile();
+					image.transferTo(uploadedFile);
+				}
+			}
+		advert.getAdvertDetail().setAdPictures(pictures);
+			success = insertAdvert(advert);
 		
-		if(advert != null){
-			iAdvertService.insertAdvert(advert);
+		
+		}catch(Exception e){
+			System.out.println("an error occured in image.transferTo(imageFile): " + e);
+			e.printStackTrace();
 		}
 		response.sendRedirect("/AdPost/adverts"); 
 	}
@@ -129,9 +159,10 @@ public class AdvertController {
 		return iMenuService.getAllMenus(menuType);
 	}
 	private Advert createAdvert(String adSubject, String adBody, String adLocation,
-			String contactEmail, String contactNo, int subMenuId, AdPicture picture){
-		Advert advert = new Advert();
-		AdvertDetail advertDetail = new AdvertDetail();
+			String contactEmail, String contactNo, int subMenuId){
+		
+		
+		
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if(auth.getPrincipal().equals("anonymousUser")){
@@ -141,20 +172,35 @@ public class AdvertController {
 			User user = (User) auth.getPrincipal();
 			AppUser appUser = iUserService.getUser(user.getUsername());
 			SubMenu subMenu = iMenuService.getSubMenu(subMenuId);
-			List<AdPicture> adPictures = new ArrayList<AdPicture>();
-			adPictures.add(picture);
+			AdvertDetail advertDetail = new AdvertDetail();
+			Advert advert = new Advert();
+
+			//persist the parent first
+			advert.setSubmittedDate(new Date());
+			advert.setAppUser(appUser);
+			advert.setSubMenu(subMenu);
+			advert.setAdvertDetail(advertDetail);
+			advert = iAdvertService.getAdvert
+					(iAdvertService.insertAdvert(advert));
+			
 			advertDetail.setAdSubject(adSubject);
 			advertDetail.setAdBody(adBody);
 			advertDetail.setAdLocation(adLocation);
 			advertDetail.setContactEmail(contactEmail);
 			advertDetail.setContactNo(contactNo);
-			iAdvertService.insertAdvertDetail(advertDetail);
-			advertDetail.setAdPictures(adPictures);
-			advert.setSubmittedDate(new Date());
-			advert.setAdvertDetail(advertDetail);
-			advert.setAppUser(appUser);
-			advert.setSubMenu(subMenu);
-			return advert;
+			advertDetail.setAdvert(advert);
+			//set parent in child and persist child
+			iAdvertService.insertAdvertDetail(advertDetail);	
+						
+			return iAdvertService.getAdvert(advert.getAdvertId());
 		}
+		
+	}
+	private boolean insertAdvert(Advert advert){
+		if(advert != null){
+			int id = iAdvertService.insertAdvert(advert);
+			return true;
+		}
+		else return false;
 	}
 }
