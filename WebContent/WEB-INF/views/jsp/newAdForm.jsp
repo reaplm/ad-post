@@ -45,14 +45,18 @@
 			
 			<div class="form-row">
 				<p></p>
-				<img src="<%=request.getContextPath()%>
-								/resources/images/ic_add_a_photo_black_48dp.png" 
-									height="20px" width ="20px" />
+
+									<!-- 
 							<form:input type="file" 
 								id="adPictures" accept="image/*" name="files[]" multiple="multiple" 
 								path="files"/>
+								-->
+						<form:input name="file" type="hidden" 
+						role="uploadcare-uploader" path="files" 
+						data-images-only="true" data-multiple="true"/> 
 				
 			</div>
+			<br />
 			<div class="form-row">
 				<p></p>
 							<button type="submit" class="button form-submit">Post</button>
