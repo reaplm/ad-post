@@ -16,7 +16,7 @@
 	    <c:if test="${fn: length(advertList) > 0}">
 					<c:forEach var="advert" items="${advertList}">
 						<h2>
-							<a href="/AdPost/advert/ad-detail?id=${advert.getAdvertId()}" 
+							<a href="/AdPost/advert/detail?id=${advert.getAdvertId()}" 
 								class="advert-details-link">${advert.advertDetail.getAdSubject()}</a>
 						</h2>
 						 <div>

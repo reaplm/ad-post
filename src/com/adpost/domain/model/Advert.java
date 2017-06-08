@@ -1,5 +1,6 @@
 package com.adpost.domain.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,14 +31,12 @@ public class Advert {
 			fetch=FetchType.EAGER)
 	private AdvertDetail advertDetail; 
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="fk_sub_menu_id", nullable=false)
-	@JsonManagedReference
 	private SubMenu subMenu;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne//default is fetch=FetchType.LAZY
 	@JoinColumn(name="fk_user_id", nullable=false)
-	@JsonManagedReference
 	private AppUser appUser;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="advert")
@@ -92,26 +91,38 @@ public class Advert {
 	public void setPublishedDate(Date publishedDate){
 		this.publishedDate = publishedDate;
 	}
-	public Date getPublishedDate(){
-		return this.publishedDate;
+	public String getPublishedDate(){
+		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		if(this.publishedDate != null)
+			return format.format(this.publishedDate);
+		else return null;
 	}
 	public void setApprovedDate(Date approvedDate){
 		this.approvedDate = approvedDate;
 	}
-	public Date getApprovedDate(){
-		return this.approvedDate;
+	public String getApprovedDate(){
+		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		if(this.approvedDate != null)
+			return format.format(this.approvedDate);
+		else return null;
 	}
 	public void setSubmittedDate(Date submittedDate){
 		this.submittedDate = submittedDate;
 	}
-	public Date getSubmittedDate(){
-		return this.submittedDate;
+	public String getSubmittedDate(){
+		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		if(this.submittedDate != null)
+			return format.format(this.submittedDate);
+		else return null;
 	}
 	public void setRejectedDate(Date rejectedDate){
 		this.rejectedDate = rejectedDate;
 	}
-	public Date getRejectedDate(){
-		return this.rejectedDate;
+	public String getRejectedDate(){
+		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		if(this.rejectedDate != null)
+			return format.format(this.rejectedDate);
+		else return null;
 	}
 	public void setPublishedFlag(int publishedFlag){
 		this.publishedFlag = publishedFlag;

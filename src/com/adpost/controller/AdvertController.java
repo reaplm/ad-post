@@ -105,10 +105,9 @@ public class AdvertController {
 					String fileName = image.getOriginalFilename();
 					adPicture.setImageName(fileName);
 					adPicture.setAdvertDetail(advert.getAdvertDetail());
-					//persist the paprent first, set the parent in child then persist the child
+					//persist the parent first, set the parent in child then persist the child
 					iAdvertService.insertAdPicture(adPicture);
 					pictures.add(adPicture);
-					//advert.getAdvertDetail().getAdPictures().add(adPicture);
 					String[] fileSplit = fileName.split("\\.");
 					fileNames.add(fileName);
 					//File imageFile = new File(request.getServletContext().getRealPath("C:/Users/pmolefe/Documents/AdPost/images/uploads"), fileName);
@@ -118,7 +117,6 @@ public class AdvertController {
 					if(!directory.exists()){
 						directory.mkdirs();
 					}
-					//iAdvertService.updateAdvertDetail(advert.getAdvertDetail());
 					File uploadedFile = new File(uploadDirectory+"\\"+Math.random()+fileName);
 					uploadedFile.createNewFile();
 					image.transferTo(uploadedFile);
@@ -135,10 +133,12 @@ public class AdvertController {
 		response.sendRedirect("/AdPost/adverts"); 
 	}
 	@RequestMapping(value="/advert/detail", method=GET)
-	public @ResponseBody Advert getAdvert(
+	public @ResponseBody ModelAndView getAdvert(
 			@RequestParam("id") int id){
+		ModelAndView model = new ModelAndView("advertDetails");
 		Advert advert = iAdvertService.getAdvert(id);
-		return advert;
+		model.addObject("advert", advert);
+		return model;
 	}
 	
 	@RequestMapping(value="/advert/post-ad", method=GET)
@@ -149,6 +149,7 @@ public class AdvertController {
 		model.addObject("fileUpload",new FileUpload());
 		return model;
 	}
+	
 	private List<Advert> getAdvertList(){
 		return iAdvertService.getAllAdverts();
 	}
