@@ -3,8 +3,13 @@ package com.adpost.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Deque;
@@ -16,14 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.jni.FileInfo;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,8 +32,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.adpost.domain.model.AdPicture;
@@ -42,13 +39,15 @@ import com.adpost.domain.model.Advert;
 import com.adpost.domain.model.AdvertDetail;
 import com.adpost.domain.model.AppUser;
 import com.adpost.domain.model.FileUpload;
+import com.adpost.domain.model.GroupImage;
 import com.adpost.domain.model.Menu;
+import com.adpost.domain.model.SingleImage;
 import com.adpost.domain.model.SubMenu;
 import com.adpost.exception.FailedToPersistObjectException;
 import com.adpost.service.IAdvertService;
 import com.adpost.service.IMenuService;
 import com.adpost.service.IUserService;
-import com.sun.xml.internal.ws.api.ResourceLoader;
+import com.uploadcare.api.Client;
 
 @Controller
 public class AdvertController {
@@ -86,44 +85,51 @@ public class AdvertController {
 	public void submitAdvert(HttpServletRequest request,
 			HttpServletResponse response, 
 			@ModelAttribute("fileUpload") FileUpload fileUpload)
-					throws NumberFormatException, IOException, IllegalStateException, 
-					ServletException, FileUploadException, FailedToPersistObjectException{
-		
-		//Get uploaded files and store them
-		List<MultipartFile> files = fileUpload.getFiles();
+				throws IOException, IllegalStateException, 
+				ServletException, FailedToPersistObjectException{
+
+		@SuppressWarnings("unused")
 		List<String> fileNames = new ArrayList<String>();
 		List<AdPicture> pictures =  new ArrayList<AdPicture>();
 		boolean success = false;
 		
+
+		
 		try{
-			Advert advert = createAdvert(fileUpload.getAdSubject(), fileUpload.getAdBody(),
-					fileUpload.getAdLocation(),fileUpload.getContactEmail(),
-					fileUpload.getContactNo(), fileUpload.getSubMenuId());
-			if(files != null && files.size() > 0){
-				for(MultipartFile image:files){
-					AdPicture adPicture = new AdPicture();
-					String fileName = image.getOriginalFilename();
-					adPicture.setImageName(fileName);
-					adPicture.setAdvertDetail(advert.getAdvertDetail());
-					//persist the parent first, set the parent in child then persist the child
-					iAdvertService.insertAdPicture(adPicture);
-					pictures.add(adPicture);
-					String[] fileSplit = fileName.split("\\.");
-					fileNames.add(fileName);
-					//File imageFile = new File(request.getServletContext().getRealPath("C:/Users/pmolefe/Documents/AdPost/images/uploads"), fileName);
-					//File tempFile = File.createTempFile(fileSplit[0], "." + fileSplit[1],
-							//new File(uploadDirectory));
-					File directory = new File(uploadDirectory);
-					if(!directory.exists()){
-						directory.mkdirs();
-					}
-					File uploadedFile = new File(uploadDirectory+"\\"+Math.random()+fileName);
-					uploadedFile.createNewFile();
-					image.transferTo(uploadedFile);
-				}
-			}
+			Advert advert = createAdvert(fileUpload.getAdSubject(), 
+					fileUpload.getAdBody(),fileUpload.getAdLocation(),
+					fileUpload.getContactEmail(), fileUpload.getContactNo(), 
+					fileUpload.getSubMenuId());
+		//check if it's a group
+		if(fileUpload.getIsGroup()){
+			 GroupImage image = new GroupImage();
+			 image.setGroupCdnUrl(fileUpload.getGroupCdnUrl());
+			 image.setGroupUuid(fileUpload.getGroupUuid());
+			 image.setCount(fileUpload.getGroupCount());
+			 image.setGroupSize(fileUpload.getGroupSize());
+			//set properties of the current image and persist
+			 for(int i = 0; i < fileUpload.getUuid().size(); i++ ){
+				 image.setUuid(fileUpload.getUuid().get(i));
+				 image.setCdnUrl(fileUpload.getCdnUrl().get(i));
+				 image.setName(fileUpload.getName().get(i));
+				 image.setSize(fileUpload.getSize().get(i));
+				//persist the parent first, set the parent in child then persist the child
+				 image.setAdvertDetail(advert.getAdvertDetail());
+				 iAdvertService.insertAdPicture(image);
+			 }
+		}
+		else {
+			SingleImage image = new SingleImage();
+			image.setCdnUrl(fileUpload.getGroupCdnUrl());
+			image.setUuid(fileUpload.getGroupUuid());
+			image.setSize(fileUpload.getGroupSize());
+			//persist the parent first, set the parent in child then persist the child
+			image.setAdvertDetail(advert.getAdvertDetail());
+			iAdvertService.insertAdPicture(image);
+		}
+				
 		advert.getAdvertDetail().setAdPictures(pictures);
-			success = insertAdvert(advert);
+		success = insertAdvert(advert);
 		
 		
 		}catch(Exception e){
@@ -161,9 +167,7 @@ public class AdvertController {
 	}
 	private Advert createAdvert(String adSubject, String adBody, String adLocation,
 			String contactEmail, String contactNo, int subMenuId){
-		
-		
-		
+			
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if(auth.getPrincipal().equals("anonymousUser")){
@@ -203,5 +207,37 @@ public class AdvertController {
 			return true;
 		}
 		else return false;
+	}
+	//https://stackoverflow.com/questions/1359689/how-to-send-http-request-in-java
+	private String openHTTPConnection(String upLoadUrl){
+		HttpURLConnection httpConnection = null;
+		BufferedReader br;
+		String line;
+		String result = null;
+		
+		try{
+			URL url = new URL(upLoadUrl);
+			httpConnection = (HttpURLConnection) url.openConnection();
+			//Request headers
+			httpConnection.setRequestMethod("GET");
+			httpConnection.setRequestProperty("Accept", "application/vnd.uploadcare-v0.5+json");
+			httpConnection.setRequestProperty("Authorization",
+					"Uploadcare.Simple 402840513ca8fdd44f3b:248a2cdd20ea47dae231");
+			
+			br = new BufferedReader(new InputStreamReader(
+					httpConnection.getInputStream()));
+			while((line = br.readLine()) != null)
+				result += line;
+			
+			br.close();
+		}
+		catch(Exception e){
+			System.out.println("Error in openHTTPConnection" + e);
+			e.printStackTrace();
+		}
+		return result;
+	}
+	private void closeHTTPConnection(HttpURLConnection connection){
+		connection.disconnect();
 	}
 }

@@ -841,3 +841,6 @@ h4 {
 	margin: 0 auto;
 	border: dashed;
 }
+.uploadcare-widget-button-open {
+    background-color: #d94d4d;
+}

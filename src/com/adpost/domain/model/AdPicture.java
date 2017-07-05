@@ -1,6 +1,9 @@
 package com.adpost.domain.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +19,10 @@ import com.mysql.jdbc.Clob;
 
 @Entity
 @Table(name="advert_picture")
-public class AdPicture {
+@DiscriminatorValue(value="adPicture")
+@DiscriminatorColumn(name="group_type", 
+	discriminatorType=DiscriminatorType.STRING)
+public class AdPicture{
 	@Id
 	@GeneratedValue
 	@Column(name="pk_pic_id")
@@ -26,12 +32,11 @@ public class AdPicture {
 	@JoinColumn(name="fk_detail_id")
 	private AdvertDetail advertDetail;
 	
-	@Column(name="image_url")
-	private String imageUrl;
-	@Column(name="image_title")
-	private String imageTitle;
-	@Column(name="image_name")
-	private String imageName;
+	@Column(name="cdn_url")
+	private String cdnUrl;
+	private String name;
+	private int size;
+	private String uuid;
 	
 	public void setAdvertId(int adPictureId){
 		this.adPictureId = adPictureId;
@@ -45,28 +50,28 @@ public class AdPicture {
 	public AdvertDetail getAdvertDetail(){
 		return this.advertDetail;
 	}
-	public String getImageUrl(){
-		return this.imageUrl;
+	public String getCdnUrl(){
+		return this.cdnUrl;
 	}
-	public void setImageUrl(String imageUrl){
-		this.imageUrl = imageUrl;
+	public void setCdnUrl(String cdnUrl){
+		this.cdnUrl = cdnUrl;
 	}
-	public String getImageTitle(){
-		return this.imageTitle;
+	public String getName(){
+		return this.name;
 	}
-	public void setImageTitle(String imageTitle){
-		this.imageTitle = imageTitle;
+	public void setName(String name){
+		this.name = name;
 	}
-	public String getImageName(){
-		return this.imageName;
+	public String getUuid(){
+		return this.uuid;
 	}
-	public void setImageName(String imageName){
-		this.imageName = imageName;
+	public void setUuid(String uuid){
+		this.uuid = uuid;
 	}
-	/*public Clob getImage(){
-		return this.image;
+	public int getSize(){
+		return this.size;
 	}
-	public void setImage(Clob image){
-		this.image = image;
-	}*/
+	public void setSize(int size){
+		this.size = size;
+	}
 }

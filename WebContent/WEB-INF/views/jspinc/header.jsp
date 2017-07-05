@@ -17,10 +17,11 @@
 		<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.10.3/ui/jquery.ui.dialog.js"></script>
 		<script>
 			UPLOADCARE_LOCALE = "en";
-			UPLOADCARE_TABS = "file dropbox gdrive";
-			UPLOADCARE_PUBLIC_KEY = "04e626f5ad861e785172";
+			UPLOADCARE_PUBLIC_KEY = '402840513ca8fdd44f3b';
+		    UPLOADCARE_TABS = 'file camera dropbox';
+		    UPLOADCARE_IMAGES_ONLY = true;
 		</script>
-		<script charset="utf-8" src="//ucarecdn.com/widget/2.5.9/uploadcare/uploadcare.full.min.js"></script>
+		<script charset="utf-8" src="//ucarecdn.com/widget/3.0.0/uploadcare/uploadcare.full.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>${param.title}</title>
 	</head>

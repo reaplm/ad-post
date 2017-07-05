@@ -45,5 +45,7 @@
 			<mapping class="com.adpost.domain.model.Role" />
 			<mapping class="com.adpost.domain.model.UserDetail" />
 			<mapping class="com.adpost.domain.model.UserType" />
+			<mapping class="com.adpost.domain.model.GroupImage" />
+			<mapping class="com.adpost.domain.model.SingleImage" />
 		</session-factory>
 	</hibernate-configuration>

@@ -3,8 +3,6 @@ package com.adpost.domain.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class FileUpload implements Serializable{
 
@@ -22,8 +20,19 @@ public class FileUpload implements Serializable{
 	private String adBody;
 	private String contactNo;
 	private String contactEmail;
-	private String fileName;
-	private List<MultipartFile> files = null;
+	//Group Information
+	private String groupCdnUrl;
+	private String groupUuid;
+	private int groupCount;
+	private int groupSize;
+	private boolean isGroup;
+	//File Information
+	private List<String> uuid;//this the individual file ids
+	private List<String> cdnUrl;
+	private List<Integer> size;
+	private List<String> name;
+	
+
 	
 	public int getSubMenuId(){
 		return this.subMenuId;
@@ -67,16 +76,61 @@ public class FileUpload implements Serializable{
 	public void setContactEmail(String contactEmail){
 		this.contactEmail = contactEmail;
 	}
-	public String getFileName(){
-		return this.fileName;
+	//Group 
+	public void setGroupUuid(String groupUuid){
+		this.groupUuid = groupUuid;
 	}
-	public void setFile(String fileName){
-		this.fileName = fileName;
+	public String getGroupUuid(){
+		return this.groupUuid;
 	}
-	public List<MultipartFile> getFiles(){
-		return this.files;
+	public void setGroupCount(int groupCount){
+		this.groupCount = groupCount;
 	}
-	public void setFiles(List<MultipartFile> files){
-		this.files = files;
+	public int getGroupCount(){
+		return this.groupCount;
+	}
+	public void setGroupSize(int groupSize){
+		this.groupSize = groupSize;
+	}
+	public int getGroupSize(){
+		return this.groupSize;
+	}
+	
+	public void setIsGroup(boolean isGroup){
+		this.isGroup = isGroup;
+	}
+	public boolean getIsGroup(){
+		return this.isGroup;
+	}
+	public void setGroupCdnUrl(String groupCdnUrl){
+		this.groupCdnUrl = groupCdnUrl;
+	}
+	public String getGroupCdnUrl(){
+		return this.groupCdnUrl;
+	}
+	//Individual files
+	public void setCdnUrl(List<String> cdnUrl){
+		this.cdnUrl = cdnUrl;
+	}
+	public List<String> getCdnUrl(){
+		return this.cdnUrl;
+	}
+	public void setUuid(List<String> uuid){
+		this.uuid = uuid;
+	}
+	public List<String> getUuid(){
+		return this.uuid;
+	}
+	public void setName(List<String> name){
+		this.name = name;
+	}
+	public List<String> getName(){
+		return this.name;
+	}
+	public void setSize(List<Integer> size){
+		this.size = size;
+	}
+	public List<Integer> getSize(){
+		return this.size;
 	}
 }

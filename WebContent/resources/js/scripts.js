@@ -378,6 +378,46 @@ function SubmitEditMenu(){
 		return true;
 	}
 }
+function SubmitAdvert(){
+	var validator = $("#add-advert-form").validate({
+		errorClass: 'error-msg',
+		rules:{
+			menuId:{
+				required: true
+			},
+			subMenuId:{
+				required: true
+			},
+			adLocation:{
+				required: true
+			},
+			adSubject:{
+				required: true
+			},
+			adLocation:{
+				required: true
+			}
+		},
+		messages:{
+			menuId:{
+				required: "Select menu"
+			},
+			subMenuId:{
+				required: "Select sub menu"
+			},
+			adLocation:{
+				required: "Location is required"
+			},
+			adSubject:{
+				required: "Subject cannot be blank"
+			}
+		}
+	});
+	if(validator.form()){
+		$("#add-advert-form").submit();
+	}
+}
+
 //===================================RADIO-BUTTONS================
 
 
@@ -900,26 +940,94 @@ $(document).ready(
 					  $('.active').removeClass('active');
 					  $(this).addClass('active');
 			});
-			$(document).on("change", "#new-ad-category",function(e){
+			$(document).on("change", "#menuId",function(e){
 					var parentMenuId = $(this).val();
 				  GetSubMenuList(parentMenuId, function(subMenuList){
-					  var select = document.getElementById("subMenuSelect");
+					  var select = document.getElementById("subMenuId");
 					  var length = select.length;
 					  $("#subMenuSelect").empty()
 					  $("#subMenuSelect").append("<option value='-1'> </option>");
 					  if(subMenuList.length > 0){
 							for(var i = 0; i < subMenuList.length; i++){
 								
-								$("#subMenuSelect").append("<option value = '" + subMenuList[i].subMenuId +"' >" 
+								$("#subMenuId").append("<option value = '" + subMenuList[i].subMenuId +"' >" 
 									+ subMenuList[i].subMenuName + "</option>");
 							}	
 						}
 					  
-						$("#subMenuSelect").removeClass("hidden");
+						$("#subMenuId").removeClass("hidden");
 				  });
 				
 		});
+		//==========================UPLOADCARE WIDGET ONCHANGE========================
+			var multiWidget = uploadcare.MultipleWidget('[role=uploadcare-uploader][data-multiple]');
+			multiWidget.onUploadComplete(function(group){
+				if(group){
+					group;
+					if(group.count > 1){
+						$("#add-advert-form").append(
+								"<input type='hidden' name='isGroup'" +
+								"value='true'/>"
+						);
+					}else{
+						$("#add-advert-form").append(
+								"<input type='hidden' name='isGroup'" +
+								"value='false'/>"
+						);
+					}
+					
+					$("#add-advert-form").append(
+							"<input type='hidden' name='groupCdnUrl'" +
+							"value='" + group.cdnUrl + "'/>"
+					);
+					$("#add-advert-form").append(
+							"<input type='hidden' name='groupUuid'" +
+							"value='" + group.uuid + "'/>"
+					);
+					$("#add-advert-form").append(
+							"<input type='hidden' name='groupCount'" +
+							"value='" + group.count + "'/>"
+					);
+					$("#add-advert-form").append(
+							"<input type='hidden' name='groupSize'" +
+							"value='" + group.size + "'/>"
+					);
+				}
+			});
+			multiWidget.onChange(function(group){
+				if(group){
 			
+					group;
+					group.files();
+					$.when.apply(null, group.files()).then(
+							function(){
+								var filesInfo = arguments;
+								for(i=0; i< filesInfo.length; i++){
+									$("#add-advert-form").append(
+											"<input type='hidden' name='uuid[" + i + "]'" +
+											"value='"+filesInfo[i].uuid+"'/>"
+									);
+									$("#add-advert-form").append(
+											"<input type='hidden' name='cdnUrl[" + i + "]'" +
+											"value='"+filesInfo[i].cdnUrl+"'/>"
+									);
+									$("#add-advert-form").append(
+											"<input type='hidden' name='size[" + i + "]'" +
+											"value='"+filesInfo[i].size+"'/>"
+									);
+									$("#add-advert-form").append(
+											"<input type='hidden' name='name[" + i + "]'" +
+											"value='"+filesInfo[i].name+"'/>"
+									);
+								
+									//document.getElementById("#fileId").setAttribute("value", filesInfo[i].uuid);
+									//document.getElementById("#cdnUrl").setAttribute("value", filesInfo[i].cdnUrl);
+									var cdnUrl = filesInfo[i].cdnUrl;
+									var uuid = filesInfo[i].uuid;
+								}
+					});
+				}
+			});
 			//=======================ADVERT DETAILS ONCLICK===========================
 			/*$(document).on("click", ".advert-details-link",function(e){
 				var url = $(this).attr("href");
