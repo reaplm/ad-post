@@ -33,18 +33,24 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.AppUser,
 				<p>Phone: ${advert.advertDetail.getContactNo()}&nbsp;&nbsp;&nbsp;Email: ${advert.advertDetail.getContactEmail()}</p>
 			</div>
 		</div>
+		<div class="ad-dtl-pictures">
+			<c:forEach var="picture" items="${adPictures}" varStatus="loop">
+				<div class="ad-dtl-pictures-thb" >
+					<img src="${picture.groupCdnUrl}nth/${loop.index}/" 
+						width = 80px height = 80px 
+						onClick="OpenImageDialog('${picture.groupCdnUrl}nth/${loop.index}/','${advert.advertDetail.getAdSubject()}');"
+						class="button"/>
+				</div>
+			</c:forEach>
+			
+		</div>
 		<div class="ad-dtl-comments">
 		comments
 		</div>
 		
-		
-		<div class="clear"></div>
-		<div class="ad-dtl-pictures">
-			<img src="<%=request.getContextPath()%>/resources/images/ic_keyboard_hide_black_48dp.png" 
-				height="50px" width ="50px" />
-		</div>
 
 	</div>
+	<div id="open-image" class="hidden dialog"></div>
 	<jsp:include page="/WEB-INF/views/jspinc/rightSidebar.jsp"></jsp:include>
 	   <jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>
 	

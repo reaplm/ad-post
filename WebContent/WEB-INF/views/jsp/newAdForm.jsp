@@ -46,9 +46,9 @@
 			</div>
 			
 			<div class="form-row">
-				<form:input name="groupCdnUrl" type="hidden" id="uploadcareWidget"
+				<form:input name="widgetUrl" type="hidden" id="uploadcareWidget"
 						role="uploadcare-uploader" data-images-only="true" 
-						data-multiple="true" data-multiple-max="4" path="groupCdnUrl"/> 
+						data-multiple="true" data-multiple-max="4" path="widgetUrl"/> 
 				
 			</div>
 			<br />

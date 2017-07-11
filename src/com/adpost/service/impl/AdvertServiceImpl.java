@@ -63,4 +63,8 @@ public class AdvertServiceImpl implements IAdvertService{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public List<AdPicture> getAdDetailPictures(int detailId) {
+		return iAdvertDAO.getAdDetailPictures(detailId);
+	}
 }

@@ -155,5 +155,25 @@ public class AdvertDAOImpl implements IAdvertDAO{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public List<AdPicture> getAdDetailPictures(int detailId) {
+		List<AdPicture> result = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		try{
+			Query query = session.createQuery("from AdPicture"
+					+ " where advertDetail.adDetailId = :detailId");
+			query.setParameter("detailId", detailId);
+			result = (List<AdPicture>)query.list();
+			session.flush();
+			session.getTransaction().commit();
+			session.close();
+		}
+		catch(Exception e){
+			System.out.println("Exception occured while fetching images.\n" + e);
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

@@ -27,4 +27,6 @@ public List<Advert> getAllAdverts();
 	public int insertAdPicture(AdPicture adPicture);
 	public AdPicture getAdPicture(int id);
 	public void updateAdPicture(AdPicture adPicture);
+	public List<AdPicture> getAdDetailPictures(int detailId);
+	
 }

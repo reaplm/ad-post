@@ -31,12 +31,21 @@ public class AdPicture{
 	@ManyToOne
 	@JoinColumn(name="fk_detail_id")
 	private AdvertDetail advertDetail;
-	
+	//Individual File Information
 	@Column(name="cdn_url")
 	private String cdnUrl;
 	private String name;
 	private int size;
 	private String uuid;
+	//Group Information
+	@Column(name="group_cdn_url")
+	private String groupCdnUrl;
+	@Column(name="group_count")
+	private int groupCount;
+	@Column(name="group_size")
+	private int groupSize;
+	@Column(name="group_uuid")
+	private String groupUuid;
 	
 	public void setAdvertId(int adPictureId){
 		this.adPictureId = adPictureId;
@@ -73,5 +82,29 @@ public class AdPicture{
 	}
 	public void setSize(int size){
 		this.size = size;
+	}
+	public String getgroupUuid(){
+		return this.groupUuid;
+	}
+	public void setGroupUuid(String groupUuid){
+		this.groupUuid = groupUuid;
+	}
+	public void setGroupCdnUrl(String groupCdnUrl){
+		this.groupCdnUrl = groupCdnUrl;
+	}
+	public String getGroupCdnUrl(){
+		return this.groupCdnUrl;
+	}
+	public int getGroupSize(){
+		return this.groupSize;
+	}
+	public void setGroupSize(int groupSize){
+		this.groupSize = groupSize;
+	}
+	public int getGroupCount(){
+		return this.groupCount;
+	}
+	public void setGroupCount(int groupCount){
+		this.groupCount = groupCount;
 	}
 }

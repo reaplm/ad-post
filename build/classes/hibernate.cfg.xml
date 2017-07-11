@@ -18,7 +18,7 @@
 			<!-- Disable second level cache -->
 			
 			<!-- Drop and re-create the database schema on startup -->  
-	       	<property name="hbm2ddl.auto">create</property>  
+	       	<property name="hbm2ddl.auto">validate</property>  
 	       	
 	       	<!-- Use the script to initialize the database -->
 	       	<property name="hibernate.hbm2ddl.import_files">ad_post_init.sql</property>
@@ -45,7 +45,5 @@
 			<mapping class="com.adpost.domain.model.Role" />
 			<mapping class="com.adpost.domain.model.UserDetail" />
 			<mapping class="com.adpost.domain.model.UserType" />
-			<mapping class="com.adpost.domain.model.GroupImage" />
-			<mapping class="com.adpost.domain.model.SingleImage" />
 		</session-factory>
 	</hibernate-configuration>

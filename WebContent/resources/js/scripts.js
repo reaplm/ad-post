@@ -1,4 +1,26 @@
 
+function OpenImageDialog(url, title){
+	var OK = function(){$("#open-image").dialog("close");}
+	dialogOpts = {
+			width: 'auto',
+			height: 'auto',
+			modal: true,
+			autoOpen: false,
+			resizable: false,
+			title: title,
+			buttons:{
+				"OK": OK
+			},
+			dialogClass: 'dialog'
+	}
+	$("#open-image").empty();
+	$("#open-image").append("<img src='" + url + 
+			"' width = 300px />");
+	$("#open-image").removeClass("hidden");
+	$("#open-image").removeClass("hidden");
+	$("#open-image").dialog(dialogOpts);
+	$("#open-image").dialog("open");
+}
 function UploadImage(imageType){
 	if(imageType == 'adPicture'){
 		//dialog popup
@@ -964,17 +986,7 @@ $(document).ready(
 			multiWidget.onUploadComplete(function(group){
 				if(group){
 					group;
-					if(group.count > 1){
-						$("#add-advert-form").append(
-								"<input type='hidden' name='isGroup'" +
-								"value='true'/>"
-						);
-					}else{
-						$("#add-advert-form").append(
-								"<input type='hidden' name='isGroup'" +
-								"value='false'/>"
-						);
-					}
+					//group.files();
 					
 					$("#add-advert-form").append(
 							"<input type='hidden' name='groupCdnUrl'" +
@@ -996,7 +1008,6 @@ $(document).ready(
 			});
 			multiWidget.onChange(function(group){
 				if(group){
-			
 					group;
 					group.files();
 					$.when.apply(null, group.files()).then(

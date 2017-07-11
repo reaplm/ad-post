@@ -55,7 +55,6 @@ body {
 #bottom-header li {
 	padding-right: 10px;
 }
-
 .menu-list li {
 	list-style-type: none;
 	display: inline;
@@ -101,30 +100,31 @@ body {
 }
 .logo {
 	background-color: transparent;
-	margin-top: 0px;
 }
 
-
-
 .search-bar {
-	height: 22px;
-	width: 260px;
-	margin-top: 10px;
-	color: #e4dce2;
-	border-width: 1px;
-	border-radius: 10px 10px 10px 10px;
+	width: 50%;
+	margin: 0 auto;
 	backgroud-color: #ef4762;
-	float: right;
 }
 .search-bar button{
 	background-color: transparent;
-	border-radius: 10px 10px 10px 10px;
 	border: none;
 }
 .search-bar img{
 	width: 25px;
 	height: 25px;
 	repeat: none;
+}
+.search-bar input{
+	width: 90%;
+	height: 25px;
+	border-width: 1px;
+	border-radius: 10px 10px 10px 10px;
+	background-color: #f8ecc1;
+	text-align: center;
+	border-color: #fa6247;
+	color: #666;
 }
 
 /*==========================SIDEBAR====================================*/
@@ -195,7 +195,7 @@ body {
 }
 #right-sidebar{
 	background-color: #fff;
-	margin-left: 5px;
+	margin-left: 0px;
 }
 /*==========================LOGIN PAGE====================================*/
 #pg-login{
@@ -521,9 +521,10 @@ body {
 	margin-right: 5px;
 }
 .ad-dtl-body{
-	width: 60%;
+	width: 50%;
 	margin-left: 10px;
 	float: left;
+
 }
 .ad-dtl-body-txt{
 	width: 100%;
@@ -533,15 +534,22 @@ body {
 	width: 100%;
 }
 .ad-dtl-comments{
-	width: 35%;
+	width: 25%;
 	min-height: 350px;
 	float: left;
 	overflow: auto;
 	border-left: solid 1px #e9eef2;
+
 }
 
 .ad-dtl-pictures{
-	width: 100%;
+	width: 20%;
+	min-height: 350px;
+	float: left;
+	border-left: solid 1px #e9eef2;
+}
+.ad-dtl-pictures-thb{
+	width: 90%;
 }
 /*==========================FOOTER====================================*/
 #footer {

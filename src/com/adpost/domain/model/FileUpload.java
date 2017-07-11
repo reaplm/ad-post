@@ -25,7 +25,6 @@ public class FileUpload implements Serializable{
 	private String groupUuid;
 	private int groupCount;
 	private int groupSize;
-	private boolean isGroup;
 	//File Information
 	private List<String> uuid;//this the individual file ids
 	private List<String> cdnUrl;
@@ -94,13 +93,6 @@ public class FileUpload implements Serializable{
 	}
 	public int getGroupSize(){
 		return this.groupSize;
-	}
-	
-	public void setIsGroup(boolean isGroup){
-		this.isGroup = isGroup;
-	}
-	public boolean getIsGroup(){
-		return this.isGroup;
 	}
 	public void setGroupCdnUrl(String groupCdnUrl){
 		this.groupCdnUrl = groupCdnUrl;

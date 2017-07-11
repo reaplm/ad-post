@@ -18,6 +18,9 @@ public interface IAdvertDAO {
 	public void updateAdvert(Advert advert);
 	public int insertAdvert(Advert advert);
 	public void deleteAdvert(Advert advert);
+
+	
+	public List<AdPicture> getAdDetailPictures(int detailId);
 	
 	//Advert Detail
 	public int insertAdvertDetail(AdvertDetail advertDetail);

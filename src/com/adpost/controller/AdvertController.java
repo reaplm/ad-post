@@ -39,9 +39,7 @@ import com.adpost.domain.model.Advert;
 import com.adpost.domain.model.AdvertDetail;
 import com.adpost.domain.model.AppUser;
 import com.adpost.domain.model.FileUpload;
-import com.adpost.domain.model.GroupImage;
 import com.adpost.domain.model.Menu;
-import com.adpost.domain.model.SingleImage;
 import com.adpost.domain.model.SubMenu;
 import com.adpost.exception.FailedToPersistObjectException;
 import com.adpost.service.IAdvertService;
@@ -100,13 +98,12 @@ public class AdvertController {
 					fileUpload.getAdBody(),fileUpload.getAdLocation(),
 					fileUpload.getContactEmail(), fileUpload.getContactNo(), 
 					fileUpload.getSubMenuId());
-		//check if it's a group
-		if(fileUpload.getIsGroup()){
-			 GroupImage image = new GroupImage();
-			 image.setGroupCdnUrl(fileUpload.getGroupCdnUrl());
-			 image.setGroupUuid(fileUpload.getGroupUuid());
-			 image.setCount(fileUpload.getGroupCount());
-			 image.setGroupSize(fileUpload.getGroupSize());
+
+			AdPicture image = new AdPicture();
+			image.setGroupCdnUrl(fileUpload.getGroupCdnUrl());
+			image.setGroupUuid(fileUpload.getGroupUuid());
+			image.setGroupCount(fileUpload.getGroupCount());
+			image.setGroupSize(fileUpload.getGroupSize());
 			//set properties of the current image and persist
 			 for(int i = 0; i < fileUpload.getUuid().size(); i++ ){
 				 image.setUuid(fileUpload.getUuid().get(i));
@@ -115,22 +112,12 @@ public class AdvertController {
 				 image.setSize(fileUpload.getSize().get(i));
 				//persist the parent first, set the parent in child then persist the child
 				 image.setAdvertDetail(advert.getAdvertDetail());
+				 pictures.add(image);
 				 iAdvertService.insertAdPicture(image);
 			 }
-		}
-		else {
-			SingleImage image = new SingleImage();
-			image.setCdnUrl(fileUpload.getGroupCdnUrl());
-			image.setUuid(fileUpload.getGroupUuid());
-			image.setSize(fileUpload.getGroupSize());
-			//persist the parent first, set the parent in child then persist the child
-			image.setAdvertDetail(advert.getAdvertDetail());
-			iAdvertService.insertAdPicture(image);
-		}
 				
 		advert.getAdvertDetail().setAdPictures(pictures);
 		success = insertAdvert(advert);
-		
 		
 		}catch(Exception e){
 			System.out.println("an error occured in image.transferTo(imageFile): " + e);
@@ -143,7 +130,10 @@ public class AdvertController {
 			@RequestParam("id") int id){
 		ModelAndView model = new ModelAndView("advertDetails");
 		Advert advert = iAdvertService.getAdvert(id);
+		List<AdPicture> imageList = iAdvertService.getAdDetailPictures
+				(advert.getAdvertDetail().getAdDetailId());
 		model.addObject("advert", advert);
+		model.addObject("adPictures", imageList);
 		return model;
 	}
 	

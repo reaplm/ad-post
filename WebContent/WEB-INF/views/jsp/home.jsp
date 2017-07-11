@@ -6,7 +6,7 @@
     <jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/topMenu.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/logo.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/jspinc/bottomMenu.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/jspinc/searchBar.jsp"></jsp:include>
 	<div class="clear"></div>
 	<div id="pg-home">
 		
