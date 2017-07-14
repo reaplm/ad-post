@@ -74,6 +74,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 						</div>
 				</div>
 				<input type="hidden" id="hiddenId" name="menuId"/>
+				<input type="hidden" id="menuType" name="menuType"/>
 			</form>
 		</div>
 	</div>

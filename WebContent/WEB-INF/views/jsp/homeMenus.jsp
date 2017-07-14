@@ -34,7 +34,7 @@
 								<tr style="background-color: #fff">
 								<% } %>	
 									<td><a href="/AdPost/submenu/detail?id=${subMenu.getSubMenuId()}"
-									 	class="">
+									 	class="sub-menu-dtl">
 									 	${subMenu.getSubMenuName()}</a></td>					
 									<td>${subMenu.getSubMenuDesc()}</td>
 									<td>${subMenu.getMenuStatus()}</td>

@@ -98,6 +98,13 @@ public class MenuController {
 		return iMenuService.getMenu(menuId);
 
 	}
+	@RequestMapping(value="/submenu/detail",method=GET)
+	@ResponseBody
+	public SubMenu getSubMenuDetail(
+			@RequestParam(value="id") int subMenuId){
+		return getSubMenuById(subMenuId);
+
+	}
 	@RequestMapping(value="/menu/status")
 	@ResponseBody
 	public List<Menu> getMenuListByStatus(
@@ -156,20 +163,42 @@ public class MenuController {
 		int menuId = 0;
 		boolean success = false;
 		String id = request.getParameter("menuId");
+		String menuType = request.getParameter("menuType").toLowerCase();
 		if(request.getParameter("menuId") != null){
 			menuId = Integer.parseInt(request.getParameter("menuId"));
-			Menu menu = iMenuService.getMenu(menuId);
-			menu.setMenuDesc(request.getParameter("editDescription"));
-			menu.setMenuName(request.getParameter("editTitle"));
-			menu.setIcon(request.getParameter("editIcon"));
-			menu.setUrl(request.getParameter("editUrl"));
-			if(request.getParameter("status").compareToIgnoreCase("active") == 0)
-				menu.setMenuStatus(MenuStatus.ACTIVE);
-			else if(request.getParameter("status").compareToIgnoreCase("inactive") == 0)
-				menu.setMenuStatus(MenuStatus.INACTIVE);
+			if(menuType != null){
+				switch(menuType){
+				case "menu":
+					Menu menu = iMenuService.getMenu(menuId);
+					menu.setMenuDesc(request.getParameter("editDescription"));
+					menu.setMenuName(request.getParameter("editTitle"));
+					menu.setIcon(request.getParameter("editIcon"));
+					menu.setUrl(request.getParameter("editUrl"));
+					if(request.getParameter("status").compareToIgnoreCase("active") == 0)
+						menu.setMenuStatus(MenuStatus.ACTIVE);
+					else if(request.getParameter("status").compareToIgnoreCase("inactive") == 0)
+						menu.setMenuStatus(MenuStatus.INACTIVE);
+					
+					iMenuService.updateMenu(menu);
+					success = true;
+					break;
+				case "submenu":
+					SubMenu subMenu = iMenuService.getSubMenuById(menuId);
+					subMenu.setSubMenuDesc(request.getParameter("editDescription"));
+					subMenu.setSubMenuName(request.getParameter("editTitle"));
+					subMenu.setIcon(request.getParameter("editIcon"));
+					subMenu.setUrl(request.getParameter("editUrl"));
+					
+					
+					iMenuService.insertSubMenu(subMenu);
+					success = true;
+					break;
+			}
+		}
 			
-			iMenuService.updateMenu(menu);
-			success = true;
+			
+			
+			
 		}
 		return success;
 
@@ -209,6 +238,9 @@ public class MenuController {
 	}
 	private List<SubMenu> getSubMenuList(int parentMenuId){
 		return iMenuService.getAllSubMenus(parentMenuId);
+	}
+	private SubMenu getSubMenuById(int id){
+		return iMenuService.getSubMenuById(id);
 	}
 	private Menu createMenu(String title, String description, String url,
 			String icon,String menuType){

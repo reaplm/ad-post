@@ -229,5 +229,27 @@ public class MenuDAOImpl implements IMenuDAO{
 		 }
 		 return result;
 	}
+	@Override
+	public SubMenu getSubMenuById(int id) {
+		List<SubMenu> result = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		try{
+			session.beginTransaction();
+			Query query = session.createQuery("from SubMenu "
+					+ " where subMenuId = :id");
+			query.setParameter("id", id);
+			result = (List<SubMenu>)query.list();
+			session.getTransaction().commit();
+			session.flush();
+			session.close();
+		}
+		catch(Exception e){
+			System.out.println("Error caught getting subMenu by id: \n" + e);
+			e.printStackTrace();
+		}
+		if(result.size() == 1){return result.get(0);}
+		 else return null;
+	}
 
 }

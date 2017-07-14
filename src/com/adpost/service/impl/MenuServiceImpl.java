@@ -85,5 +85,10 @@ public class MenuServiceImpl implements IMenuService{
 	public List<Menu> getMenusByType(String menuType) {
 		return iMenuDAO.getMenusByType(menuType);
 	}
+
+	@Override
+	public SubMenu getSubMenuById(int id) {
+		return iMenuDAO.getSubMenuById(id);
+	}
 	
 }

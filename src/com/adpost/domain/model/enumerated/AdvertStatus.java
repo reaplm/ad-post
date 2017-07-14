@@ -1,4 +1,4 @@
-package com.adpost.domain.model;
+package com.adpost.domain.model.enumerated;
 
 public enum AdvertStatus {
 	PUBLISHED(1),

@@ -23,6 +23,7 @@ public interface IMenuDAO {
 	public void deleteMenu(Menu menu);
 	
 	public List<SubMenu> getAllSubMenus();
+	public SubMenu getSubMenuById(int id);
 	public SubMenu getSubMenu(int id);
 	public void updateSubMenu(SubMenu subMenu);
 	public void insertSubMenu(SubMenu subMenu);

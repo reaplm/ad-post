@@ -38,4 +38,5 @@ public class AdminController {
 		modelAndView.addObject("title", "Admin Home");
 		return modelAndView;
 	}
+	
 }

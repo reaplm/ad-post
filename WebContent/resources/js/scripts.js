@@ -70,6 +70,25 @@ function UploadAdPicture(url, callback){
 		});
 }
 /**
+ * Get Details of subMenu
+ * @param id
+ * @param callback
+ */
+function GetSubMenuDetail(id, callback){
+	$.ajax({
+		type: "get",
+		url: url,
+		dataType: "json",
+		cache: true,
+		error: function(jqXHr,textStatus, errorThrown){
+			alert("Error Uploading image:\n" + errorThrown);
+		},
+		success: function(data){
+			callback(data);
+		}
+	});
+}
+/**
  * Get list of sub-menus belonging to parent
  * @param parentMenuId
  * @param callback
@@ -170,6 +189,19 @@ function GetMenuById(url, callback){
 		dataType: "json",
 		error: function(jqXHr,textStatus, errorThrown){
 			alert("Error fetching menu details for url:\n" + url);
+		},
+		success: function(data){
+			callback(data);
+		}
+	});
+}
+function GetSubMenuById(url, callback){
+	$.ajax({
+		type: "get",
+		url: url,
+		dataType: "json",
+		error: function(jqXHr,textStatus, errorThrown){
+			alert("Error fetching home menus:\n" + errorThrown);
 		},
 		success: function(data){
 			callback(data);
@@ -396,7 +428,35 @@ function SubmitEditMenu(){
 		}
 	});
 	if(validator.form()){
-		SubmitEditMenuAjax();
+		SubmitEditMenuAjax("menu");
+		return true;
+	}
+}
+/**
+ * Edit Menu Validator
+ */
+function SubmitEditSubMenu(){
+	var validator = $("#edit-menu-form").validate({
+		errorClass: "error-msg",
+		rules:{
+			editTitle: {
+				required: true
+			},
+			editUrl:{
+				required: true
+			}
+		},
+		messages:{
+			editTitle:{
+				required: "*Required"
+			},
+			editUrl:{
+				required: "*Required"
+			}
+		}
+	});
+	if(validator.form()){
+		SubmitEditMenuAjax("submenu");
 		return true;
 	}
 }
@@ -500,28 +560,46 @@ function SubmitMenu(){
 	});//end save menu
 	
 }
-function SubmitEditMenuAjax(){
+function SubmitEditMenuAjax(menuType){
 	var formData = $("#edit-menu-form").serializeArray();
-
-	$.ajax({
-		type: "post",
-		url: $("#edit-menu-form").attr("action"),
-		dataType: "json",
-		data: formData,
-		error: function(jqXHr,textStatus, errorThrown){
-		},
-		success: function(data){
-			if(data == true){
-				alert("Menu saved successfully!");
+	if(menuType.toLowerCase() == "menu"){
+		$.ajax({
+			type: "post",
+			url: $("#edit-menu-form").attr("action"),
+			dataType: "json",
+			data: formData,
+			error: function(jqXHr,textStatus, errorThrown){
+			},
+			success: function(data){
+				if(data == true){
+					alert("Menu saved successfully!");
+				}
+				if(data == false){
+					alert("The following errors were encountered:\n" + errorThrown);
+				}
 			}
-			if(data == false){
-				alert("The following errors were encountered:\n" + errorThrown);
+		});//end save menu
+	}
+	if(menuType.toLowerCase() == "submenu"){
+		$.ajax({
+			type: "post",
+			url: $("#edit-menu-form").attr("action"),
+			dataType: "json",
+			data: formData,
+			error: function(jqXHr,textStatus, errorThrown){
+			},
+			success: function(data){
+				if(data == true){
+					alert("Menu saved successfully!");
+				}
+				if(data == false){
+					alert("The following errors were encountered:\n" + errorThrown);
+				}
 			}
-		}
-	});//end saveUser
+		});//end sub menu
 		
+	}
 }
-
 function GetUserDetails(){
 	var linkUrl = $(this).attr("href");
 	
@@ -928,6 +1006,70 @@ $(document).ready(
 				
 				$("#dg-menu-dtl").dialog("open");
 			});
+			//==============================SUBMENU ONCLICK===========================
+			/**
+			 * Edit SubMenu Item
+			 */
+			$(document).on("click", ".sub-menu-dtl", function(e){
+				e.preventDefault();
+				var status = "";
+				var cancel= function(){$("#dg-menu-dtl").dialog("close");},
+				saveMenu = function(){
+					var result = SubmitEditSubMenu();
+					if(result){
+						$("#dg-menu-dtl").dialog("close");
+						window.location.reload();
+					}
+				},
+				dialogOpts ={
+					width: 550,
+					height: "auto",
+					modal: true,
+					autoOpen: false,
+					resizable: false,
+					title: "Edit Sub Menu",
+					position: { my: "right bottom", at: "center center", of: window },
+					open: function(){},
+					close: function(){$(".edit-menu").addClass("hidden");},
+					buttons:{
+						"save": saveMenu
+					},
+					dialogClass: 'dialog'
+				};
+				$("#dg-menu-dtl").dialog(dialogOpts);
+				//get menu details through ajax
+				GetSubMenuById($(this).attr("href"), function(subMenu){
+					var textbox;
+					if(subMenu != null){
+						$("#dg-menu-dtl").removeClass("hidden");
+					}
+					//set attributes
+					$("#dtlName").text(" " + subMenu.subMenuName);
+					$("#dtlDesc").text(" - " + subMenu.subMenuDesc);
+					$("#dtlIcon").text(subMenu.icon);
+					$("#dtlType").text(subMenu.subMenuType);
+					$("#dtlStatus").text(subMenu.menuStatus);
+					//inputs
+					document.getElementById("editTitle").value = subMenu.subMenuName;
+					document.getElementById("editDescription").value = subMenu.subMenuDesc;
+					document.getElementById("editIcon").value = subMenu.icon;
+					document.getElementById("editUrl").value = subMenu.url;
+					document.getElementById("menuType").value = "subMenu";
+					//status = menu.menuStatus;
+					if(subMenu.subMenuStatus == "APPROVED"){
+						document.getElementById("menuActive").checked = true;
+					}else{
+						document.getElementById("menuInactive").checked = false;
+					}
+					document.getElementById("hiddenId").value = subMenu.subMenuId;
+					//open dialog
+					
+					$("#dg-menu-dtl").dialog({title: 'Editing ' + subMenu.subMenuName});					
+				});
+				
+				
+				$("#dg-menu-dtl").dialog("open");
+			});
 			$(document).on("click", ".dtl-link", function(e){
 				e.preventDefault();
 				var linkAction = $(this).text().toLowerCase();
@@ -950,11 +1092,6 @@ $(document).ready(
 				}
 				if(linkAction == "edit"){
 					$(".edit-menu").removeClass("hidden");
-						//select values
-						//$("#menuType").val(data.menuType);
-						//$("#menuStatus").val(data.menuStatus);
-						
-					
 				}
 			});
 			//=======================MENU-LIST STATE===========================
@@ -981,6 +1118,7 @@ $(document).ready(
 				  });
 				
 		});
+		
 		//==========================UPLOADCARE WIDGET ONCHANGE========================
 			var multiWidget = uploadcare.MultipleWidget('[role=uploadcare-uploader][data-multiple]');
 			multiWidget.onUploadComplete(function(group){

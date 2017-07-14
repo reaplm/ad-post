@@ -45,7 +45,6 @@ import com.adpost.exception.FailedToPersistObjectException;
 import com.adpost.service.IAdvertService;
 import com.adpost.service.IMenuService;
 import com.adpost.service.IUserService;
-import com.uploadcare.api.Client;
 
 @Controller
 public class AdvertController {
@@ -55,9 +54,7 @@ public class AdvertController {
 	private IMenuService iMenuService;
 	@Autowired
 	private IUserService iUserService;
-	
-	private final String uploadDirectory = "C:/Users/pmolefe/Documents/AdPost/images/uploads";
-	
+		
 	@RequestMapping(value="/adverts", method=GET)
 	public ModelAndView getAllAdverts(
 			@ModelAttribute("advert") Advert advert,
@@ -71,6 +68,13 @@ public class AdvertController {
 		modelAndView.addObject("advertList", advertList);
 		modelAndView.addObject("menuList", menuList);
 		return modelAndView;
+	}
+	@RequestMapping(value="/admin/posts")
+	public ModelAndView posts(){
+		ModelAndView model = new ModelAndView("posts");
+		List<Advert> posts = iAdvertService.getAllAdverts();
+		model.addObject("advertList", posts);
+		return model;
 	}
 	@RequestMapping(value="/advert/newpost", method=GET)
 	public ModelAndView newAdvert(@ModelAttribute("adDetails") AdvertDetail advertDetails){
@@ -136,6 +140,7 @@ public class AdvertController {
 		model.addObject("adPictures", imageList);
 		return model;
 	}
+	
 	
 	@RequestMapping(value="/advert/post-ad", method=GET)
 	public ModelAndView postAd(@ModelAttribute FileUpload fileUpload){
