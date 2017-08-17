@@ -7,22 +7,19 @@
 	<div id="pg-login">
 			<form id = "login-form" action = "/AdPost/login" method = "post" >
 				<div class="form-row">
-					<img src="resources/images/person_outline.png"/>
-					<input class = "textbox txt-medium" 
-						type = "text" name = "email" 
+					<input class = "textbox username" type = "text" name = "email" 
 								id = "email" placeholder = "email" value="${email}" />
 				</div>
 				<div class="form-row">
-					<img src="resources/images/lock_outline.png"/>
-					<input class = "textbox txt-medium" type = "password" 
+					<input class = "textbox password" type = "password" 
 								name = "password" id = "password" placeholder = "password"/>
 				</div>
-				<div class="form-row align-center">
+				<div class="form-row">
 					<button name = "action" id = "login-button" class="button form-submit"
 							onclick="SubmitLogin()" >SUBMIT</button><br />
 				</div>
 				<div class="form-row align-center">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href = "/AdPost/resetPassword">Forgot Password?</a>&nbsp;&nbsp;&nbsp;
+					<a href = "/AdPost/resetPassword">Forgot Password?</a>&nbsp;&nbsp;&nbsp;
 					<a href = "/AdPost/register">Register</a>
 				</div>
 			</form>
@@ -31,4 +28,3 @@
 			<p class = "error-msg">${errorMsg}</p>
 	</div>
 			<div class="clear"></div>
-</div>

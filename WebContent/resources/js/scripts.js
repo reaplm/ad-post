@@ -1,73 +1,77 @@
 
-function OpenImageDialog(url, title){
-	var OK = function(){$("#open-image").dialog("close");}
-	dialogOpts = {
-			width: 'auto',
-			height: 'auto',
-			modal: true,
-			autoOpen: false,
-			resizable: false,
-			title: title,
-			buttons:{
-				"OK": OK
-			},
-			dialogClass: 'dialog'
-	}
-	$("#open-image").empty();
-	$("#open-image").append("<img src='" + url + 
-			"' width = 300px />");
-	$("#open-image").removeClass("hidden");
-	$("#open-image").removeClass("hidden");
-	$("#open-image").dialog(dialogOpts);
-	$("#open-image").dialog("open");
-}
-function UploadImage(imageType){
-	if(imageType == 'adPicture'){
-		//dialog popup
-		var done= function(){
-				var url = $("#photo-upload-form").attr("action");
-				var formData = new FormData(this);
-				
-				UploadAdPicture(url, function(data){
-					alert(data.message);
-				});
-				$("#photo-upload").dialog("close");
-			},
-		dialogOpts ={
-			width: 350,
-			height: 450,
-			modal: true,
-			autoOpen: false,
-			resizable: false,
-			title: "Upload Pictures",
-			open: function(){},
-			buttons:{
-				"DONE": done
-			},
-			dialogClass: 'dialog'
-		};
-		 $("#photo-upload").removeClass("hidden");
-		  $("#photo-upload").dialog(dialogOpts);
-		  $("#photo-upload").dialog("open");
-	}
-	if(imageType == 'profilePicture'){
+function SaveActiveTab(){
+	var activeTabIndex = $("#menu-tabs").tabs("option", "active");
+	var dataStore = window.sessionStorage;
+	try{
+		dataStore.setItem("activeTabIndex", activeTabIndex);
+	}catch(e){alert("Can't store index: \n"+e);}
 		
-	}
-	return false;
 }
-function UploadAdPicture(url, callback){
-	$.ajax({
-			type: "post",
-			url: url,
-			dataType: "json",
-			cache: true,
-			error: function(jqXHr,textStatus, errorThrown){
-				alert("Error Uploading image:\n" + errorThrown);
-			},
-			success: function(data){
-				callback(data);
-			}
-		});
+function OpenActiveTab(){
+	var dataStore = window.sessionStorage;
+	var	oldIndex = dataStore.getItem("activeTabIndex");
+
+	$("#menu-tabs").tabs("option", "active", oldIndex);
+		
+}
+function SaveActiveAcc(){
+	var activeAccIndex = $(".sidebar-accordion").accordion("option", "active");
+	var dataStore = window.sessionStorage;
+	try{
+		dataStore.setItem("activeAccIndex", activeAccIndex);
+	}catch(e){alert("Can't store index: \n"+e);}
+		
+}
+function OpenActiveAcc(){
+	var dataStore = window.sessionStorage;
+	var	oldIndex = dataStore.getItem("activeAccIndex");
+
+	$(".sidebar-accordion").accordion("option", "active", parseInt(oldIndex));
+		
+}
+function ReseActiveTab(){
+	var dataStore = window.sessionStorage;
+	dataStore.setItem("activeIndex", 0);
+
+	$("#menu-tabs").tabs("option", "active", oldIndex);
+		
+}
+/*function OpenActiveTab(){
+	var activeTabIndex = 0;
+	var dataStore = window.sessionStorage;
+	var oldIndex = 0;
+	try{
+		oldIndex = dataStore.getItem(index);
+	}catch(e){alert("dataStore  exception"+e);}
+	$("#menu-tabs").tabs({
+		active: oldIndex,
+		activate: function(e,ui){
+			var newIdex = $("#menu-tabs").tabs("option", "active");
+			try{
+				dataStorage.setItem("index", newIndex);
+			}catch(e){alert("Can't store index: \n"+e);}
+		}
+	});
+		
+}*/
+/**
+ * Swap the image
+ */
+var slideIndex = 1;
+function SlideNext(){
+	ShowSlides(slideIndex += 1);
+}
+function ShowSlides(index){
+	var i;
+	var slides = document.getElementsByClassName("img-slide");
+	if(index > slides.length){slideIndex = 1;}
+	for(i=0; i< slides.length; i++){
+		slides[i].style.display = "none";
+	}
+	slides[slideIndex - 1].style.display = "block";
+}
+function CurrentSlide(index){
+	ShowSlides(index);
 }
 /**
  * Get Details of subMenu
@@ -313,8 +317,7 @@ function AddMenu(){
 		SubmitMenu();
 		//close dialog
 		$("#add-menu").dialog("close");
-		alert("Menu Created.");
-		window.location.reload();
+		
 		return false;
 	}
 }
@@ -324,7 +327,6 @@ function AddMenu(){
 function SubmitRegistration(){
 	var validator = $("#register-form").validate({
 		errorClass: "error-msg",
-		errorElement: "div",
 		rules:{
 			firstName: {
 				required: true
@@ -497,6 +499,7 @@ function SubmitAdvert(){
 	});
 	if(validator.form()){
 		$("#add-advert-form").submit();
+		return true;
 	}
 }
 
@@ -556,6 +559,7 @@ function SubmitMenu(){
 				$("#add-menu-form").dialog("close");
 			}
 			window.location.reload();
+			
 		}
 	});//end save menu
 	
@@ -649,7 +653,7 @@ function GetUserDetails(){
 	});//end saveUser
 	
 }
-function ShowUserDetails(){
+/*function ShowUserDetails(){
 	var linkUrl = $("user-details-link").attr("href");
 	var cancel= function(){$("#view-user").dialog("close");},
 	saveUser = function(){
@@ -697,7 +701,7 @@ function ShowUserDetails(){
 	alert("clicked!");
 	
 	
-}
+}*/
 /**
  * Clears all inputs in a form
  * @param formId : the id of the form to clear
@@ -713,7 +717,11 @@ function SetupWidgets(){
 	$("#menu-tabs").tabs();
 	
 	//accordion sidebar 
-	$(".sidebar-accordion").accordion();
+	$(".sidebar-accordion").accordion({
+		collapsible: true,
+		active: false,
+		heightStyle: "content"
+	});
 
 }
 function InitDom(){
@@ -738,12 +746,35 @@ function InitDom(){
 
  window.onload = function() {
 	  //var input = document.getElementById("password").focus();
-	}
+	 OpenActiveTab();
+	 OpenActiveAcc();
+	 CurrentSlide(1);
+}
+ function InitDialog(){
+	 var dialogOpts ={
+				width: 550,
+				height: "auto",
+				modal: true,
+				autoOpen: false,
+				resizable: false,
+				position: "auto",
+				title: "",
+				dialogClass: 'dialog'
+			};
+			return $("#jqDialog").dialog(dialogOpts);
+ }
+ window.unload = function(){
+	 ReseActiveTab();
+ }
 $(document).ready(
 		function(){
 			//initDom();
 			SetupWidgets();
-			
+			var jqDialog = InitDialog();
+			/**
+			 * Dialogs
+			 */
+	
 			/**
 			 * Adding a new user through dialog
 			 */
@@ -817,29 +848,18 @@ $(document).ready(
 			/**
 			 * Dialog for editing a user
 			 */
-			$(document).on("click", ".user-details-link",function(e){
+			$(document).on("click", ".lnk-user-details",function(e){
 				e.preventDefault();
 				var linkUrl = $(this).attr("href");
-				var cancel= function(){$("#view-user").dialog("close");},
 				saveUser = function(){
 					//SubmitNewUser();
 					//var formData = $("#add-user-form").serializeArray();
 					//AddUser(formData);
 					
 				},
-				dialogOpts ={
-					width: 500,
-					height: 450,
-					modal: true,
-					autoOpen: false,
-					resizable: false,
-					title: "View User",
-					open: function(){},
-					buttons:{
-						"cancel": cancel,
-						"save": saveUser
-					},
-					dialogClass: 'dialog'
+				close = function(){
+					
+					$("#view-user").addClass("hidden");
 				};
 				//send data using ajax and open dialog on success
 				$.ajax({
@@ -868,11 +888,12 @@ $(document).ready(
 							$("#edit-user-status").value='Active';
 						}
 						else {$("#edit-user-status").value='Inctive';}
-						
+						$("#view-user").appendTo("#jqDialog");
 						$("#view-user").removeClass("hidden");
 						$("#view-user-bot").removeClass("hidden");
-						$("#view-user").dialog(dialogOpts);
-						$("#view-user").dialog("open");
+						jqDialog.dialog("option",({title: data.userDetail.firstName + "Details",
+							buttons:{"save": saveUser},close: close}));
+						jqDialog.dialog("open");
 					
 					}
 					
@@ -890,26 +911,14 @@ $(document).ready(
 			$(document).on("click", "#new-menu",function(e){
 				var htmlText;
 				var menuType = "category";
-				var cancel= function(){$("#add-menu").dialog("close");},
-				addMenu = function(){
-					
+				var addMenu = function(){
 					AddMenu();
+					alert("Menu Created.");
+					window.location.reload();
 					
 				},
-				dialogOpts ={
-					width: 500,
-					height: 350,
-					modal: true,
-					autoOpen: false,
-					resizable: false,
-					title: "Add Category/Sub-Category",
-					open: function(){},
-					buttons:{
-						"cancel": cancel,
-						"save": addMenu
-					},
-					dialogClass: 'dialog'
-				};
+				close = function(){$("#add-menu").addClass("hidden");};
+				
 				GetMenuList(menuType, function(menuList){
 					  var select = document.getElementById("parentId");
 					  var length = select.length;
@@ -926,9 +935,10 @@ $(document).ready(
 				  });
 				//open dialog
 				$("#add-menu").removeClass("hidden");
-				$("#add-menu").dialog(dialogOpts);
-				$("#add-menu").dialog("open");
-				
+				$("#add-menu").appendTo("#jqDialog");
+				$("#jqDialog").dialog("option",({title: "Add Category/Sub-Category",
+					buttons: {"save": addMenu}, close: close}) );
+				$("#jqDialog").dialog("open");
 				return false;
 			});
 			/**
@@ -936,39 +946,28 @@ $(document).ready(
 			 */
 			$(document).on("click", ".menu-details-link",function(e){
 				e.preventDefault();
-				var status = "";
-				var cancel= function(){$("#dg-menu-dtl").dialog("close");},
+				var status = "", open = true;
+				var cancel= function(){$("#jqDialog").dialog("close");},
 				saveMenu = function(){
+					SaveActiveTab();
 					var result = SubmitEditMenu();
 					if(result){
-						$("#dg-menu-dtl").dialog("close");
+						$("#jqDialog").dialog("close");
 						window.location.reload();
 					}
 				},
-				dialogOpts ={
-					width: 550,
-					height: "auto",
-					modal: true,
-					autoOpen: false,
-					resizable: false,
-					title: "Edit Menu",
-					position: { my: "right bottom", at: "center center", of: window },
-					open: function(){},
-					close: function(){$(".edit-menu").addClass("hidden");},
-					buttons:{
-						"save": saveMenu
-					},
-					dialogClass: 'dialog'
-				};
-				$("#dg-menu-dtl").dialog(dialogOpts);
+				close = function(){$(".dg-menu-dtl").addClass("hidden");};
+				$(".dg-menu-dtl").appendTo("#jqDialog");
+				
 				//get menu details through ajax
 				GetMenuById($(this).attr("href"), function(menu){
 					var textbox;
 					if(menu != null){
-						$("#dg-menu-dtl").removeClass("hidden");
-					}
+						$(".dg-menu-dtl").removeClass("hidden");
+						
+					}else{open = false;}
 					//set image attributes
-					$("#dg-menu-dtl img").attr("src", "/AdPost/" +
+					$(".dg-menu-dtl img").attr("src", "/AdPost/" +
 							"resources/images/homeIcons/" + menu.icon);
 					//$("#menu-dtl img").attr("title", "menu.icon") 
 					//spans
@@ -983,6 +982,9 @@ $(document).ready(
 					document.getElementById("editDescription").value = menu.menuDesc;
 					document.getElementById("editIcon").value = menu.icon;
 					document.getElementById("editUrl").value = menu.url;
+					document.getElementById("menuType").value = "menu";
+					$(".dg-menu-dtl img").removeClass("hidden");
+
 					//status = menu.menuStatus;
 					if(menu.menuStatus == "ACTIVE"){
 						document.getElementById("menuActive").checked = true;
@@ -993,19 +995,16 @@ $(document).ready(
 					document.getElementById("hiddenId").value = menu.menuId;
 					//open dialog
 					
-					$("#dg-menu-dtl").dialog({title: 'Editing ' + menu.menuName});					
+					$("#jqDialog").dialog({title: 'Editing ' + menu.menuName});					
 				});
-				/*GetMenuStatus(function(status){
-					var select = document.getElementById("statusSelect");
-					$("#statusSelect").empty();
-					for(var i= 0; i < status.length; i++){
-						select.append("<option value = '"+status[i]+"'>"+ status[i]+"</option>")
-					}
-					//select.value = menuStatus;
-				});*/
-				
-				$("#dg-menu-dtl").dialog("open");
+				if(open == true){
+					$('.dg-menu-dtl').removeClass("ui-widget-content");
+					jqDialog.dialog({buttons:{"save": saveMenu}, close:close});
+					$("#jqDialog").dialog("open");
+				}
+				else{alert("Failed to open dialog!");}
 			});
+
 			//==============================SUBMENU ONCLICK===========================
 			/**
 			 * Edit SubMenu Item
@@ -1013,42 +1012,35 @@ $(document).ready(
 			$(document).on("click", ".sub-menu-dtl", function(e){
 				e.preventDefault();
 				var status = "";
-				var cancel= function(){$("#dg-menu-dtl").dialog("close");},
+				var cancel= function(){$("#jqDialog").dialog("close");},
 				saveMenu = function(){
 					var result = SubmitEditSubMenu();
 					if(result){
-						$("#dg-menu-dtl").dialog("close");
+						$("#jqDialog").dialog("close");
+						
 						window.location.reload();
 					}
-				},
-				dialogOpts ={
-					width: 550,
-					height: "auto",
-					modal: true,
-					autoOpen: false,
-					resizable: false,
-					title: "Edit Sub Menu",
-					position: { my: "right bottom", at: "center center", of: window },
-					open: function(){},
-					close: function(){$(".edit-menu").addClass("hidden");},
-					buttons:{
-						"save": saveMenu
-					},
-					dialogClass: 'dialog'
-				};
-				$("#dg-menu-dtl").dialog(dialogOpts);
+				}
+				close = function(){$(".dg-menu-dtl").addClass("hidden");};
+				
+				$(".dg-menu-dtl").appendTo("#jqDialog");
+				
 				//get menu details through ajax
 				GetSubMenuById($(this).attr("href"), function(subMenu){
 					var textbox;
 					if(subMenu != null){
-						$("#dg-menu-dtl").removeClass("hidden");
+						$(".dg-menu-dtl").removeClass("hidden");
 					}
+					
+					
 					//set attributes
 					$("#dtlName").text(" " + subMenu.subMenuName);
 					$("#dtlDesc").text(" - " + subMenu.subMenuDesc);
 					$("#dtlIcon").text(subMenu.icon);
 					$("#dtlType").text(subMenu.subMenuType);
 					$("#dtlStatus").text(subMenu.menuStatus);
+					$(".dg-menu-dtl img").addClass("hidden");
+
 					//inputs
 					document.getElementById("editTitle").value = subMenu.subMenuName;
 					document.getElementById("editDescription").value = subMenu.subMenuDesc;
@@ -1056,19 +1048,19 @@ $(document).ready(
 					document.getElementById("editUrl").value = subMenu.url;
 					document.getElementById("menuType").value = "subMenu";
 					//status = menu.menuStatus;
-					if(subMenu.subMenuStatus == "APPROVED"){
-						document.getElementById("menuActive").checked = true;
+					if(subMenu.menuStatus == "ACTIVE"){
+						document.getElementById("menuActive").checked = "checked";
 					}else{
-						document.getElementById("menuInactive").checked = false;
+						document.getElementById("menuInactive").checked = "checked";
 					}
 					document.getElementById("hiddenId").value = subMenu.subMenuId;
 					//open dialog
 					
-					$("#dg-menu-dtl").dialog({title: 'Editing ' + subMenu.subMenuName});					
+					jqDialog.dialog({title: 'Editing ' + subMenu.subMenuName});	
 				});
-				
-				
-				$("#dg-menu-dtl").dialog("open");
+				//Dialog Options
+				jqDialog.dialog({buttons:{"save": saveMenu}, close:close});
+				$("#jqDialog").dialog("open");
 			});
 			$(document).on("click", ".dtl-link", function(e){
 				e.preventDefault();
@@ -1118,7 +1110,34 @@ $(document).ready(
 				  });
 				
 		});
-		
+			//=========================JQUERY ACCORDION MENU=========================
+			$(document).on("click", ".sidebar-accordion li a", function(e){
+				SaveActiveAcc();
+			});
+			//navigation highlight
+			var url = window.location.href;
+			url = url.split("?",1);
+			url = decodeURIComponent(url);
+			$(".list-menu a").each(function(){
+				if(this.href == url){
+					//$(this).closest('li').addClass("active");
+					$(this).addClass("active");
+				}
+			});
+			$(".sidebar-accordion a").each(function(){
+				if(this.href == url){
+					$(this).closest('li').addClass("active");
+					var liParent = $(this).parent('ul');
+					liParent.closest('h3').addClass("ui-accordion-header-active");
+					liParent.closest('h3').addClass("ui-state-active");
+					//$(this).closest('.sidebar-accordion h3').addClass("ui-accordion-header-active");
+					//$(this).parent('ui-accordion-header').addClass("ui-accordion-header-active");
+					//$(this).parent('ui-accordion-header').addClass("ui-state-active");
+				}
+			});
+			$("#menu-tabs a").on("click",function(){
+				SaveActiveTab();
+			});
 		//==========================UPLOADCARE WIDGET ONCHANGE========================
 			var multiWidget = uploadcare.MultipleWidget('[role=uploadcare-uploader][data-multiple]');
 			multiWidget.onUploadComplete(function(group){
@@ -1177,6 +1196,7 @@ $(document).ready(
 					});
 				}
 			});
+			
 			//=======================ADVERT DETAILS ONCLICK===========================
 			/*$(document).on("click", ".advert-details-link",function(e){
 				var url = $(this).attr("href");

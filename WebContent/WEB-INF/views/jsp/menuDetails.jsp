@@ -4,7 +4,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>	
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-	<div id="dg-menu-dtl" class="dialog hidden">
+	<div class="hidden dg-menu-dtl dg-menu">
 		<div class="details">
 			<div class="dtl-img">
 				<img src=""
@@ -23,7 +23,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 		</div>
 		
 		<div class="edit-menu hidden">
-		<hr />
+			<hr />
 			<form id = "edit-menu-form" method="post" action="/AdPost/menu/edit">
 				<div class="form-row">
 					<div class="left-col"></div>
@@ -40,7 +40,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 						</div>
 						<div class="right-col">
 							<input type = "text" id = "editTitle" name = "editTitle" 
-							class="textbox txt-medium"/>
+							class="textbox"/>
 						</div>
 				</div>
 				<div class="clear"></div>
@@ -50,7 +50,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 						</div>
 						<div class="right-col">
 							<input type = "text" id = "editDescription" name = "editDescription" 
-								class="textbox txt-medium" />
+								class="textbox" />
 						</div>
 				</div>
 				<div class="clear"></div>
@@ -60,7 +60,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 						</div>
 						<div class="right-col">
 							<input type = "text" id = "editIcon" name = "editIcon" 
-								class="textbox txt-medium" />
+								class="textbox" />
 						</div>
 				</div>
 				<div class="clear"></div>
@@ -70,7 +70,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.Menu" %>
 						</div>
 						<div class="right-col">
 							<input type = "text" id = "editUrl" name = "editUrl" 
-								class="textbox txt-medium"/>
+								class="textbox"/>
 						</div>
 				</div>
 				<input type="hidden" id="hiddenId" name="menuId"/>

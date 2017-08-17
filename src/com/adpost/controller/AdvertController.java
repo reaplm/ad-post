@@ -55,7 +55,7 @@ public class AdvertController {
 	@Autowired
 	private IUserService iUserService;
 		
-	@RequestMapping(value="/adverts", method=GET)
+	/*@RequestMapping(value="/adverts", method=GET)
 	public ModelAndView getAllAdverts(
 			@ModelAttribute("advert") Advert advert,
 			@ModelAttribute("adDetails") AdvertDetail advertDetails){
@@ -68,7 +68,7 @@ public class AdvertController {
 		modelAndView.addObject("advertList", advertList);
 		modelAndView.addObject("menuList", menuList);
 		return modelAndView;
-	}
+	}*/
 	@RequestMapping(value="/admin/posts")
 	public ModelAndView posts(){
 		ModelAndView model = new ModelAndView("posts");
@@ -121,7 +121,7 @@ public class AdvertController {
 			 }
 				
 		advert.getAdvertDetail().setAdPictures(pictures);
-		success = insertAdvert(advert);
+		success = updateAdvert(advert);
 		
 		}catch(Exception e){
 			System.out.println("an error occured in image.transferTo(imageFile): " + e);
@@ -129,10 +129,34 @@ public class AdvertController {
 		}
 		response.sendRedirect("/AdPost/adverts"); 
 	}
-	@RequestMapping(value="/advert/detail", method=GET)
+	@RequestMapping(value="/adverts", method=GET)
 	public @ResponseBody ModelAndView getAdvert(
+			@RequestParam(value="id", required=false, defaultValue="-1") int id,
+			@ModelAttribute("advert") Advert advert,
+			@ModelAttribute("adDetails") AdvertDetail advertDetails){
+		ModelAndView modelAndView = new ModelAndView();
+		if(id < 0){
+			modelAndView.setViewName("adverts");
+			List<Advert> advertList = getAdvertList();
+			List<Menu> menuList = getMenuList();
+			modelAndView.addObject("title", "Adverts");
+			modelAndView.addObject("advertList", advertList);
+			modelAndView.addObject("menuList", menuList);
+			return modelAndView;
+		}else{
+			modelAndView.setViewName("adDetail");
+			advert = iAdvertService.getAdvert(id);
+			List<AdPicture> imageList = iAdvertService.getAdDetailPictures
+					(advert.getAdvertDetail().getAdDetailId());
+			modelAndView.addObject("advert", advert);
+			modelAndView.addObject("adPictures", imageList);
+		}
+		return modelAndView;
+	}
+	@RequestMapping(value="/admin/advert/detail", method=GET)
+	public @ResponseBody ModelAndView getAdminAdvert(
 			@RequestParam("id") int id){
-		ModelAndView model = new ModelAndView("advertDetails");
+		ModelAndView model = new ModelAndView("adminAdDetail");
 		Advert advert = iAdvertService.getAdvert(id);
 		List<AdPicture> imageList = iAdvertService.getAdDetailPictures
 				(advert.getAdvertDetail().getAdDetailId());
@@ -199,6 +223,13 @@ public class AdvertController {
 	private boolean insertAdvert(Advert advert){
 		if(advert != null){
 			int id = iAdvertService.insertAdvert(advert);
+			return true;
+		}
+		else return false;
+	}
+	private boolean updateAdvert(Advert advert){
+		if(advert != null){
+			iAdvertService.updateAdvert(advert);
 			return true;
 		}
 		else return false;

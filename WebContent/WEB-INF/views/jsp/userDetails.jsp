@@ -2,11 +2,8 @@
 pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.AppUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
-<!-- 
-<div id="view-user" class="hidden dialog" >
-	-->		 
-	
+	 
+	<div id="view-user" class="hidden dialog" >
 			<div id="view-user-top">
 				<table>
 					<tr>
@@ -144,6 +141,7 @@ pageEncoding="ISO-8859-1" import = "com.adpost.domain.model.AppUser"%>
 					</tr>
 				</table>
 				</form>
-			</div>		
+			</div>	
+			</div>	
 
 

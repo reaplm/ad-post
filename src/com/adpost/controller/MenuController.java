@@ -188,7 +188,10 @@ public class MenuController {
 					subMenu.setSubMenuName(request.getParameter("editTitle"));
 					subMenu.setIcon(request.getParameter("editIcon"));
 					subMenu.setUrl(request.getParameter("editUrl"));
-					
+					if(request.getParameter("status").compareToIgnoreCase("active") == 0)
+						subMenu.setMenuStatus(MenuStatus.ACTIVE);
+					else if(request.getParameter("status").compareToIgnoreCase("inactive") == 0)
+						subMenu.setMenuStatus(MenuStatus.INACTIVE);
 					
 					iMenuService.insertSubMenu(subMenu);
 					success = true;

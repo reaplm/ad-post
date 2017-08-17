@@ -10,31 +10,31 @@
 		<form id = "register-form" method="post" action="/AdPost/register">
 			<div class="form-row">
 				<div class="form-col float-left">
-					<input class = "textbox txt-small float-left" type = "text" 
+					<input class = "textbox" type = "text" 
 						name = "firstName" id = "firstName" placeholder="First Name"/>
 				</div>
 				<div  class="form-col float-left">
-					<input class = "textbox txt-small" type = "text" 
+					<input class = "textbox" type = "text" 
 						name = "lastName" id = "lastName" placeholder="Last Name"/>
 				</div>
 			</div>
 			<div class="clear"></div>
 			<div class="form-row">
-				<input class = "textbox txt-medium" type = "text" 
+				<input class = "textbox" type = "text" 
 					name = "email" id = "email" placeholder="Email"/>
 			</div>
 			<div class="form-row">
 				<div class="form-col float-left">
-					<input class = "textbox txt-small float-left" type = "text" 
+					<input class = "textbox" type = "text" 
 						name = "password" id = "password" placeholder="Password"/>
 				</div>
 				<div class="form-col float-left">
-					<input class = "textbox txt-small float-left" type = "text" 
+					<input class = "textbox" type = "text" 
 						name = "confirmPass" id = "confirmPass" placeholder="Re-enter password"/>
 				</div>
 			</div>
-			<div class="form-row align-center">
-				<button name="register" id = "register-button" class="form-submit button"
+			<div class="form-row">
+				<button name="register" class="form-submit button"
 						onclick="SubmitRegistration()">SUBMIT</button>
 			</div>		
 		</form>	

@@ -6,8 +6,8 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
     
-    <jsp:include page="/WEB-INF/views/jspinc/adminHeader.jsp"></jsp:include>
-    <div id="wrapper">
+    <jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/jspinc/adminMenu.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/jspinc/leftSidebar.jsp"></jsp:include>
 	
 	<div id="users" class="content">

@@ -4,8 +4,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="clear"></div>
-<div id="bottom-header" class="header">
-	<ul class="menu-list">
+<div id="bottom-header" class="list-menu">
+	<ul>
 		<li><a href="/AdPost/home">Home</a></li>
 		<li><a href="/AdPost/about">About</a></li>
 		<li><a href="/AdPost/contact">Contact</a></li>

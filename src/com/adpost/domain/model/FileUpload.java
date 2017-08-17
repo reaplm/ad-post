@@ -31,6 +31,8 @@ public class FileUpload implements Serializable{
 	private List<Integer> size;
 	private List<String> name;
 	
+	private String uploadCareUrl;
+	
 
 	
 	public int getSubMenuId(){
@@ -124,5 +126,11 @@ public class FileUpload implements Serializable{
 	}
 	public List<Integer> getSize(){
 		return this.size;
+	}
+	public void setUploadCareUrl(String uploadCareUrl){
+		this.uploadCareUrl = uploadCareUrl;
+	}
+	public String getUploadCareUrl(){
+		return this.uploadCareUrl;
 	}
 }

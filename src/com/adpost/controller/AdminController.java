@@ -38,5 +38,11 @@ public class AdminController {
 		modelAndView.addObject("title", "Admin Home");
 		return modelAndView;
 	}
+	@RequestMapping(value="/admin/dashboard", method=GET)
+	public ModelAndView dashboard(){
+		ModelAndView modelAndView = new ModelAndView("dashboard");
+		modelAndView.addObject("title", "Dashboard");
+		return modelAndView;
+	}
 	
 }

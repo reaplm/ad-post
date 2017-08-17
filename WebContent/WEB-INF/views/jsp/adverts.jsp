@@ -9,20 +9,26 @@
 	
 	<jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/topMenu.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/jspinc/bottomMenu.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/jspinc/logo.jsp"></jsp:include>
     
     
-    <div id="advert-list" class="content float-left">
+    <div id="pg-adverts" class="content float-left">
 	    <c:if test="${fn: length(advertList) > 0}">
-					<c:forEach var="advert" items="${advertList}">
-						<h2>
-							<a href="/AdPost/advert/detail?id=${advert.getAdvertId()}" 
+	    	<hr />
+				<c:forEach var="advert" items="${advertList}">
+					
+					<div class="advert-list" >
+						<p>
+							<a href="/AdPost/adverts?id=${advert.getAdvertId()}" 
 								class="advert-details-link">${advert.advertDetail.getAdSubject()}</a>
-						</h2>
+						</p>
 						 <div>
 						 	<p>${advert.advertDetail.getAdBody()}</p>
+					 	</div>
 					 </div>
+					 <hr />
 				</c:forEach>
+				
 			</c:if>											
 	</div>
 	<jsp:include page="/WEB-INF/views/jspinc/rightSidebar.jsp"></jsp:include>

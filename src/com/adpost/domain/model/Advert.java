@@ -86,14 +86,14 @@ public class Advert {
 	public void setAdvertStatus(AdvertStatus advertStatus){
 		this.advertStatus = advertStatus;
 	}
-	public AdvertStatus getAdverStatus(){
+	public AdvertStatus getAdvertStatus(){
 		return this.advertStatus;
 	}
 	public void setPublishedDate(Date publishedDate){
 		this.publishedDate = publishedDate;
 	}
 	public String getPublishedDate(){
-		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		if(this.publishedDate != null)
 			return format.format(this.publishedDate);
 		else return null;
@@ -102,7 +102,7 @@ public class Advert {
 		this.approvedDate = approvedDate;
 	}
 	public String getApprovedDate(){
-		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		if(this.approvedDate != null)
 			return format.format(this.approvedDate);
 		else return null;
@@ -111,7 +111,7 @@ public class Advert {
 		this.submittedDate = submittedDate;
 	}
 	public String getSubmittedDate(){
-		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		if(this.submittedDate != null)
 			return format.format(this.submittedDate);
 		else return null;
@@ -120,7 +120,7 @@ public class Advert {
 		this.rejectedDate = rejectedDate;
 	}
 	public String getRejectedDate(){
-		SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		if(this.rejectedDate != null)
 			return format.format(this.rejectedDate);
 		else return null;

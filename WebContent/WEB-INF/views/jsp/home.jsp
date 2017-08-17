@@ -6,7 +6,6 @@
     <jsp:include page="/WEB-INF/views/jspinc/header.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/topMenu.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/views/jspinc/logo.jsp"></jsp:include>
-    <jsp:include page="/WEB-INF/views/jspinc/searchBar.jsp"></jsp:include>
 	<div class="clear"></div>
 	<div id="pg-home">
 		
@@ -14,10 +13,10 @@
 			<% int rowCount = 0; %>
 			
 				<c:forEach var="category" items="${categories}">
-					
-					<% if(rowCount%3 == 0) { %>
-					<div class="clear"></div>
-					<hr />
+
+					<% if(rowCount%4 == 0) { %>
+						<div class="clear"></div>
+						<hr />
 					<% }%>
 					
 					<div class="category">
@@ -54,7 +53,7 @@
 		
 		<div class="clear"></div>
 		<br />
-		<div ><a href="/AdPost/adverts">BROWSE CATEGORIES</a></div>
+		<a href="/AdPost/adverts">BROWSE CATEGORIES</a>
 	</div>
 
 	<jsp:include page="/WEB-INF/views/jspinc/footer.jsp"></jsp:include>							
